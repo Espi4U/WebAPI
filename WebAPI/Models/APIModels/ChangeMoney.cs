@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebAPI.Models.APIModels
 {
@@ -12,5 +9,7 @@ namespace WebAPI.Models.APIModels
         public decimal Size { get; set; }
         public DateTime Date { get; set; }
         public string Type { get; set; }
+        public Category Category { get; set; }
+        public Currency Currency { get; set; }
     }
 }
