@@ -14,13 +14,9 @@ namespace WebAPI.Models
         public DbSet<ChangeMoney> ChangesMoney { get; set; }
         public DbSet<Currency> Currencies { get; set; }
 
-        public FamilyFinanceContext()
+        public FamilyFinanceContext(DbContextOptions<FamilyFinanceContext> options) : base(options)
         {
             Database.EnsureCreated();
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql("server=localhost;UserId=root;Password=espi4upass;database=famillyfinance;");
         }
     }
 }
