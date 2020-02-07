@@ -11,7 +11,7 @@ namespace WebAPI
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<FamilyFinanceContext>(options => options.UseMySql("server=localhost;UserId=root;Password=espi4u;database=familyfinance;"));
+            services.AddDbContext<FamilyFinanceContext>(options => options.UseMySql("server=localhost;UserId=root;Password=espi4u;database=famfin;"));
 
             services.AddControllers();
         }
