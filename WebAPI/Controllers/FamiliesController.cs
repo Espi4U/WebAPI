@@ -27,14 +27,8 @@ namespace WebAPI.Controllers
             return await db.Families.ToListAsync();
         }
 
-        [HttpGet("get_all_persons_by_familyid/{id:int}")]
-        public async Task<ActionResult<IEnumerable<Family>>> GetAllPersonsByFamilyID(int id)
-        {
-            return await db.Families.Where(f=>f.Id == id).Include(p=>p.Persons).ToListAsync();
-        }
-
         [HttpPost("add_new_family")]
-        public async Task<ActionResult<Family>> Post(Family family)
+        public async Task<ActionResult<Family>> AddNewFamily(Family family)
         {
             if (family == null)
             {
@@ -71,12 +65,6 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-
-            family.Persons.Clear();
-            family.Purposes.Clear();
-            family.Purses.Clear();
-            family.Reports.Clear();
-            family.ChangesInMoney.Clear();
 
             db.Families.Remove(family);
             await db.SaveChangesAsync();
