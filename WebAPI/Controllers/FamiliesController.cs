@@ -21,13 +21,19 @@ namespace WebAPI.Controllers
             db = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Family>>> Get()
+        [HttpGet("get_all_families")]
+        public async Task<ActionResult<IEnumerable<Family>>> GetAllFamilies()
         {
             return await db.Families.ToListAsync();
         }
 
-        [HttpPost]
+        [HttpGet("get_all_persons_by_familyid/{id:int}")]
+        public async Task<ActionResult<IEnumerable<Family>>> GetAllPersonsByFamilyID(int id)
+        {
+            return await db.Families.Where(f=>f.Id == id).Include(p=>p.Persons).ToListAsync();
+        }
+
+        [HttpPost("add_new_family")]
         public async Task<ActionResult<Family>> Post(Family family)
         {
             if (family == null)
@@ -40,7 +46,7 @@ namespace WebAPI.Controllers
             return Ok(family);
         }
 
-        [HttpPut]
+        [HttpPut("update_family")]
         public async Task<ActionResult<Family>> Put(Family family)
         {
             if (family == null)
@@ -57,17 +63,24 @@ namespace WebAPI.Controllers
             return Ok(family);
         }
 
-        [HttpDelete("{id}")]
+        [Route("delete_family/{id:int}")]
         public async Task<ActionResult<Family>> Delete(int id)
         {
-            Family user = db.Families.FirstOrDefault(x => x.Id == id);
-            if (user == null)
+            Family family = db.Families.FirstOrDefault(x => x.Id == id);
+            if (family == null)
             {
                 return NotFound();
             }
-            db.Families.Remove(user);
+
+            family.Persons.Clear();
+            family.Purposes.Clear();
+            family.Purses.Clear();
+            family.Reports.Clear();
+            family.ChangesInMoney.Clear();
+
+            db.Families.Remove(family);
             await db.SaveChangesAsync();
-            return Ok(user);
+            return Ok(family);
         }
     }
 }

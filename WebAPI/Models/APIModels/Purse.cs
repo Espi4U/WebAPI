@@ -12,5 +12,11 @@ namespace WebAPI.Models.APIModels
         public decimal Size { get; set; }
         [Required]
         public Currency Currency { get; set; }
+
+        public int? FamilyId { get; set; }
+        public Family Family { get; set; }
+
+        public int? PersonId { get; set; }
+        public Person Person { get; set; }
     }
 }

@@ -18,5 +18,8 @@ namespace WebAPI.Models.APIModels
         public List<Purpose> Purposes { get; set; }
         public List<Purse> Purses { get; set; }
         public List<Report> Reports { get; set; }
+
+        public int? FamilyId { get; set; }
+        public Family Family { get; set; }
     }
 }
