@@ -21,13 +21,13 @@ namespace WebAPI.Controllers
             db = context;
         }
 
-        [HttpGet("get_all_families")]
+        [Route("get_all_families")]
         public async Task<ActionResult<IEnumerable<Family>>> GetAllFamilies()
         {
             return await db.Families.ToListAsync();
         }
 
-        [HttpPost("add_new_family")]
+        [Route("add_new_family")]
         public async Task<ActionResult<Family>> AddNewFamily(Family family)
         {
             if (family == null)
@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
             return Ok(family);
         }
 
-        [HttpPut("update_family")]
+        [Route("update_family")]
         public async Task<ActionResult<Family>> Put(Family family)
         {
             if (family == null)
