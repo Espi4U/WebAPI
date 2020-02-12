@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
 using WebAPI.Models.APIModels;
+using WebAPI.Models.APIModels.Requests;
+using WebAPI.Models.APIModels.Responses;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("reports")]
     public class ReportsController : ControllerBase
     {
         readonly FamilyFinanceContext db;
@@ -17,28 +19,29 @@ namespace WebAPI.Controllers
             db = context;
         }
 
-        [Route("get_all_family_reports_by_id/{familyID:int}")]
-        public async Task<ActionResult<IEnumerable<Report>>> GetAllFamilyReportsByID(int familyID)
+        [HttpGet]
+        [Route("get_all_reports")]
+        public async Task<ActionResult<GetReportsResponse>> GetAllFamilyReportsByID([FromBody]IdRequest request)
         {
-            return await db.Reports.Where(x => x.FamilyId == familyID).ToListAsync();
+            return new GetReportsResponse
+            {
+                Reports = await db.Reports.Where(x => x.FamilyId == request.Id).ToListAsync()
+            };
         }
 
-        [Route("get_all_person_reports_by_id/{personID:int}")]
-        public async Task<ActionResult<IEnumerable<Report>>> GetAllPersonReportsByID(int personID)
+        [HttpPost]
+        [Route("add_new_report")]
+        public async Task<ActionResult<Report>> AddNewReportAsync([FromBody]Report report)
         {
-            return await db.Reports.Where(x => x.PersonId == personID).ToListAsync();
-        }
+            if(report == null)
+            {
+                return BadRequest();
+            }
 
-        [Route("add_new_family_report/{id:int}")]
-        public async Task<ActionResult<IEnumerable<Report>>> AddNewFamilyReport([FromQuery]Report report ,int id)
-        {
-            return await db.Reports.Where(x => x.PersonId == id).ToListAsync();
-        }
+            db.Reports.Add(report);
+            await db.SaveChangesAsync();
 
-        [Route("add_new_person_report/{id:int}")]
-        public async Task<ActionResult<IEnumerable<Report>>> AddNewPersonReport([FromQuery]Report report, int id)
-        {
-            return await db.Reports.Where(x => x.PersonId == id).ToListAsync();
+            return Ok(report);
         }
     }
 }
