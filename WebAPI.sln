@@ -3,9 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{74C75715-6E48-48BD-9DBE-D7656638D454}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{74C75715-6E48-48BD-9DBE-D7656638D454}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyFinance.Android", "FamilyFinance\FamilyFinance.Android\FamilyFinance.Android.csproj", "{F46B8A8A-D34D-48E3-A201-8E202303E7CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyFinance", "FamilyFinance\FamilyFinance\FamilyFinance.csproj", "{1725D218-4A81-4445-AD97-D820765D5A9D}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{1B8AD7BF-6D94-4336-920E-78899D0FA97A}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Shared\Shared.projitems*{1b8ad7bf-6d94-4336-920e-78899d0fa97a}*SharedItemsImports = 13
+		Shared\Shared.projitems*{f46b8a8a-d34d-48e3-a201-8e202303e7cb}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -15,6 +25,16 @@ Global
 		{74C75715-6E48-48BD-9DBE-D7656638D454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74C75715-6E48-48BD-9DBE-D7656638D454}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74C75715-6E48-48BD-9DBE-D7656638D454}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F46B8A8A-D34D-48E3-A201-8E202303E7CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F46B8A8A-D34D-48E3-A201-8E202303E7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F46B8A8A-D34D-48E3-A201-8E202303E7CB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F46B8A8A-D34D-48E3-A201-8E202303E7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F46B8A8A-D34D-48E3-A201-8E202303E7CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F46B8A8A-D34D-48E3-A201-8E202303E7CB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1725D218-4A81-4445-AD97-D820765D5A9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1725D218-4A81-4445-AD97-D820765D5A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1725D218-4A81-4445-AD97-D820765D5A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1725D218-4A81-4445-AD97-D820765D5A9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

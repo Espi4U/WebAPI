@@ -8,7 +8,7 @@ namespace WebAPI.Models.APIModels.Requests
 {
     public class IdRequest
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
+        public int? PersonID { get; set; }
+        public int? FamilyID { get; set; }
     }
 }

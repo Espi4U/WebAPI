@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
 using WebAPI.Models.APIModels;
 using WebAPI.Models.APIModels.Requests;
+using WebAPI.Models.APIModels.Requests.ReportsControllerRequests;
 using WebAPI.Models.APIModels.Responses;
 
 namespace WebAPI.Controllers
@@ -21,27 +21,32 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("get_all_reports")]
-        public async Task<ActionResult<GetReportsResponse>> GetAllFamilyReportsByID([FromBody]IdRequest request)
+        public async Task<ActionResult<GetReportsResponse>> GetAllReportsByIDAsync([FromBody]IdRequest request)
         {
+            if(request.FamilyID == null && request.PersonID == null)
+            {
+                return BadRequest();
+            }
+
             return new GetReportsResponse
             {
-                Reports = await db.Reports.Where(x => x.FamilyId == request.Id).ToListAsync()
+                Reports = request.FamilyID == null ? await db.Reports.Where(x => x.PersonId == request.PersonID).ToListAsync() : await db.Reports.Where(x => x.FamilyId == request.FamilyID).ToListAsync()
             };
         }
 
         [HttpPost]
         [Route("add_new_report")]
-        public async Task<ActionResult<Report>> AddNewReportAsync([FromBody]Report report)
+        public async Task<ActionResult<Report>> AddNewReportAsync([FromBody]AddNewReportRequest request)
         {
-            if(report == null)
+            if(request.Report.FamilyId == null && request.Report.PersonId == null)
             {
                 return BadRequest();
             }
 
-            db.Reports.Add(report);
+            db.Reports.Add(request.Report);
             await db.SaveChangesAsync();
 
-            return Ok(report);
+            return Ok(request.Report);
         }
     }
 }
