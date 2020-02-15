@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Models.APIModels.Requests.PersonsControllerRequests
 {
-    public class AddNewPersonRequest
+    public class PersonRequest
     {
         public Person Person { get; set; }
     }

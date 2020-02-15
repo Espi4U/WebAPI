@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyFinance.Android", "FamilyFinance\FamilyFinance.Android\FamilyFinance.Android.csproj", "{F46B8A8A-D34D-48E3-A201-8E202303E7CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyFinance", "FamilyFinance\FamilyFinance\FamilyFinance.csproj", "{1725D218-4A81-4445-AD97-D820765D5A9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyFinance", "FamilyFinance\FamilyFinance\FamilyFinance.csproj", "{1725D218-4A81-4445-AD97-D820765D5A9D}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{1B8AD7BF-6D94-4336-920E-78899D0FA97A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{85BAD88D-3BBF-44A1-89A6-AFB53E4E4982}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

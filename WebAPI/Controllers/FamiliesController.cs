@@ -7,15 +7,13 @@ using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
 using WebAPI.Models.APIModels;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("families")]
     public class FamiliesController : ControllerBase
     {
-        readonly FamilyFinanceContext db;
+        private readonly FamilyFinanceContext db;
         public FamiliesController(FamilyFinanceContext context)
         {
             db = context;

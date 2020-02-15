@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Models.APIModels.Requests.ReportsControllerRequests
 {
-    public class AddNewReportRequest
+    public class ReportRequest
     {
         public Report Report { get; set; }
     }

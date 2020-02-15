@@ -13,7 +13,7 @@ namespace WebAPI.Controllers
     [Route("reports")]
     public class ReportsController : ControllerBase
     {
-        readonly FamilyFinanceContext db;
+        private readonly FamilyFinanceContext db;
         public ReportsController(FamilyFinanceContext context)
         {
             db = context;
@@ -21,14 +21,14 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("get_all_reports")]
-        public async Task<ActionResult<GetReportsResponse>> GetAllReportsByIDAsync([FromBody]IdRequest request)
+        public async Task<ActionResult<ListReporstResponse>> GetAllReportsByIDAsync([FromBody]IdRequest request)
         {
             if(request.FamilyID == null && request.PersonID == null)
             {
                 return BadRequest();
             }
 
-            return new GetReportsResponse
+            return new ListReporstResponse
             {
                 Reports = request.FamilyID == null ? await db.Reports.Where(x => x.PersonId == request.PersonID).ToListAsync() : await db.Reports.Where(x => x.FamilyId == request.FamilyID).ToListAsync()
             };
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("add_new_report")]
-        public async Task<ActionResult<Report>> AddNewReportAsync([FromBody]AddNewReportRequest request)
+        public async Task<ActionResult<Report>> AddNewReportAsync([FromBody]ReportRequest request)
         {
             if(request.Report.FamilyId == null && request.Report.PersonId == null)
             {

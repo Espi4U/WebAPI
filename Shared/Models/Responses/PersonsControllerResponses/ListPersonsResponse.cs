@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Models.APIModels.Responses.PersonsControllerResponses
 {
-    public class GetPersonsResponse
+    public class ListPersonsResponse
     {
         public List<Person> Persons { get; set; }
     }

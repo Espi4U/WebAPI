@@ -9,6 +9,7 @@
     <Import_RootNamespace>Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AuthorizeData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Category.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChangeMoney.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Currency.cs" />
@@ -17,13 +18,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Purpose.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Purse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Report.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\AuthorizeDataRequests\LoginRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\BaseRequests\IdRequest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\PersonsControllerRequests\AddNewPersonRequest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\ReportsControllerRequests\AddNewReportRequest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\PersonsControllerResponses\GetPersonsResponse.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ReportsControllerResponses\GetReportsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\PersonsControllerRequests\PersonRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\ReportsControllerRequests\ReportRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\AuthorizeDataResponses\LoginResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\CategoriesResponses\ListCategoriesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\PersonsControllerResponses\ListPersonsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ReportsControllerResponses\ListReportsResponse.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Models\Responses\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Requests\CategoriesRequests\" />
   </ItemGroup>
 </Project>
