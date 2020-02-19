@@ -2,3 +2,6 @@
 
 # CS0436: Type conflicts with imported type
 dotnet_diagnostic.CS0436.severity = none
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = none

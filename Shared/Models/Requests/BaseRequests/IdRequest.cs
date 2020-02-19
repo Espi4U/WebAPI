@@ -1,14 +1,12 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebAPI.Models.APIModels.Requests
 {
     public class IdRequest
     {
+        [JsonProperty("personid")]
         public int? PersonID { get; set; }
+        [JsonProperty("familyid")]
         public int? FamilyID { get; set; }
     }
 }
