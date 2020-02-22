@@ -26,14 +26,14 @@ namespace WebAPI.Controllers
         [Route("get_persons_by_family_id")]
         public async Task<ActionResult<ListPersonsResponse>> GetPersonsByFamilyIDAsync([FromBody]IdRequest request)
         {
-            if(request.FamilyID == null)
+            if(request.FamilyId == null)
             {
                 return BadRequest();
             }
 
             return new ListPersonsResponse
             {
-                Persons = await db.Persons.Where(x => x.FamilyId == request.FamilyID).ToListAsync()
+                Persons = await db.Persons.Where(x => x.FamilyId == request.FamilyId).ToListAsync()
             };
         }
 

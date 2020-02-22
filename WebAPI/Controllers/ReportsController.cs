@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Models.Responses;
 using WebAPI.Models;
 using WebAPI.Models.APIModels;
 using WebAPI.Models.APIModels.Requests;
@@ -20,33 +21,85 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("get_all_reports")]
-        public async Task<ActionResult<ListReporstResponse>> GetAllReportsByIDAsync([FromBody]IdRequest request)
+        [Route("get_all_reports_by_id")]
+        public async Task<ListReporstResponse> GetAllReportsByIdAsync([FromBody]IdRequest request)
         {
-            if(request.FamilyID == null && request.PersonID == null)
+            var response = new ListReporstResponse();
+            try
             {
-                return BadRequest();
-            }
+                if (request.PersonId == null && request.FamilyId == null)
+                {
+                    response.IsError = true;
+                    response.Message = "Bad request";
 
-            return new ListReporstResponse
+                    return response;
+                }
+
+                response.Reports = request.PersonId == null ? await db.Reports.Where(x => x.FamilyId == request.FamilyId).ToListAsync() :
+                    await db.Reports.Where(x => x.PersonId == request.PersonId).ToListAsync();
+                return response;
+            }
+            catch
             {
-                Reports = request.FamilyID == null ? await db.Reports.Where(x => x.PersonId == request.PersonID).ToListAsync() : await db.Reports.Where(x => x.FamilyId == request.FamilyID).ToListAsync()
-            };
+                response.IsError = true;
+                response.Message = "Bad request";
+                return response;
+            }
         }
 
         [HttpPost]
         [Route("add_new_report")]
-        public async Task<ActionResult<Report>> AddNewReportAsync([FromBody]ReportRequest request)
+        public async Task<BaseResponse> AddNewReportAsync([FromBody]ReportRequest request)
         {
-            if(request.Report.FamilyId == null && request.Report.PersonId == null)
+            var response = new BaseResponse();
+            try
             {
-                return BadRequest();
+                if (request.Report == null)
+                {
+                    response.IsError = true;
+                    response.Message = "Cannot add empty report";
+                    return response;
+                }
+                if (db.Reports.Contains(request.Report))
+                {
+                    response.IsError = true;
+                    response.Message = "Report is already exist";
+                    return response;
+                }
+
+                db.Reports.Add(request.Report);
+                await db.SaveChangesAsync();
+
+                return response;
             }
+            catch
+            {
+                response.IsError = true;
+                response.Message = "Bad request";
+                return response;
+            }
+        }
 
-            db.Reports.Add(request.Report);
-            await db.SaveChangesAsync();
+        [HttpGet]
+        [Route("delete_report_by_id")]
+        public async Task<BaseResponse> DeleteReportByIdAsync([FromBody]ReportRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var report = await db.Reports.Where(x => x.Id == request.Report.Id).FirstOrDefaultAsync();
 
-            return Ok(request.Report);
+                db.Reports.Remove(report);
+                await db.SaveChangesAsync();
+
+                return response;
+            }
+            catch
+            {
+                response.IsError = true;
+                response.Message = "Bad request";
+                return response;
+            }
         }
     }
 }

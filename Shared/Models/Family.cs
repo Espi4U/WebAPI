@@ -10,21 +10,27 @@ namespace WebAPI.Models.APIModels
         public int Id { get; set; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } // імя сім'ї
 
         [JsonProperty("persons")]
-        public List<Person> Persons { get; set; }
+        public List<Person> Persons { get; set; } // усі члени сім'ї
 
         [JsonProperty("changesinmoney")]
-        public List<ChangeMoney> ChangesInMoney { get; set; }
+        public List<ChangeMoney> ChangesInMoney { get; set; } // загальні сімейні доходи/витрати
 
         [JsonProperty("purposes")]
-        public List<Purpose> Purposes { get; set; }
+        public List<Purpose> Purposes { get; set; } // цілі заощадження сім'ї
 
         [JsonProperty("purses")]
-        public List<Purse> Purses { get; set; }
+        public List<Purse> Purses { get; set; } // гаманці сім'ї
 
         [JsonProperty("reports")]
-        public List<Report> Reports { get; set; }
+        public List<Report> Reports { get; set; } // звіти сім'ї
+
+        [JsonProperty("categories")]
+        public List<Category> Categories { get; set; } // категорії доходів/витрат сім'ї
+
+        [JsonProperty("currencies")]
+        public List<Currency> Currencies { get; set; } // валюти сім'ї
     }
 }

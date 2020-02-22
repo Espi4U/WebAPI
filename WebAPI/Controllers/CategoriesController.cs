@@ -11,8 +11,6 @@ using WebAPI.Models;
 using WebAPI.Models.APIModels;
 using WebAPI.Models.APIModels.Requests;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace WebAPI.Controllers
 {
     [ApiController]
@@ -25,67 +23,86 @@ namespace WebAPI.Controllers
             db = context;
         }
 
-        [HttpGet]
-        [Route("get_all_categories")]
-        public async Task<ActionResult<ListCategoriesResponse>> GetAllCategoriesAsync([FromBody]IdRequest request)
-        {
-            if(request.PersonID == null && request.FamilyID == null)
-            {
-                return BadRequest();
-            }
-
-            return new ListCategoriesResponse
-            {
-                Categories = await db.Categories.ToListAsync()
-            };
-        }
-
         [HttpPost]
         [Route("add_new_categoty")]
-        public async Task<ActionResult<BaseResponse>> AddNewCategoryAsync([FromBody]CategoryRequest request)
+        public async Task<BaseResponse> AddNewCategoryAsync([FromBody]CategoryRequest request)
         {
             var response = new BaseResponse();
+            try
+            {
+                if (request.Category == null)
+                {
+                    response.IsError = true;
+                    response.Message = "Cannot add empty category";
+                    return response;
+                }
+                if (db.Categories.Contains(request.Category))
+                {
+                    response.IsError = true;
+                    response.Message = "Categoty is already exist";
+                    return response;
+                }
 
-            if (request.Category == null)
+                db.Categories.Add(request.Category);
+                await db.SaveChangesAsync();
+
+                return response;
+            }
+            catch
             {
                 response.IsError = true;
-                response.Message = "Cannot add empty category";
+                response.Message = "Bad request";
+                return response;
             }
-
-            if (db.Categories.Contains(request.Category))
-            {
-                response.IsError = true;
-                response.Message = "Categoty is already exist";
-            }
-
-            db.Categories.Add(request.Category);
-            await db.SaveChangesAsync();
-
-            return response;
         }
 
         [HttpGet]
-        [Route("add_new_categoty")]
-        public async Task<ActionResult<ListCategoriesResponse>> GetAllCategoriesById([FromBody]IdRequest request)
+        [Route("get_categories_by_id")]
+        public async Task<ListCategoriesResponse> GetAllCategoriesByIdAsync([FromBody]IdRequest request)
         {
             var response = new ListCategoriesResponse();
+            try
+            {
+                if (request.PersonId == null && request.FamilyId == null)
+                {
+                    response.IsError = true;
+                    response.Message = "Bad request";
 
-            //if (request.Category == null)
-            //{
-            //    response.IsError = true;
-            //    response.Message = "Cannot add empty category";
-            //}
+                    return response;
+                }
 
-            //if (db.Categories.Contains(request.Category))
-            //{
-            //    response.IsError = true;
-            //    response.Message = "Categoty is already exist";
-            //}
+                response.Categories = request.PersonId == null ? await db.Categories.Where(x => x.FamilyId == request.FamilyId).ToListAsync() :
+                    await db.Categories.Where(x => x.PersonId == request.PersonId).ToListAsync();
+                return response;
+            }
+            catch
+            {
+                response.IsError = true;
+                response.Message = "Bad request";
+                return response;
+            }
+        }
 
-            //db.Categories.Add(request.Category);
-            //await db.SaveChangesAsync();
+        [HttpGet]
+        [Route("delete_category_by_id")]
+        public async Task<BaseResponse> DeleteCategoryByIdAsync([FromBody]CategoryRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var category = await db.Categories.Where(x => x.Id == request.Category.Id).FirstOrDefaultAsync();
 
-            return response;
+                db.Categories.Remove(category);
+                await db.SaveChangesAsync();
+
+                return response;
+            }
+            catch
+            {
+                response.IsError = true;
+                response.Message = "Bad request";
+                return response;
+            }
         }
     }
 }

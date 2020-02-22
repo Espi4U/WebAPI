@@ -5,8 +5,8 @@ namespace WebAPI.Models.APIModels.Requests
     public class IdRequest
     {
         [JsonProperty("personid")]
-        public int? PersonID { get; set; }
+        public int? PersonId { get; set; }
         [JsonProperty("familyid")]
-        public int? FamilyID { get; set; }
+        public int? FamilyId { get; set; }
     }
 }
