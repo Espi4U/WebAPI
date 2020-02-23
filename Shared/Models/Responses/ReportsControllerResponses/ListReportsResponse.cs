@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Models.APIModels.Responses
 {
-    public class ListReporstResponse : BaseResponse
+    public class ListReportsResponse : BaseResponse
     {
         [JsonProperty("reports")]
         public List<Report> Reports { get; set; }

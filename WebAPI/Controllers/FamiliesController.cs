@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Models.Requests.FamiliesRequests;
+using Shared.Models.Responses;
 using WebAPI.Models;
 using WebAPI.Models.APIModels;
 
@@ -19,54 +21,35 @@ namespace WebAPI.Controllers
             db = context;
         }
 
-        [Route("get_all_families")]
-        public async Task<ActionResult<IEnumerable<Family>>> GetAllFamilies()
-        {
-            return await db.Families.ToListAsync();
-        }
-
         [Route("add_new_family")]
-        public async Task<ActionResult<Family>> AddNewFamily(Family family)
+        public async Task<BaseResponse> AddNewFamilyAsync([FromBody]FamilyRequest request)
         {
-            if (family == null)
+            var response = new BaseResponse();
+            try
             {
-                return BadRequest();
+                if(request.Family == null)
+                {
+                    response.IsError = true;
+                    response.Message = "Cannot add NULL";
+                    return response;
+                }
+                if (db.Families.Contains(request.Family))
+                {
+                    response.IsError = true;
+                    response.Message = "Family is already exist";
+                    return response;
+                }
+
+                db.Families.Add(request.Family);
+                await db.SaveChangesAsync();
+                return response;
             }
-
-            db.Families.Add(family);
-            await db.SaveChangesAsync();
-            return Ok(family);
-        }
-
-        [Route("update_family")]
-        public async Task<ActionResult<Family>> Put(Family family)
-        {
-            if (family == null)
+            catch
             {
-                return BadRequest();
+                response.IsError = true;
+                response.Message = "Bad request";
+                return response;
             }
-            if (!db.Families.Any(x => x.Id == family.Id))
-            {
-                return NotFound();
-            }
-
-            db.Update(family);
-            await db.SaveChangesAsync();
-            return Ok(family);
-        }
-
-        [Route("delete_family/{id:int}")]
-        public async Task<ActionResult<Family>> Delete(int id)
-        {
-            Family family = db.Families.FirstOrDefault(x => x.Id == id);
-            if (family == null)
-            {
-                return NotFound();
-            }
-
-            db.Families.Remove(family);
-            await db.SaveChangesAsync();
-            return Ok(family);
         }
     }
 }

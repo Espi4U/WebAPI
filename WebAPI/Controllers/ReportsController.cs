@@ -22,9 +22,9 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("get_all_reports_by_id")]
-        public async Task<ListReporstResponse> GetAllReportsByIdAsync([FromBody]IdRequest request)
+        public async Task<ListReportsResponse> GetAllReportsByIdAsync([FromBody]IdRequest request)
         {
-            var response = new ListReporstResponse();
+            var response = new ListReportsResponse();
             try
             {
                 if (request.PersonId == null && request.FamilyId == null)
