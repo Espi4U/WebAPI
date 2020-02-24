@@ -32,14 +32,14 @@ namespace WebAPI.Controllers
             {
                 if (request.Category == null)
                 {
-                    response.IsError = true;
-                    response.Message = "Cannot add empty category";
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = "Cannot add empty category";
                     return response;
                 }
                 if (db.Categories.Contains(request.Category))
                 {
-                    response.IsError = true;
-                    response.Message = "Categoty is already exist";
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = "Categoty is already exist";
                     return response;
                 }
 
@@ -50,8 +50,8 @@ namespace WebAPI.Controllers
             }
             catch
             {
-                response.IsError = true;
-                response.Message = "Bad request";
+                response.BaseIsSuccess = false;
+                response.BaseMessage = "Bad request";
                 return response;
             }
         }
@@ -65,8 +65,8 @@ namespace WebAPI.Controllers
             {
                 if (request.PersonId == null && request.FamilyId == null)
                 {
-                    response.IsError = true;
-                    response.Message = "Bad request";
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = "Bad request";
 
                     return response;
                 }
@@ -77,8 +77,8 @@ namespace WebAPI.Controllers
             }
             catch
             {
-                response.IsError = true;
-                response.Message = "Bad request";
+                response.BaseIsSuccess = false;
+                response.BaseMessage = "Bad request";
                 return response;
             }
         }
@@ -99,8 +99,8 @@ namespace WebAPI.Controllers
             }
             catch
             {
-                response.IsError = true;
-                response.Message = "Bad request";
+                response.BaseIsSuccess = false;
+                response.BaseMessage = "Bad request";
                 return response;
             }
         }

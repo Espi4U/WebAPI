@@ -29,14 +29,14 @@ namespace WebAPI.Controllers
             {
                 if(request.Family == null)
                 {
-                    response.IsError = true;
-                    response.Message = "Cannot add NULL";
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = "Cannot add NULL";
                     return response;
                 }
                 if (db.Families.Contains(request.Family))
                 {
-                    response.IsError = true;
-                    response.Message = "Family is already exist";
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = "Family is already exist";
                     return response;
                 }
 
@@ -46,8 +46,8 @@ namespace WebAPI.Controllers
             }
             catch
             {
-                response.IsError = true;
-                response.Message = "Bad request";
+                response.BaseIsSuccess = false;
+                response.BaseMessage = "Bad request";
                 return response;
             }
         }

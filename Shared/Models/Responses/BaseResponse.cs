@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Shared.Models.Responses
 {
-    public class BaseResponse
+    public class BaseResponse : ApiResponse
     {
         [JsonProperty("iserror")]
-        public bool IsError { get; set; } = false;
+        public bool BaseIsSuccess { get; set; } = true;
         [JsonProperty("message")]
-        public string Message { get; set; } = "";
+        public string BaseMessage { get; set; } = "";
     }
 }
