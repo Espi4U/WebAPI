@@ -3,34 +3,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Models;
 
 namespace WebAPI.Services
 {
     public abstract class BaseService
     {
-        protected async Task<T> GetResponseAsync<T>(Func<Task<T>> func) where T : ApiResponse, new()
+        protected T GetResponse<T>(Func<T> func) where T : ApiResponse, new()
         {
             T response;
-
             try
             {
-                response = await func();
+                response = func();
             }
             catch (Exception e)
             {
-
                 response = new T
                 {
                     IsSuccess = false,
                     ApiMessage = e.Message
                 };
-
                 if (e.InnerException != null)
                 {
                     response.ApiMessage += e.InnerException.Message;
                 }
             }
-
             return response;
         }
     }

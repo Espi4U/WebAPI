@@ -15,7 +15,7 @@ namespace WebAPI.Models
         public DbSet<ChangeMoney> ChangesMoney { get; set; }
         public DbSet<Currency> Currencies { get; set; }
 
-        public FamilyFinanceContext(DbContextOptions<FamilyFinanceContext> options) : base(options)
+        public FamilyFinanceContext()
         {
             Database.EnsureCreated();
         }
