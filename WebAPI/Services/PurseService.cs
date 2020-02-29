@@ -12,7 +12,7 @@ namespace WebAPI.Services
 {
     public class PurseService : BaseService
     {
-        public BaseResponse AddNewPurse(PurseRequest request)
+        public BaseResponse AddPurse(PurseRequest request)
         {
             return GetResponse(() => {
                 var response = new BaseResponse();
@@ -20,7 +20,7 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.Purse == null)
+                        if (request.Purse == default)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = "Cannot add empty purse";
@@ -48,7 +48,7 @@ namespace WebAPI.Services
             });
         }
 
-        public ListPursesResponse GetPursesById(IdRequest request)
+        public ListPursesResponse GetPurses(IdRequest request)
         {
             return GetResponse(() => {
                 var response = new ListPursesResponse();
@@ -56,14 +56,14 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.PersonId == null && request.FamilyId == null)
+                        if (request.PersonId == default && request.FamilyId == default)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = "Bad request";
                         }
                         else
                         {
-                            response.Purses = request.PersonId == null ? db.Purses.Where(x => x.FamilyId == request.FamilyId).ToList() :
+                            response.Purses = request.PersonId == default ? db.Purses.Where(x => x.FamilyId == request.FamilyId).ToList() :
                             db.Purses.Where(x => x.PersonId == request.PersonId).ToList();
                         }
                     }
@@ -79,7 +79,7 @@ namespace WebAPI.Services
             });
         }
 
-        public BaseResponse DeletePurseById(PurseRequest request)
+        public BaseResponse DeletePurse(PurseRequest request)
         {
             return GetResponse(() => {
                 var response = new BaseResponse();

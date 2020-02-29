@@ -21,7 +21,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\CategoriesRequests\CategoryRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\CurrenciesRequests\CurrencyRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\FamiliesRequests\FamilyRequest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\PersonsControllerRequests\PersonRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\PersonsRequests\PersonRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\PursesRequests\PurseRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\ReportsControllerRequests\ReportRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ApiResponse.cs" />

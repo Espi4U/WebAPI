@@ -8,5 +8,6 @@ namespace WebAPI.Services
 {
     public class FamilyService : BaseService
     {
+
     }
 }

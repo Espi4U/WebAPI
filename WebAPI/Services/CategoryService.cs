@@ -12,7 +12,7 @@ namespace WebAPI.Services
 {
     public class CategoryService : BaseService
     {
-        public BaseResponse AddNewCategory(CategoryRequest request)
+        public BaseResponse AddCategory(CategoryRequest request)
         {
             return GetResponse(() => {
                 var response = new BaseResponse();
@@ -20,7 +20,7 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.Category == null)
+                        if (request.Category == default)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = "Cannot add empty category";
@@ -48,7 +48,7 @@ namespace WebAPI.Services
             });
         }
 
-        public ListCategoriesResponse GetCategoriesById(IdRequest request)
+        public ListCategoriesResponse GetCategories(IdRequest request)
         {
             return GetResponse(() => {
                 var response = new ListCategoriesResponse();
@@ -56,14 +56,14 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.PersonId == null && request.FamilyId == null)
+                        if (request.PersonId == default && request.FamilyId == default)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = "Bad request";
                         }
                         else
                         {
-                            response.Categories = request.PersonId == null ? db.Categories.Where(x => x.FamilyId == request.FamilyId).ToList() :
+                            response.Categories = request.PersonId == default ? db.Categories.Where(x => x.FamilyId == request.FamilyId).ToList() :
                             db.Categories.Where(x => x.PersonId == request.PersonId).ToList();
                         }
                     }
@@ -79,7 +79,7 @@ namespace WebAPI.Services
             });
         }
 
-        public BaseResponse DeleteCategoryById(CategoryRequest request)
+        public BaseResponse DeleteCategory(CategoryRequest request)
         {
             return GetResponse(() => {
                 var response = new BaseResponse();

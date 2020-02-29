@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Models.Responses;
 using WebAPI.Models;
 using WebAPI.Models.APIModels;
 using WebAPI.Models.APIModels.Requests;
 using WebAPI.Models.APIModels.Requests.PersonsControllerRequests;
 using WebAPI.Models.APIModels.Responses.PersonsControllerResponses;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -16,35 +18,18 @@ namespace WebAPI.Controllers
     [Route("persons")]
     public class PersonsController : ControllerBase
     {
-        private readonly FamilyFinanceContext db;
-        public PersonsController(FamilyFinanceContext context)
+        private readonly PersonService _personService;
+        public PersonsController(PersonService personService)
         {
-            db = context;
+            _personService = personService;
         }
 
-        [HttpGet]
-        [Route("get_persons_by_family_id")]
-        public async Task<ActionResult<ListPersonsResponse>> GetPersonsByFamilyIDAsync([FromBody]IdRequest request)
-        {
-            if(request.FamilyId == null)
-            {
-                return BadRequest();
-            }
+        [Route("get_persons"), HttpPost]
+        public ListPersonsResponse GetPersons([FromBody]IdRequest request) =>
+            _personService.GetPersons(request);
 
-            return new ListPersonsResponse
-            {
-                Persons = await db.Persons.Where(x => x.FamilyId == request.FamilyId).ToListAsync()
-            };
-        }
-
-        [HttpPost]
-        [Route("add_new_person")]
-        public async Task<ActionResult<Person>> AddPersonAsync([FromBody]PersonRequest request)
-        { 
-            db.Persons.Add(request.Person);
-            await db.SaveChangesAsync();
-
-            return Ok(request.Person);
-        }
+        [Route("add_person"), HttpPost]
+        public BaseResponse AddPerson([FromBody]PersonRequest request) =>
+            _personService.AddPerson(request);
     }
 }

@@ -25,15 +25,15 @@ namespace WebAPI.Controllers
         }
 
         [Route("add_new_categoty"), HttpPost]
-        public BaseResponse AddNewCategory([FromBody]CategoryRequest request) =>
-            _categoryService.AddNewCategory(request);
+        public BaseResponse AddCategory([FromBody]CategoryRequest request) =>
+            _categoryService.AddCategory(request);
 
         [Route("get_categories_by_id"), HttpPost]
-        public ListCategoriesResponse GetCategoriesById([FromBody]IdRequest request) =>
-            _categoryService.GetCategoriesById(request);
+        public ListCategoriesResponse GetCategories([FromBody]IdRequest request) =>
+            _categoryService.GetCategories(request);
 
         [Route("delete_category_by_id"), HttpPost]
-        public BaseResponse DeleteCategoryById([FromBody]CategoryRequest request) =>
-            _categoryService.DeleteCategoryById(request);
+        public BaseResponse DeleteCategory([FromBody]CategoryRequest request) =>
+            _categoryService.DeleteCategory(request);
     }
 }

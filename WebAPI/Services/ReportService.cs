@@ -20,14 +20,14 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.PersonId == null && request.FamilyId == null)
+                        if (request.PersonId == default && request.FamilyId == default)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = "Bad request";
                         }
                         else
                         {
-                            response.Reports = request.PersonId == null ? db.Reports.Where(x => x.FamilyId == request.FamilyId).ToList() :
+                            response.Reports = request.PersonId == default ? db.Reports.Where(x => x.FamilyId == request.FamilyId).ToList() :
                                 db.Reports.Where(x => x.PersonId == request.PersonId).ToList();
                         }
                     }
@@ -51,7 +51,7 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.Report == null)
+                        if (request.Report == default)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = "Cannot add empty report";

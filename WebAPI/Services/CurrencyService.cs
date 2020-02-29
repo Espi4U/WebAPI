@@ -20,7 +20,7 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.Currency == null)
+                        if (request.Currency == default)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = "Cannot add empty currency";
@@ -56,7 +56,7 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.PersonId == null && request.FamilyId == null)
+                        if (request.PersonId == default && request.FamilyId == default)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = "Bad request";
@@ -64,7 +64,7 @@ namespace WebAPI.Services
                             return response;
                         }
 
-                        response.Currencies = request.PersonId == null ? db.Currencies.Where(x => x.FamilyId == request.FamilyId).ToList() :
+                        response.Currencies = request.PersonId == default ? db.Currencies.Where(x => x.FamilyId == request.FamilyId).ToList() :
                             db.Currencies.Where(x => x.PersonId == request.PersonId).ToList();
                     }
 

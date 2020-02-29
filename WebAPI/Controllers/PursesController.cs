@@ -22,15 +22,15 @@ namespace WebAPI.Controllers
         }
 
         [Route("get_purses_by_id"), HttpPost]
-        public ListPursesResponse GetPursesById([FromBody]IdRequest request) =>
-            _purseService.GetPursesById(request);
+        public ListPursesResponse GetPurses([FromBody]IdRequest request) =>
+            _purseService.GetPurses(request);
 
         [Route("add_new_purse"), HttpPost]
-        public BaseResponse AddNewReport([FromBody]PurseRequest request) =>
-            _purseService.AddNewPurse(request);
+        public BaseResponse AddPurse([FromBody]PurseRequest request) =>
+            _purseService.AddPurse(request);
 
-        [Route("delete_purse_by_id"), HttpPost]
-        public BaseResponse DeleteReportById([FromBody]PurseRequest request) =>
-            _purseService.DeletePurseById(request);
+        [Route("delete_purse"), HttpPost]
+        public BaseResponse DeletePurse([FromBody]PurseRequest request) =>
+            _purseService.DeletePurse(request);
     }
 }
