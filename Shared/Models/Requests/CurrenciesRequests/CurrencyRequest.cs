@@ -7,7 +7,7 @@ using WebAPI.Models.APIModels.Requests;
 
 namespace Shared.Models.Requests.CurrenciesRequests
 {
-    public class CurrencyRequest : IdRequest
+    public class CurrencyRequest
     {
         [JsonProperty("currency")]
         public Currency Currency { get; set; }
