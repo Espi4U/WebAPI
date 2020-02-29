@@ -9,6 +9,7 @@ using Shared.Models.Responses;
 using Shared.Models.Responses.CurrenciesResponses;
 using WebAPI.Models;
 using WebAPI.Models.APIModels.Requests;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -16,92 +17,22 @@ namespace WebAPI.Controllers
     [Route("currencies")]
     public class CurrenciesController : ControllerBase
     {
-        private readonly FamilyFinanceContext db;
-        public CurrenciesController(FamilyFinanceContext context)
+        private readonly CurrencyService _currencyService;
+        public CurrenciesController(CurrencyService currencyService)
         {
-            db = context;
+            _currencyService = currencyService;
         }
 
-        [HttpPost]
-        [Route("add_new_currency")]
-        public async Task<BaseResponse> AddNewCurrencyAsync([FromBody]CurrencyRequest request)
-        {
-            var response = new BaseResponse();
-            try
-            {
-                if (request.Currency == null)
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = "Cannot add empty currency";
-                    return response;
-                }
-                if (db.Currencies.Contains(request.Currency))
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = "Currency is already exist";
-                    return response;
-                }
+        [Route("add_new_currency"), HttpPost]
+        public BaseResponse AddNewCurrency([FromBody]CurrencyRequest request) =>
+            _currencyService.AddNewCurrency(request);
 
-                db.Currencies.Add(request.Currency);
-                await db.SaveChangesAsync();
+        [Route("get_all_currencies_by_id"), HttpPost]
+        public ListCurrenciesResponse GetAllCurrenciesById([FromBody]IdRequest request) =>
+            _currencyService.GetCurrenciesById(request);
 
-                return response;
-            }
-            catch
-            {
-                response.BaseIsSuccess = false;
-                response.BaseMessage = "Bad request";
-                return response;
-            }
-        }
-
-        [HttpGet]
-        [Route("get_all_currencies_by_id")]
-        public async Task<ListCurrenciesResponse> GetAllCurrenciesByIdAsync([FromBody]IdRequest request)
-        {
-            var response = new ListCurrenciesResponse();
-            try
-            {
-                if (request.PersonId == null && request.FamilyId == null)
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
-
-                    return response;
-                }
-
-                response.Currencies = request.PersonId == null ? await db.Currencies.Where(x => x.FamilyId == request.FamilyId).ToListAsync() :
-                    await db.Currencies.Where(x => x.PersonId == request.PersonId).ToListAsync();
-                return response;
-            }
-            catch
-            {
-                response.BaseIsSuccess = false;
-                response.BaseMessage = "Bad request";
-                return response;
-            }
-        }
-
-        [HttpGet]
-        [Route("delete_currency_by_id")]
-        public async Task<BaseResponse> DeleteCurrencyByIdAsync([FromBody]CurrencyRequest request)
-        {
-            var response = new BaseResponse();
-            try
-            {
-                var report = await db.Currencies.Where(x => x.Id == request.Currency.Id).FirstOrDefaultAsync();
-
-                db.Currencies.Remove(report);
-                await db.SaveChangesAsync();
-
-                return response;
-            }
-            catch
-            {
-                response.BaseIsSuccess = false;
-                response.BaseMessage = "Bad request";
-                return response;
-            }
-        }
+        [Route("delete_currency_by_id"), HttpPost]
+        public BaseResponse DeleteCurrencyById([FromBody]CurrencyRequest request) =>
+            _currencyService.DeleteCurrencyById(request);
     }
 }

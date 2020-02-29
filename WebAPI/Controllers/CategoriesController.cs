@@ -10,6 +10,7 @@ using Shared.Models.Responses.CategoriesResponses;
 using WebAPI.Models;
 using WebAPI.Models.APIModels;
 using WebAPI.Models.APIModels.Requests;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -17,92 +18,22 @@ namespace WebAPI.Controllers
     [Route("categories")]
     public class CategoriesController : ControllerBase
     {
-        private readonly FamilyFinanceContext db;
-        public CategoriesController(FamilyFinanceContext context)
+        private readonly CategoryService _categoryService;
+        public CategoriesController(CategoryService categoryService)
         {
-            db = context;
+            _categoryService = categoryService;
         }
 
-        [HttpPost]
-        [Route("add_new_categoty")]
-        public async Task<BaseResponse> AddNewCategoryAsync([FromBody]CategoryRequest request)
-        {
-            var response = new BaseResponse();
-            try
-            {
-                if (request.Category == null)
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = "Cannot add empty category";
-                    return response;
-                }
-                if (db.Categories.Contains(request.Category))
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = "Categoty is already exist";
-                    return response;
-                }
+        [Route("add_new_categoty"), HttpPost]
+        public BaseResponse AddNewCategory([FromBody]CategoryRequest request) =>
+            _categoryService.AddNewCategory(request);
 
-                db.Categories.Add(request.Category);
-                await db.SaveChangesAsync();
+        [Route("get_categories_by_id"), HttpPost]
+        public ListCategoriesResponse GetCategoriesById([FromBody]IdRequest request) =>
+            _categoryService.GetCategoriesById(request);
 
-                return response;
-            }
-            catch
-            {
-                response.BaseIsSuccess = false;
-                response.BaseMessage = "Bad request";
-                return response;
-            }
-        }
-
-        [HttpGet]
-        [Route("get_categories_by_id")]
-        public async Task<ListCategoriesResponse> GetAllCategoriesByIdAsync([FromBody]IdRequest request)
-        {
-            var response = new ListCategoriesResponse();
-            try
-            {
-                if (request.PersonId == null && request.FamilyId == null)
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
-
-                    return response;
-                }
-
-                response.Categories = request.PersonId == null ? await db.Categories.Where(x => x.FamilyId == request.FamilyId).ToListAsync() :
-                    await db.Categories.Where(x => x.PersonId == request.PersonId).ToListAsync();
-                return response;
-            }
-            catch
-            {
-                response.BaseIsSuccess = false;
-                response.BaseMessage = "Bad request";
-                return response;
-            }
-        }
-
-        [HttpGet]
-        [Route("delete_category_by_id")]
-        public async Task<BaseResponse> DeleteCategoryByIdAsync([FromBody]CategoryRequest request)
-        {
-            var response = new BaseResponse();
-            try
-            {
-                var category = await db.Categories.Where(x => x.Id == request.Category.Id).FirstOrDefaultAsync();
-
-                db.Categories.Remove(category);
-                await db.SaveChangesAsync();
-
-                return response;
-            }
-            catch
-            {
-                response.BaseIsSuccess = false;
-                response.BaseMessage = "Bad request";
-                return response;
-            }
-        }
+        [Route("delete_category_by_id"), HttpPost]
+        public BaseResponse DeleteCategoryById([FromBody]CategoryRequest request) =>
+            _categoryService.DeleteCategoryById(request);
     }
 }
