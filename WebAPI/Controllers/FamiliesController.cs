@@ -8,6 +8,7 @@ using Shared.Models.Requests.FamiliesRequests;
 using Shared.Models.Responses;
 using WebAPI.Models;
 using WebAPI.Models.APIModels;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -15,41 +16,15 @@ namespace WebAPI.Controllers
     [Route("families")]
     public class FamiliesController : ControllerBase
     {
-        private readonly FamilyFinanceContext db;
-        public FamiliesController(FamilyFinanceContext context)
+        private readonly FamilyService _familyService;
+        public FamiliesController(FamilyService familyService)
         {
-            db = context;
+            _familyService = familyService;
         }
 
-        [Route("add_new_family")]
-        public async Task<BaseResponse> AddNewFamilyAsync([FromBody]FamilyRequest request)
-        {
-            var response = new BaseResponse();
-            try
-            {
-                if(request.Family == null)
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = "Cannot add NULL";
-                    return response;
-                }
-                if (db.Families.Contains(request.Family))
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = "Family is already exist";
-                    return response;
-                }
+        [Route("add_family"), HttpPost]
+        public BaseResponse AddFamily([FromBody]FamilyRequest request) =>
+            _familyService.AddFamily(request);
 
-                db.Families.Add(request.Family);
-                await db.SaveChangesAsync();
-                return response;
-            }
-            catch
-            {
-                response.BaseIsSuccess = false;
-                response.BaseMessage = "Bad request";
-                return response;
-            }
-        }
     }
 }

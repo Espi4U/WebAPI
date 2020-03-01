@@ -1,4 +1,5 @@
 ﻿using Shared.Models.Responses;
+using Shared.Models.Responses.PersonsResponses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,6 +65,41 @@ namespace WebAPI.Services
                         else
                         {
                             response.Persons = db.Persons.Where(x => x.FamilyId == request.FamilyId).ToList();
+                        }
+                    }
+
+                    return response;
+                }
+                catch
+                {
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = "Bad request";
+                    return response;
+                }
+            });
+        }
+
+        public PersonResponse GetPersonByUserData(string login, string passwordHash, int pinCode)
+        {
+            return GetResponse(() => {
+                var response = new PersonResponse();
+                try
+                {
+                    using (FamilyFinanceContext db = new FamilyFinanceContext())
+                    {
+                        if (login == default || passwordHash == default || pinCode == default)
+                        {
+                            response.IsSuccess = false;
+                            response.BaseMessage = "Auth data is empty";
+                        }
+                        else
+                        {
+                            response.Person = db.Persons.Where(x => x.Login == login && x.PasswordHash == passwordHash && x.PINCode == pinCode).FirstOrDefault();
+                            if(response.Person == default)
+                            {
+                                response.IsSuccess = false;
+                                response.BaseMessage = "Not find anyone persons";
+                            }
                         }
                     }
 

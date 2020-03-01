@@ -36,5 +36,16 @@ namespace WebAPI.Models.APIModels
 
         [JsonProperty("currencies")]
         public List<Currency> Currencies { get; set; } // валюти члена сім'ї
+
+
+        // дані для авторизації/реєстрації
+        [JsonProperty("login")]
+        public string Login { get; set; }
+
+        [JsonProperty("passwordhash")]
+        public string PasswordHash { get; set; }
+
+        [JsonProperty("pincode")]
+        public int PINCode { get; set; }
     }
 }
