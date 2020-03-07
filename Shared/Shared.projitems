@@ -9,6 +9,7 @@
     <Import_RootNamespace>Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Category.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChangeMoney.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Currency.cs" />
@@ -17,8 +18,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Purpose.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Purse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Report.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\BaseRequests\GetResultsForTimePeriodRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\BaseRequests\IdRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\CategoriesRequests\CategoryRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\ChangeMoneyRequests\ChangeMoneyRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\ChangeMoneyRequests\GetIncomesOrExpensesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\CurrenciesRequests\CurrencyRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\FamiliesRequests\FamilyRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\PersonsRequests\PersonRequest.cs" />
@@ -28,6 +32,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ApiResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\BaseResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\CategoriesResponses\ListCategoriesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ChangeMoneysResponses\ChangeMoneyResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ChangeMoneysResponses\ListChangeMoneysResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\CurrenciesResponses\ListCurrenciesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\PersonsResponses\ListPersonsResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\PersonsResponses\PersonResponse.cs" />

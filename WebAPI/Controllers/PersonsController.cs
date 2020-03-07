@@ -25,11 +25,11 @@ namespace WebAPI.Controllers
         }
 
         [Route("get_persons"), HttpPost]
-        public ListPersonsResponse GetPersons([FromBody]IdRequest request) =>
-            _personService.GetPersons(request);
+        public async Task<ListPersonsResponse> GetPersonsAsync([FromBody]IdRequest request) =>
+            await Task.Run(()=> _personService.GetPersons(request));
 
         [Route("add_person"), HttpPost]
-        public BaseResponse AddPerson([FromBody]PersonRequest request) =>
-            _personService.AddPerson(request);
+        public async Task<BaseResponse> AddPersonAsync([FromBody]PersonRequest request) =>
+            await Task.Run(() => _personService.AddPerson(request));
     }
 }
