@@ -12,7 +12,7 @@ namespace WebAPI.Services
 {
     public class ReportService : BaseService
     {
-        public ListReportsResponse GetAllReportsById(IdRequest request)
+        public ListReportsResponse GetAllReportsById(BaseRequest request)
         {
             return GetResponse(()=> {
                 var response = new ListReportsResponse();
@@ -31,15 +31,14 @@ namespace WebAPI.Services
                                 db.Reports.Where(x => x.PersonId == request.PersonId).ToList();
                         }
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
 
@@ -69,15 +68,14 @@ namespace WebAPI.Services
                             db.SaveChanges();
                         }
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
 
@@ -94,15 +92,14 @@ namespace WebAPI.Services
                         db.Reports.Remove(report);
                         db.SaveChanges();
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
     }

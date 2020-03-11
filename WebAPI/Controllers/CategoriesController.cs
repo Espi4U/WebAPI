@@ -15,7 +15,7 @@ using WebAPI.Services;
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Route("categories")]
+    [Route("api/v1/categories")]
     public class CategoriesController : ControllerBase
     {
         private readonly CategoryService _categoryService;
@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
             _categoryService.AddCategory(request);
 
         [Route("get_categories_by_id"), HttpPost]
-        public ListCategoriesResponse GetCategories([FromBody]IdRequest request) =>
+        public ListCategoriesResponse GetCategories([FromBody]BaseRequest request) =>
             _categoryService.GetCategories(request);
 
         [Route("delete_category_by_id"), HttpPost]

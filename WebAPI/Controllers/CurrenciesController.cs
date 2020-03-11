@@ -14,7 +14,7 @@ using WebAPI.Services;
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Route("currencies")]
+    [Route("api/v1/currencies")]
     public class CurrenciesController : ControllerBase
     {
         private readonly CurrencyService _currencyService;
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
             _currencyService.AddNewCurrency(request);
 
         [Route("get_all_currencies_by_id"), HttpPost]
-        public ListCurrenciesResponse GetAllCurrenciesById([FromBody]IdRequest request) =>
+        public ListCurrenciesResponse GetAllCurrenciesById([FromBody]BaseRequest request) =>
             _currencyService.GetCurrenciesById(request);
 
         [Route("delete_currency_by_id"), HttpPost]

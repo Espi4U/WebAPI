@@ -13,7 +13,7 @@ using WebAPI.Services;
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Route("account")]
+    [Route("api/v1/account")]
     public class AccountController : ControllerBase
     {
         private readonly PersonService _personService;

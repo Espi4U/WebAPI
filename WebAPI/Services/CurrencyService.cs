@@ -36,19 +36,18 @@ namespace WebAPI.Services
                             db.SaveChanges();
                         }
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
 
-        public ListCurrenciesResponse GetCurrenciesById(IdRequest request)
+        public ListCurrenciesResponse GetCurrenciesById(BaseRequest request)
         {
             return GetResponse(() => {
                 var response = new ListCurrenciesResponse();
@@ -67,15 +66,14 @@ namespace WebAPI.Services
                         response.Currencies = request.PersonId == default ? db.Currencies.Where(x => x.FamilyId == request.FamilyId).ToList() :
                             db.Currencies.Where(x => x.PersonId == request.PersonId).ToList();
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
 
@@ -92,15 +90,14 @@ namespace WebAPI.Services
                         db.Currencies.Remove(currency);
                         db.SaveChanges();
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
     }

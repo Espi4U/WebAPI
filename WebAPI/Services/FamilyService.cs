@@ -34,15 +34,14 @@ namespace WebAPI.Services
                             db.SaveChanges();
                         }
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
     }

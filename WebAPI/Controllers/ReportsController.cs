@@ -12,7 +12,7 @@ using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
-    [Route("reports")]
+    [Route("api/v1/reports")]
     public class ReportsController : ControllerBase
     {
         private readonly ReportService _reportService;
@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         }
 
         [Route("get_all_reports_by_id"), HttpPost]
-        public ListReportsResponse GetAllReportsById([FromBody]IdRequest request) =>
+        public ListReportsResponse GetAllReportsById([FromBody]BaseRequest request) =>
             _reportService.GetAllReportsById(request);
 
         [Route("add_new_report"), HttpPost]

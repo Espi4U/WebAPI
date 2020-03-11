@@ -47,5 +47,8 @@ namespace WebAPI.Models.APIModels
 
         [JsonProperty("pincode")]
         public int PINCode { get; set; }
+
+        [JsonProperty("personaccesstoken")]
+        public string PersonAccessToken { get; set; }
     }
 }

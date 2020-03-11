@@ -15,7 +15,7 @@ using WebAPI.Services;
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Route("persons")]
+    [Route("api/v1/persons")]
     public class PersonsController : ControllerBase
     {
         private readonly PersonService _personService;
@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
         }
 
         [Route("get_persons"), HttpPost]
-        public async Task<ListPersonsResponse> GetPersonsAsync([FromBody]IdRequest request) =>
+        public async Task<ListPersonsResponse> GetPersonsAsync([FromBody]BaseRequest request) =>
             await Task.Run(()=> _personService.GetPersons(request));
 
         [Route("add_person"), HttpPost]

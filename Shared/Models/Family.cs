@@ -12,6 +12,9 @@ namespace WebAPI.Models.APIModels
         [JsonProperty("name")]
         public string Name { get; set; } // імя сім'ї
 
+        [JsonProperty("familyaccesstoken")]
+        public string FamilyAccessToken { get; set; }
+
         [JsonProperty("persons")]
         public List<Person> Persons { get; set; } // усі члени сім'ї
 

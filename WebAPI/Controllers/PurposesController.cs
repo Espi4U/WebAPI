@@ -12,7 +12,7 @@ using WebAPI.Services;
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Route("purposes")]
+    [Route("api/v1/purposes")]
     public class PurposesController : ControllerBase
     {
         private readonly PurposeService _purposeService;
@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         }
 
         [Route("get_purposes"), HttpPost]
-        public ListPurposesResponse GetPurses([FromBody]IdRequest request) =>
+        public ListPurposesResponse GetPurses([FromBody]BaseRequest request) =>
             _purposeService.GetPurposes(request);
 
         [Route("add_purpose"), HttpPost]

@@ -13,7 +13,7 @@ using WebAPI.Services;
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Route("families")]
+    [Route("api/v1/families")]
     public class FamiliesController : ControllerBase
     {
         private readonly FamilyService _familyService;
@@ -23,8 +23,8 @@ namespace WebAPI.Controllers
         }
 
         [Route("add_family"), HttpPost]
-        public BaseResponse AddFamily([FromBody]FamilyRequest request) =>
-            _familyService.AddFamily(request);
+        public async Task<BaseResponse> AddFamilyAsync([FromBody]FamilyRequest request) =>
+            await Task.Run(() => _familyService.AddFamily(request));
 
     }
 }

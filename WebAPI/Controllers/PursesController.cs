@@ -12,7 +12,7 @@ using WebAPI.Services;
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Route("purses")]
+    [Route("api/v1/purses")]
     public class PursesController : ControllerBase
     {
         private readonly PurseService _purseService;
@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         }
 
         [Route("get_purses_by_id"), HttpPost]
-        public ListPursesResponse GetPurses([FromBody]IdRequest request) =>
+        public ListPursesResponse GetPurses([FromBody]BaseRequest request) =>
             _purseService.GetPurses(request);
 
         [Route("add_new_purse"), HttpPost]

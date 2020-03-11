@@ -10,7 +10,7 @@ using WebAPI.Services;
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Route("changemoneys")]
+    [Route("api/v1/changemoneys")]
     public class ChangeMoneysController : ControllerBase
     {
         private readonly ChangeMoneyService _changeMoneyService;

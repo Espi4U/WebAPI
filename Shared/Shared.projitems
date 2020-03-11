@@ -19,7 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Purse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Report.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\BaseRequests\GetResultsForTimePeriodRequest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\BaseRequests\IdRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\BaseRequests\BaseRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\CategoriesRequests\CategoryRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\ChangeMoneyRequests\ChangeMoneyRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\ChangeMoneyRequests\GetIncomesOrExpensesRequest.cs" />
@@ -35,6 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ChangeMoneysResponses\ChangeMoneyResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ChangeMoneysResponses\ListChangeMoneysResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\CurrenciesResponses\ListCurrenciesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\LoginResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\PersonsResponses\ListPersonsResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\PersonsResponses\PersonResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\PurposesResponses\ListPurposesResponse.cs" />

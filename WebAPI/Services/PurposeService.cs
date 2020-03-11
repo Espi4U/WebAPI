@@ -36,19 +36,18 @@ namespace WebAPI.Services
                             db.SaveChanges();
                         }
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
 
-        public ListPurposesResponse GetPurposes(IdRequest request)
+        public ListPurposesResponse GetPurposes(BaseRequest request)
         {
             return GetResponse(() => {
                 var response = new ListPurposesResponse();
@@ -67,15 +66,14 @@ namespace WebAPI.Services
                             db.Purposes.Where(x => x.PersonId == request.PersonId).ToList();
                         }
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
 
@@ -92,15 +90,14 @@ namespace WebAPI.Services
                         db.Purposes.Remove(purpose);
                         db.SaveChanges();
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
     }

@@ -31,19 +31,18 @@ namespace WebAPI.Services
                                     db.ChangesMoney.Where(x => x.FamilyId == request.FamilyId && x.Type == request.Type).ToList();
                         }
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
 
-        public ListChangeMoneysResponse GetDataForReport(IdRequest request/*need change*/)
+        public ListChangeMoneysResponse GetDataForReport(BaseRequest request/*need change*/)
         {
             return GetResponse(() => {
                 var response = new ListChangeMoneysResponse();
@@ -53,15 +52,14 @@ namespace WebAPI.Services
                     {
                         // code here
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
 
@@ -90,15 +88,14 @@ namespace WebAPI.Services
                             }
                         }
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
 
@@ -127,15 +124,14 @@ namespace WebAPI.Services
                             }
                         }
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
 
@@ -164,18 +160,17 @@ namespace WebAPI.Services
                             }
                         }
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
-        public ListChangeMoneysResponse GetAdviceForTimePeriod(IdRequest request/*need change*/)
+        public ListChangeMoneysResponse GetAdviceForTimePeriod(BaseRequest request/*need change*/)
         {
             return GetResponse(() => {
                 var response = new ListChangeMoneysResponse();
@@ -185,15 +180,14 @@ namespace WebAPI.Services
                     {
                         // code here
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
     }

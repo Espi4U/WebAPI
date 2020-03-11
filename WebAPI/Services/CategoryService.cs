@@ -36,19 +36,18 @@ namespace WebAPI.Services
                             db.SaveChanges();
                         }
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
 
-        public ListCategoriesResponse GetCategories(IdRequest request)
+        public ListCategoriesResponse GetCategories(BaseRequest request)
         {
             return GetResponse(() => {
                 var response = new ListCategoriesResponse();
@@ -67,15 +66,14 @@ namespace WebAPI.Services
                             db.Categories.Where(x => x.PersonId == request.PersonId).ToList();
                         }
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
 
@@ -92,15 +90,14 @@ namespace WebAPI.Services
                         db.Categories.Remove(category);
                         db.SaveChanges();
                     }
-
-                    return response;
                 }
                 catch
                 {
                     response.BaseIsSuccess = false;
                     response.BaseMessage = "Bad request";
-                    return response;
                 }
+
+                return response;
             });
         }
     }
