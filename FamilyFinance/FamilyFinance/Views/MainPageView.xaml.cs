@@ -1,22 +1,20 @@
-﻿using FamilyFinance.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System;
+using System.ComponentModel;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xamarin.Forms.Xaml;
 
 namespace FamilyFinance.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainPageView : ContentPage
+    [DesignTimeVisible(false)]
+    public partial class MainPageView : Xamarin.Forms.TabbedPage
     {
         public MainPageView()
         {
             InitializeComponent();
-            BindingContext = new MainPageViewModel();
+            NavigationPage.SetHasNavigationBar(this, false);
+            On<Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
         }
     }
 }

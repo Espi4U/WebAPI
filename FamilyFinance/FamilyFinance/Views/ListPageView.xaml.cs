@@ -10,11 +10,12 @@ using Xamarin.Forms.Xaml;
 namespace FamilyFinance.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ListReportsPageView : ContentPage
+    public partial class ListPageView : ContentPage
     {
-        public ListReportsPageView()
+        public ListPageView()
         {
             InitializeComponent();
+            BindingContext = this;
         }
     }
 }

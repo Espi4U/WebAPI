@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FamilyFinance.Views;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,7 @@ namespace FamilyFinance
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new MainPageView();
         }
 
         protected override void OnStart()

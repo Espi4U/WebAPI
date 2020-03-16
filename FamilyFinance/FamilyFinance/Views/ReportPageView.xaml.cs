@@ -15,6 +15,7 @@ namespace FamilyFinance.Views
         public ReportPageView()
         {
             InitializeComponent();
+            BindingContext = this;
         }
     }
 }
