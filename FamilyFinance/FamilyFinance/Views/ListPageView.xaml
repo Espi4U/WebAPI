@@ -5,11 +5,54 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="FamilyFinance.Views.ListPageView">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+    <Grid
+        RowSpacing="1"
+        ColumnSpacing="1">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <StackLayout
+            Grid.Row="0"
+            Grid.Column="0">
+            <Image Source="" />
+            <Label Text="Purposes" />
         </StackLayout>
-    </ContentPage.Content>
+        <StackLayout
+            Grid.Row="0"
+            Grid.Column="1">
+            <Image Source="" />
+            <Label Text="Purses" />
+        </StackLayout>
+        <StackLayout
+            Grid.Row="1"
+            Grid.Column="0">
+            <Image Source="" />
+            <Label Text="Reports" />
+        </StackLayout>
+        <StackLayout
+            Grid.Row="1"
+            Grid.Column="1">
+            <Image Source="" />
+            <Label Text="Categories" />
+        </StackLayout>
+        <StackLayout
+            Grid.Row="2"
+            Grid.Column="0">
+            <Image Source="" />
+            <Label Text="Currencies" />
+        </StackLayout>
+        <StackLayout
+            Grid.Row="2"
+            Grid.Column="1">
+            <Image Source="" />
+            <Label Text="Incomes/Expenses" />
+        </StackLayout>
+    </Grid>
 </ContentPage>

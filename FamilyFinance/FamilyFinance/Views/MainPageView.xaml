@@ -23,14 +23,14 @@
             Title="Lists"
             IconImageSource="list_icon.png">
             <x:Arguments>
-                <views:ReportPageView />
+                <views:ListPageView />
             </x:Arguments>
         </NavigationPage>
         <NavigationPage
             Title="Me"
             IconImageSource="user_icon.png">
             <x:Arguments>
-                <views:ReportPageView />
+                <views:UserPageView />
             </x:Arguments>
         </NavigationPage>
         <NavigationPage
