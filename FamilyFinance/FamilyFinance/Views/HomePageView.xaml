@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:FamilyFinance"
              mc:Ignorable="d"
-             x:Class="FamilyFinance.Views.HomePageView">
+             x:Class="FamilyFinance.Views.HomePageView"
+             BackgroundColor="LightGray">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="homePagePlusMinusButtons" TargetType="Button">

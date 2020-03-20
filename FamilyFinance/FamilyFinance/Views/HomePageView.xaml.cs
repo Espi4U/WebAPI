@@ -16,16 +16,17 @@ namespace FamilyFinance.Views
 
         public HomePageView()
         {
-            BindingContext = this;
+            NavigationPage.SetHasNavigationBar(this, false);
 
             AddNewIncomeOrExpenseCommand = new Command(AddNewIncomeOrExpense);
 
+            BindingContext = this;
             InitializeComponent();
         }
 
         public void AddNewIncomeOrExpense(object parameter)
         {
-
+            //go to next page
         }
     }
 }

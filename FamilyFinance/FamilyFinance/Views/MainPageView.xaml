@@ -7,10 +7,10 @@
     xmlns:local="clr-namespace:FamilyFinance"
     xmlns:views="clr-namespace:FamilyFinance.Views"
     x:Class="FamilyFinance.Views.MainPageView"
-    BarBackgroundColor="White"
-    UnselectedTabColor="White"
-    SelectedTabColor="White"
-    BackgroundColor="White">
+    BarBackgroundColor="LightGray"
+    UnselectedTabColor="Gray"
+    SelectedTabColor="Black"
+    BackgroundColor="LightGray">
     <TabbedPage.Children>
         <NavigationPage
             Title="Home"
