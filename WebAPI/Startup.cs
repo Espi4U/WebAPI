@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using WebAPI.Models;
+using WebAPI.Services;
 
 namespace WebAPI
 {
@@ -14,8 +15,6 @@ namespace WebAPI
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<FamilyFinanceContext>(options => options.UseMySql("server=localhost;UserId=root;Password=espi4u;database=ffinance;"));
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
@@ -42,6 +41,16 @@ namespace WebAPI
                     });
 
             services.AddControllers();
+
+            services.AddTransient<AccountService>();
+            services.AddTransient<CategoryService>();
+            services.AddTransient<ChangeMoneyService>();
+            services.AddTransient<CurrencyService>();
+            services.AddTransient<FamilyService>();
+            services.AddTransient<PersonService>();
+            services.AddTransient<PurposeService>();
+            services.AddTransient<PurseService>();
+            services.AddTransient<ReportService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

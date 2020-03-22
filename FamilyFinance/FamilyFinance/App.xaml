@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:FamilyFinance.Converters"
              mc:Ignorable="d"
              x:Class="FamilyFinance.App">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <converters:PurposeProgressToColorConverter x:Key="PurposeProgressToColorConverter"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

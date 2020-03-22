@@ -11,10 +11,10 @@ namespace WebAPI.Models.APIModels
         public string Name { get; set; } // назва цілі заощадження
 
         [JsonProperty("finalsize")]
-        public int FinalSize { get; set; } // кінцева ціль заощадження
+        public double FinalSize { get; set; } // кінцева ціль заощадження
 
         [JsonProperty("currentsize")]
-        public int CurrentSize { get; set; } // теперішня ціль заощадження
+        public double CurrentSize { get; set; } // теперішня ціль заощадження
 
         [JsonProperty("currency")]
         public Currency Currency { get; set; } // валюта цілі заощадження
@@ -30,5 +30,10 @@ namespace WebAPI.Models.APIModels
 
         [JsonProperty("person")]
         public Person Person { get; set; }  // член сім'ї власник цілі заощадження
+
+        public double PurposeProgress
+        {
+            get => CurrentSize / FinalSize;
+        }
     }
 }

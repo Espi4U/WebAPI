@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Requests.PurposesRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.PurposesResponses;
+using WebAPI.Models;
 using WebAPI.Models.APIModels.Requests;
 using WebAPI.Services;
 
@@ -33,5 +34,14 @@ namespace WebAPI.Controllers
         [Route("delete_purpose"), HttpPost]
         public BaseResponse DeletePurse([FromBody]PurposeRequest request) =>
             _purposeService.DeletePurpose(request);
+
+        [Route("get"), HttpGet]
+        public string Get()
+        {
+            using (var context = new FamilyFinanceContext())
+            {
+                return "AAA";
+            }
+        }
     }
 }

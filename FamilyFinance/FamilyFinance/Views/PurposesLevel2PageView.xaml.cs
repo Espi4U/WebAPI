@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using WebAPI.Models.APIModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,9 +14,9 @@ namespace FamilyFinance.Views
     {
         public string PageTitle { get; set; }
 
-        public PurposesLevel2PageView(string pageTitle)
+        public PurposesLevel2PageView(Purpose purpose)
         {
-            PageTitle = pageTitle;
+            PageTitle = purpose.Name;
 
             BindingContext = this;
             InitializeComponent();

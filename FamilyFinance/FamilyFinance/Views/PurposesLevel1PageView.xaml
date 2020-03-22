@@ -6,7 +6,34 @@
              mc:Ignorable="d"
              x:Class="FamilyFinance.Views.PurposesLevel1PageView"
              Title="My Purposes">
-    <ListView>
-        
+    <ListView HasUnevenRows="True"
+              ItemsSource="{Binding Purposes}"
+              SelectedItem="{Binding SelectedPurpose, Mode=TwoWay}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <ViewCell.View>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Label
+                                Grid.Row="0"
+                                FontSize="Large"
+                                Margin="20,10,20,0"
+                                Text="{Binding Name}"/>
+                            <ProgressBar
+                                Grid.Row="1"
+                                HorizontalOptions="FillAndExpand"
+                                ProgressColor="{Binding PurposeProgress, Converter={StaticResource PurposeProgressToColorConverter}}"
+                                VerticalOptions="FillAndExpand"
+                                Margin="20,0,20,10"
+                                Progress="{Binding PurposeProgress}"/>
+                        </Grid>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
     </ListView>
 </ContentPage>
