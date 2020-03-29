@@ -5,12 +5,65 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="FamilyFinance.Views.PurposesLevel2PageView"
-             Title="{Binding PageTitle}">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             Title="{Binding Purpose.Name}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Image">
+                <Setter Property="HeightRequest" Value="60"/>
+                <Setter Property="WidthRequest" Value="60"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+                <Setter Property="FontSize" Value="Medium"/>
+            </Style>
+            <Style TargetType="StackLayout">
+                <Setter Property="Opacity" Value="0.3"/>
+                <Setter Property="Margin" Value="50"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label
+            Grid.Row="0"
+            FontSize="100"
+            VerticalOptions="CenterAndExpand"
+            HorizontalOptions="CenterAndExpand"
+            TextColor="{Binding Purpose.PurposeProgress, Converter={StaticResource PurposeProgressToColorConverter}}"
+            Text="{Binding Purpose.PurposeProgress, Converter={StaticResource PurposeProgressToPercentConverter}}"/>
+        <Grid
+            Grid.Row="1"
+            HeightRequest="1"
+            VerticalOptions="Start"
+            BackgroundColor="Black"/>
+        <Grid
+            Grid.Row="2"
+            RowSpacing="2"
+            ColumnSpacing="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackLayout Grid.Column="0">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding EnlargeCommand}"/>
+                </StackLayout.GestureRecognizers>
+                <Image Source="plus_icon.png" />
+                <Label Text="Enlarge" />
+            </StackLayout>
+            <StackLayout Grid.Column="1">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DeleteCommand}"/>
+                </StackLayout.GestureRecognizers>
+                <Image Source="delete_icon.png" />
+                <Label Text="Delete" />
+            </StackLayout>
+        </Grid>
+    </Grid>
 </ContentPage>

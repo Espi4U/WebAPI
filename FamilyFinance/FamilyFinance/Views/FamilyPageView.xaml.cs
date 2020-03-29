@@ -10,12 +10,12 @@ using Xamarin.Forms.Xaml;
 namespace FamilyFinance.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPageView : ContentPage
+    public partial class FamilyPageView : ContentPage
     {
-        public LoginPageView()
+        public FamilyPageView()
         {
-            InitializeComponent();
             BindingContext = this;
+            InitializeComponent();
         }
     }
 }

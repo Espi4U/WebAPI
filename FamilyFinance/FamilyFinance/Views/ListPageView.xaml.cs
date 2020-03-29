@@ -32,6 +32,12 @@ namespace FamilyFinance.Views
                 case "purposes":
                     Navigation.PushAsync(new PurposesLevel1PageView());
                     break;
+                case "categories":
+                    Navigation.PushAsync(new CategoriesLevel1PageView());
+                    break;
+                case "reports":
+                    Navigation.PushAsync(new ReportsLevel1PageView());
+                    break;
                 default:
                     break;
             }

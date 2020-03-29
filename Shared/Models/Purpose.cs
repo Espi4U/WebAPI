@@ -31,6 +31,7 @@ namespace WebAPI.Models.APIModels
         [JsonProperty("person")]
         public Person Person { get; set; }  // член сім'ї власник цілі заощадження
 
+        [JsonIgnore]
         public double PurposeProgress
         {
             get => CurrentSize / FinalSize;

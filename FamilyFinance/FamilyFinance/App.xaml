@@ -9,6 +9,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <converters:PurposeProgressToColorConverter x:Key="PurposeProgressToColorConverter"/>
+            <converters:PurposeProgressToPercentConverter x:Key="PurposeProgressToPercentConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

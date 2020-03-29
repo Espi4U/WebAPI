@@ -30,14 +30,14 @@
             Title="Me"
             IconImageSource="user_icon.png">
             <x:Arguments>
-                <views:UserPageView />
+                <views:MePageView />
             </x:Arguments>
         </NavigationPage>
         <NavigationPage
             Title="Family"
             IconImageSource="family_icon.png">
             <x:Arguments>
-                <views:ReportPageView />
+                <views:MePageView />
             </x:Arguments>
         </NavigationPage>
     </TabbedPage.Children>
