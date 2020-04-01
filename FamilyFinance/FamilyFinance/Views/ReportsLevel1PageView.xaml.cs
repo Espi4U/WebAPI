@@ -24,7 +24,7 @@ namespace FamilyFinance.Views
                 if (value != null)
                 {
                     OnPropertyChanged(nameof(SelectedReport));
-                    //Navigation.PushAsync(new PurposesLevel2PageView(value));
+                    Navigation.PushAsync(new ReportsLevel2PageView(value));
                 }
             }
         }

@@ -15,16 +15,23 @@
                     <ViewCell.View>
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
+                            <Image
+                                Margin="10"
+                                HeightRequest="20"
+                                WidthRequest="20"
+                                Source="{Binding .,Converter={StaticResource ItemToIconConverter}}" />
                             <Label
-                                Grid.Column="0"
+                                Grid.Column="1"
                                 Margin="10"
                                 FontSize="Large"
                                 Text="{Binding Name}"/>
                             <ImageButton
-                                Grid.Column="0"
+                                Opacity="0.3"
+                                Grid.Column="2"
                                 Margin="10"
                                 HeightRequest="35"
                                 WidthRequest="35"

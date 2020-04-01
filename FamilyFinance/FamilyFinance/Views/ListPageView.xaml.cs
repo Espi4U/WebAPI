@@ -38,6 +38,9 @@ namespace FamilyFinance.Views
                 case "reports":
                     Navigation.PushAsync(new ReportsLevel1PageView());
                     break;
+                case "purses":
+                    Navigation.PushAsync(new PursesLevel1PageView());
+                    break;
                 default:
                     break;
             }

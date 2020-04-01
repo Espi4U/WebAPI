@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="FamilyFinance.Views.ReportsLevel2PageView"
+             Title="{Binding Report.Name}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Image">
+                <Setter Property="HeightRequest" Value="60"/>
+                <Setter Property="WidthRequest" Value="60"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+                <Setter Property="FontSize" Value="Medium"/>
+            </Style>
+            <Style TargetType="StackLayout">
+                <Setter Property="Opacity" Value="0.3"/>
+                <Setter Property="Margin" Value="50"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollView>
+            <Label
+                Margin="30"
+                HorizontalOptions="StartAndExpand"
+                Text="{Binding Report.Text}" />
+        </ScrollView>
+        <StackLayout Grid.Row="1">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding DeleteCommand}"/>
+            </StackLayout.GestureRecognizers>
+            <Image Source="delete_icon.png" />
+        </StackLayout>
+    </Grid>
+</ContentPage>
