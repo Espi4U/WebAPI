@@ -1,9 +1,12 @@
-﻿using Shared.Models.Responses;
+﻿using Shared.Models.Requests.BaseRequests;
+using Shared.Models.Responses;
+using Shared.Models.Responses.ReportsResponses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Models;
+using WebAPI.Models.APIModels;
 using WebAPI.Models.APIModels.Requests;
 using WebAPI.Models.APIModels.Requests.ReportsControllerRequests;
 using WebAPI.Models.APIModels.Responses;
@@ -27,8 +30,15 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            response.Reports = request.PersonId == default ? db.Reports.Where(x => x.FamilyId == request.FamilyId).ToList() :
+                            if(request.PersonId != default && request.FamilyId != default)
+                            {
+                                response.Reports = db.Reports.Where(x => x.PersonId == request.PersonId || x.FamilyId == request.FamilyId).ToList();
+                            }
+                            else
+                            {
+                                response.Reports = request.PersonId == default ? db.Reports.Where(x => x.FamilyId == request.FamilyId).ToList() :
                                 db.Reports.Where(x => x.PersonId == request.PersonId).ToList();
+                            }
                         }
                     }
                 }

@@ -28,7 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\PersonsRequests\PersonRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\PurposesRequests\PurposeRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\PursesRequests\PurseRequest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\ReportsControllerRequests\ReportRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\ReportsRequests\ReportRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ApiResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\BaseResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\CategoriesResponses\ListCategoriesResponse.cs" />
@@ -41,5 +41,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\PurposesResponses\ListPurposesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\PursesResponses\ListPursesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ReportsResponses\ListReportsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ReportsResponses\ReportResponse.cs" />
   </ItemGroup>
 </Project>
