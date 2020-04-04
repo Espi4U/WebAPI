@@ -15,7 +15,7 @@ namespace WebAPI.Services
 {
     public class ReportService : BaseService
     {
-        public ListReportsResponse GetAllReportsById(BaseRequest request)
+        public ListReportsResponse GetReports(BaseRequest request)
         {
             return GetResponse(()=> {
                 var response = new ListReportsResponse();
@@ -52,44 +52,7 @@ namespace WebAPI.Services
             });
         }
 
-        public BaseResponse AddNewReport(ReportRequest request)
-        {
-            return GetResponse(() => {
-                var response = new BaseResponse();
-                try
-                {
-                    using (FamilyFinanceContext db = new FamilyFinanceContext())
-                    {
-                        if (request.Report == default)
-                        {
-                            response.BaseIsSuccess = false;
-                            response.BaseMessage = "Cannot add empty report";
-                            return response;
-                        }
-                        else if (db.Reports.Contains(request.Report))
-                        {
-                            response.BaseIsSuccess = false;
-                            response.BaseMessage = "Report is already exist";
-                            return response;
-                        }
-                        else
-                        {
-                            db.Reports.Add(request.Report);
-                            db.SaveChanges();
-                        }
-                    }
-                }
-                catch
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
-                }
-
-                return response;
-            });
-        }
-
-        public BaseResponse DeleteReportById(ReportRequest request)
+        public BaseResponse DeleteReport(ReportRequest request)
         {
             return GetResponse(() => {
             var response = new BaseResponse();

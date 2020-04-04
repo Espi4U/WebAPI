@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Shared.Models.Requests.BaseRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.ReportsResponses;
@@ -27,17 +29,14 @@ namespace WebAPI.Controllers
             _changeMoneyService = changeMoneyService;
         }
 
-        [Route("get_all_reports_by_id"), HttpPost]
+        [Route("get_reports"), HttpPost]
         public ListReportsResponse GetAllReportsById([FromBody]BaseRequest request) =>
-            _reportService.GetAllReportsById(request);
+            _reportService.GetReports(request);
 
-        [Route("add_new_report"), HttpPost]
-        public BaseResponse AddNewReport([FromBody]ReportRequest request) =>
-            _reportService.AddNewReport(request);
 
-        [Route("delete_report_by_id"), HttpPost]
+        [Route("delete_report"), HttpPost]
         public BaseResponse DeleteReportById([FromBody]ReportRequest request) =>
-            _reportService.DeleteReportById(request);
+            _reportService.DeleteReport(request);
 
         //TODO
         [Route("generate_report_per_time_period"), HttpPost]
