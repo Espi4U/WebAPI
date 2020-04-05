@@ -26,5 +26,12 @@ namespace WebAPI.Controllers
         public async Task<BaseResponse> AddFamilyAsync([FromBody]FamilyRequest request) =>
             await Task.Run(() => _familyService.AddFamily(request));
 
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            using FamilyFinanceContext context = new FamilyFinanceContext();
+            return Ok("Test success");
+        }
     }
 }

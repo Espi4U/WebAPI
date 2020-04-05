@@ -43,6 +43,15 @@ namespace FamilyFinance
 
         #endregion
 
+        #region ACCOUNT
+
+        public async void LogInAsync()
+        {
+
+        }
+
+        #endregion
+
         private async Task<T> TryCallApiAsync<T>(string apiUrl, object request = null) where T : ApiResponse, new()
         {
             try

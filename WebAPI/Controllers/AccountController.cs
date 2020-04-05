@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Newtonsoft.Json;
 using Shared.Models.Responses.PersonsResponses;
 using WebAPI.Models.APIModels;
 using WebAPI.Services;
+using Shared.Models.Requests.BaseRequests;
+using Shared.Models.Responses;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -23,13 +26,21 @@ namespace WebAPI.Controllers
             _personService = personService;
         }
 
-        [Route("token"), HttpPost]
-        public IActionResult Token(string login, string passwordHash, int pinCode)
+        [Route("login"), HttpPost]
+        public LoginResponse Login([FromBody]LoginRequest request)
         {
-            var identity = GetIdentity(login, passwordHash, pinCode);
+            return GetToken(request);
+        }
+
+        public LoginResponse GetToken(LoginRequest request)
+        {
+            var response = new LoginResponse();
+
+            var identity = GetIdentity(request.Login, request.Password, request.PINCode);
             if (identity == default)
             {
-                return BadRequest(new { errorText = "Invalid username or password." });
+                response.BaseIsSuccess = false;
+                response.BaseMessage = "User not found";
             }
 
             var now = DateTime.UtcNow;
@@ -43,19 +54,10 @@ namespace WebAPI.Controllers
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            var response = new
-            {
-                access_token = encodedJwt,
-                username = identity.Name
-            };
+            response.Token = encodedJwt;
+            response.PersonId = Convert.ToInt32(identity.Name);
 
-            return null;//Json(response);
-        }
-
-        [Route("register"), HttpPost]
-        public void Register()
-        {
-
+            return response;
         }
 
         private ClaimsIdentity GetIdentity(string login, string passwordHash, int pinCode)
@@ -65,11 +67,11 @@ namespace WebAPI.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, response.Person.Login)
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, response.Person.Id.ToString()),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, response.Person.Role)
                 };
-                ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
+
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
                 return claimsIdentity;
             }
 

@@ -42,7 +42,6 @@ namespace WebAPI
 
             services.AddControllers();
 
-            services.AddTransient<AccountService>();
             services.AddTransient<CategoryService>();
             services.AddTransient<ChangeMoneyService>();
             services.AddTransient<CurrencyService>();

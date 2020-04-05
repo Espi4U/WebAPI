@@ -22,7 +22,7 @@ namespace WebAPI.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("server=localhost;UserId=root;Password=espi4u;database=espidb;");
+            optionsBuilder.UseMySql("server=localhost;UserId=root;Password=espi4u;database=espdb;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,7 +30,7 @@ namespace WebAPI.Models
             modelBuilder.Entity<Family>().Property(x => x.Name).IsRequired();
 
             modelBuilder.Entity<Person>().Property(x => x.Name).IsRequired();
-            modelBuilder.Entity<Person>().Property(x => x.IsHead).IsRequired();
+            modelBuilder.Entity<Person>().Property(x => x.Role).IsRequired();
             //modelBuilder.Entity<Person>().Property(x => x.FamilyId).IsRequired();
             //modelBuilder.Entity<Person>().Property(x => x.Family).IsRequired();
 

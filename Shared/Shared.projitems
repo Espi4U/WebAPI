@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Report.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\BaseRequests\GetResultsForTimePeriodRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\BaseRequests\BaseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\BaseRequests\LoginRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\CategoriesRequests\CategoryRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\ChangeMoneyRequests\ChangeMoneyRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\ChangeMoneyRequests\GetIncomesOrExpensesRequest.cs" />

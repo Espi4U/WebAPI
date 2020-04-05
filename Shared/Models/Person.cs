@@ -8,34 +8,34 @@ namespace WebAPI.Models.APIModels
         public int Id { get; set; }
 
         [JsonProperty("name")]
-        public string Name { get; set; } // ім'я члена сім'ї
+        public string Name { get; set; }
 
-        [JsonProperty("ishead")]
-        public bool IsHead { get; set; } // чи даний член сім'ї єголової сім'ї
+        [JsonProperty("role")]
+        public string Role { get; set; }
 
         [JsonProperty("changesinmoney")]
-        public List<ChangeMoney> ChangesInMoney { get; set; } // витрати/доходи члена сім'ї
+        public List<ChangeMoney> ChangesInMoney { get; set; }
 
         [JsonProperty("purposes")]
-        public List<Purpose> Purposes { get; set; } // цілі заощадження члена сім'ї
+        public List<Purpose> Purposes { get; set; }
 
         [JsonProperty("purses")]
-        public List<Purse> Purses { get; set; } // гаманці члена сім'ї
+        public List<Purse> Purses { get; set; }
 
         [JsonProperty("reports")]
-        public List<Report> Reports { get; set; } // звіти члена сім'ї
+        public List<Report> Reports { get; set; }
 
         [JsonProperty("familyid")]
         public int FamilyId { get; set; }
 
         [JsonProperty("family")]
-        public Family Family { get; set; } // до якої сім'ї відноситься даний член сім'ї
+        public Family Family { get; set; }
 
         [JsonProperty("categories")]
-        public List<Category> Categories { get; set; } // категорії доходів/витрат члена сім'ї
+        public List<Category> Categories { get; set; }
 
         [JsonProperty("currencies")]
-        public List<Currency> Currencies { get; set; } // валюти члена сім'ї
+        public List<Currency> Currencies { get; set; }
 
 
         // дані для авторизації/реєстрації
@@ -47,8 +47,5 @@ namespace WebAPI.Models.APIModels
 
         [JsonProperty("pincode")]
         public int PINCode { get; set; }
-
-        [JsonProperty("personaccesstoken")]
-        public string PersonAccessToken { get; set; }
     }
 }
