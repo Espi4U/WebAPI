@@ -1,8 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using FamilyFinance.Helpers;
+using Newtonsoft.Json;
+using Shared.Models.Requests.BaseRequests;
 using Shared.Models.Requests.CategoriesRequests;
+using Shared.Models.Requests.CurrenciesRequests;
 using Shared.Models.Requests.FamiliesRequests;
+using Shared.Models.Requests.PurposesRequests;
+using Shared.Models.Requests.PursesRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.CategoriesResponses;
+using Shared.Models.Responses.CurrenciesResponses;
+using Shared.Models.Responses.PurposesResponses;
+using Shared.Models.Responses.PursesResponses;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -11,6 +19,7 @@ using System.Threading.Tasks;
 using WebAPI.Models.APIModels.Requests;
 using WebAPI.Models.APIModels.Requests.ReportsControllerRequests;
 using WebAPI.Models.APIModels.Responses;
+using Xamarin.Forms;
 
 namespace FamilyFinance
 {
@@ -43,11 +52,74 @@ namespace FamilyFinance
 
         #endregion
 
+        #region CATEGORIES
+
+        public async Task<BaseResponse> AddCategoryAsync(CategoryRequest request) =>
+            await TryCallApiAsync<BaseResponse>("categories/add_categoty", request);
+
+        public async Task<ListCategoriesResponse> GetCategoriesAsync(BaseRequest request) =>
+            await TryCallApiAsync<ListCategoriesResponse>("categories/get_categories", request);
+
+        public async Task<BaseResponse> DeleteCategoryAsync(CategoryRequest request) =>
+            await TryCallApiAsync<BaseResponse>("categories/delete_category", request);
+
+        #endregion
+
+        #region CURRENCIES
+
+        public async Task<BaseResponse> AddCurrency(CurrencyRequest request) =>
+            await TryCallApiAsync<BaseResponse>("currencies/add_currency", request);
+
+        public async Task<ListCurrenciesResponse> GetCurrencies(BaseRequest request) =>
+            await TryCallApiAsync<ListCurrenciesResponse>("currencies/get_currency", request);
+
+        public async Task<BaseResponse> DeleteCurrency(CurrencyRequest request) =>
+            await TryCallApiAsync<BaseResponse>("currencies/delete_currency", request);
+
+        #endregion
+
+        #region PURPOSES
+
+        public async Task<BaseResponse> AddPurpose(PurposeRequest request) =>
+            await TryCallApiAsync<BaseResponse>("purposes/add_purpose", request);
+
+        public async Task<ListPurposesResponse> GetPurposes(BaseRequest request) =>
+            await TryCallApiAsync<ListPurposesResponse>("purposes/get_purposes", request);
+
+        public async Task<BaseResponse> DeletePurpose(PurposeRequest request) =>
+            await TryCallApiAsync<BaseResponse>("purposes/delete_purpose", request);
+
+        #endregion
+
+        #region PURSES
+
+        public async Task<BaseResponse> AddPurse(PurseRequest request) =>
+            await TryCallApiAsync<BaseResponse>("purses/add_purse", request);
+
+        public async Task<ListPursesResponse> GetPurses(BaseRequest request) =>
+            await TryCallApiAsync<ListPursesResponse>("purses/get_purses", request);
+
+        public async Task<BaseResponse> DeletePurse(PurseRequest request) =>
+            await TryCallApiAsync<BaseResponse>("purses/delete_purse", request);
+
+        #endregion
+
+        #region CHANGEMONEYS
+        #endregion
+
+
         #region ACCOUNT
 
-        public async void LogInAsync()
+        public async void LogInAsync(LoginRequest request)
         {
+            var response = await TryCallApiAsync<LoginResponse>("account/login", request);
+            if (!response.BaseIsSuccess)
+            {
+                return;
+            }
 
+            GlobalHelper.WritePersonId(response.PersonId);
+            GlobalHelper.WriteToken(response.Token);
         }
 
         #endregion

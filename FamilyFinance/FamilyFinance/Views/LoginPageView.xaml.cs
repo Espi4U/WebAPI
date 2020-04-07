@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared.Models.Requests.BaseRequests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,14 @@ namespace FamilyFinance.Views
 
         public void LogIn()
         {
+            var request = new LoginRequest
+            {
+                Login = Login,
+                Password = Password,
+                PINCode = PINCode
+            };
 
+            _apiClient.LogInAsync(request);
         }
     }
 }

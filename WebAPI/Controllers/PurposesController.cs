@@ -24,24 +24,15 @@ namespace WebAPI.Controllers
         }
 
         [Route("get_purposes"), HttpPost]
-        public ListPurposesResponse GetPurses([FromBody]BaseRequest request) =>
+        public ListPurposesResponse GetPurposes([FromBody]BaseRequest request) =>
             _purposeService.GetPurposes(request);
 
         [Route("add_purpose"), HttpPost]
-        public BaseResponse AddPurse([FromBody]PurposeRequest request) =>
+        public BaseResponse AddPurpose([FromBody]PurposeRequest request) =>
             _purposeService.AddPurpose(request);
 
         [Route("delete_purpose"), HttpPost]
-        public BaseResponse DeletePurse([FromBody]PurposeRequest request) =>
+        public BaseResponse DeletePurpose([FromBody]PurposeRequest request) =>
             _purposeService.DeletePurpose(request);
-
-        [Route("get"), HttpGet]
-        public string Get()
-        {
-            using (var context = new FamilyFinanceContext())
-            {
-                return "AAA";
-            }
-        }
     }
 }

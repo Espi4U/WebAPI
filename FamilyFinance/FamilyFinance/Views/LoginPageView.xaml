@@ -5,11 +5,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="FamilyFinance.Views.LoginPageView">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+    <StackLayout>
+        <Label Text="Login" />
+        <Entry Text="{Binding Login, Mode=TwoWay}" />
+        <Label Text="Password" />
+        <Entry Text="{Binding Password}" />
+        <Label Text="PIN Code" />
+        <Entry Text="{Binding PINCode}" />
+        <Button 
+           Text="LogIn"
+            Command="{Binding LogInCommand}" />
+    </StackLayout>
 </ContentPage>

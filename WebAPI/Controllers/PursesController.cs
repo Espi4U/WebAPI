@@ -21,11 +21,11 @@ namespace WebAPI.Controllers
             _purseService = purseService;
         }
 
-        [Route("get_purses_by_id"), HttpPost]
+        [Route("get_purses"), HttpPost]
         public ListPursesResponse GetPurses([FromBody]BaseRequest request) =>
             _purseService.GetPurses(request);
 
-        [Route("add_new_purse"), HttpPost]
+        [Route("add_purse"), HttpPost]
         public BaseResponse AddPurse([FromBody]PurseRequest request) =>
             _purseService.AddPurse(request);
 

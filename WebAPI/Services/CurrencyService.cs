@@ -12,7 +12,7 @@ namespace WebAPI.Services
 {
     public class CurrencyService : BaseService
     {
-        public BaseResponse AddNewCurrency(CurrencyRequest request)
+        public BaseResponse AddCurrency(CurrencyRequest request)
         {
             return GetResponse(() => {
                 var response = new BaseResponse();
@@ -47,7 +47,7 @@ namespace WebAPI.Services
             });
         }
 
-        public ListCurrenciesResponse GetCurrenciesById(BaseRequest request)
+        public ListCurrenciesResponse GetCurrencies(BaseRequest request)
         {
             return GetResponse(() => {
                 var response = new ListCurrenciesResponse();
@@ -77,7 +77,7 @@ namespace WebAPI.Services
             });
         }
 
-        public BaseResponse DeleteCurrencyById(CurrencyRequest request)
+        public BaseResponse DeleteCurrency(CurrencyRequest request)
         {
             return GetResponse(() => {
                 var response = new BaseResponse();
