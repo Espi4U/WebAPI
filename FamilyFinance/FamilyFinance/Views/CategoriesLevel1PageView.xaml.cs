@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared.Models.Requests.CategoriesRequests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace FamilyFinance.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CategoriesLevel1PageView : ContentPage
     {
+        private APIClient _apiClient;
+
         public Category SelectedCategory => null;
         public List<Category> Categories { get; set; }
 
@@ -20,7 +23,9 @@ namespace FamilyFinance.Views
 
         public CategoriesLevel1PageView()
         {
-            DeleteCommand = new Command(Delete);
+            _apiClient = new APIClient();
+
+            DeleteCommand = new Command(DeleteAsync);
 
             Categories = new List<Category>
             {
@@ -39,10 +44,19 @@ namespace FamilyFinance.Views
             InitializeComponent();
         }
 
-        private void Delete(object parameter)
+        private async void DeleteAsync(object parameter)
         {
-            int id = (int)parameter;
-            //call API here
+            Category category = (Category)parameter;
+
+            var request = new CategoryRequest
+            {
+                Category = category
+            };
+            var responce = await _apiClient.DeleteCategoryAsync(request);
+            if(!responce.BaseIsSuccess || !responce.IsSuccess)
+            {
+                return;
+            }
         }
     }
 }

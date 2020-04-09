@@ -67,39 +67,39 @@ namespace FamilyFinance
 
         #region CURRENCIES
 
-        public async Task<BaseResponse> AddCurrency(CurrencyRequest request) =>
+        public async Task<BaseResponse> AddCurrencyAsync(CurrencyRequest request) =>
             await TryCallApiAsync<BaseResponse>("currencies/add_currency", request);
 
-        public async Task<ListCurrenciesResponse> GetCurrencies(BaseRequest request) =>
+        public async Task<ListCurrenciesResponse> GetCurrenciesAsync(BaseRequest request) =>
             await TryCallApiAsync<ListCurrenciesResponse>("currencies/get_currency", request);
 
-        public async Task<BaseResponse> DeleteCurrency(CurrencyRequest request) =>
+        public async Task<BaseResponse> DeleteCurrencyAsync(CurrencyRequest request) =>
             await TryCallApiAsync<BaseResponse>("currencies/delete_currency", request);
 
         #endregion
 
         #region PURPOSES
 
-        public async Task<BaseResponse> AddPurpose(PurposeRequest request) =>
+        public async Task<BaseResponse> AddPurposeAsync(PurposeRequest request) =>
             await TryCallApiAsync<BaseResponse>("purposes/add_purpose", request);
 
-        public async Task<ListPurposesResponse> GetPurposes(BaseRequest request) =>
+        public async Task<ListPurposesResponse> GetPurposesAsync(BaseRequest request) =>
             await TryCallApiAsync<ListPurposesResponse>("purposes/get_purposes", request);
 
-        public async Task<BaseResponse> DeletePurpose(PurposeRequest request) =>
+        public async Task<BaseResponse> DeletePurposeAsync(PurposeRequest request) =>
             await TryCallApiAsync<BaseResponse>("purposes/delete_purpose", request);
 
         #endregion
 
         #region PURSES
 
-        public async Task<BaseResponse> AddPurse(PurseRequest request) =>
+        public async Task<BaseResponse> AddPurseAsync(PurseRequest request) =>
             await TryCallApiAsync<BaseResponse>("purses/add_purse", request);
 
-        public async Task<ListPursesResponse> GetPurses(BaseRequest request) =>
+        public async Task<ListPursesResponse> GetPursesAsync(BaseRequest request) =>
             await TryCallApiAsync<ListPursesResponse>("purses/get_purses", request);
 
-        public async Task<BaseResponse> DeletePurse(PurseRequest request) =>
+        public async Task<BaseResponse> DeletePurseAsync(PurseRequest request) =>
             await TryCallApiAsync<BaseResponse>("purses/delete_purse", request);
 
         #endregion

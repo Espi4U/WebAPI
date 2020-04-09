@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared.Models.Requests.PurposesRequests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace FamilyFinance.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PurposesLevel2PageView : ContentPage
     {
+        private APIClient _apiClient;
         public Purpose Purpose { get; set; }
 
         public ICommand EnlargeCommand { get; }
@@ -20,23 +22,34 @@ namespace FamilyFinance.Views
 
         public PurposesLevel2PageView(Purpose purpose)
         {
+            _apiClient = new APIClient();
+
             Purpose = purpose;
 
-            EnlargeCommand = new Command(Enlarge);
-            DeleteCommand = new Command(Delete);
+            EnlargeCommand = new Command(EnlargeAsync);
+            DeleteCommand = new Command(DeleteAsync);
 
             BindingContext = this;
             InitializeComponent();
         }
 
-        private void Enlarge()
+        private async void EnlargeAsync()
         {
             //goto edit page
         }
 
-        private void Delete()
+        private async void DeleteAsync()
         {
-            //call API for delete this purpose
+            var request = new PurposeRequest
+            {
+                Purpose = Purpose
+            };
+            var response = await _apiClient.DeletePurposeAsync(request);
+            if(!response.BaseIsSuccess || !response.IsSuccess)
+            {
+                return;
+            }
+
         }
     }
 }
