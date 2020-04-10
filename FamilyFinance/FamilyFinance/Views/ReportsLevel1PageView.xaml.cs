@@ -62,8 +62,7 @@ namespace FamilyFinance.Views
 
         private async void LoadReportsAsync()
         {
-            var request = GlobalHelper.GetBaseRequest();
-            var response = await _apiClient.GetReportsAsync(request);
+            var response = await _apiClient.GetReportsAsync(GlobalHelper.GetBaseRequest());
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
                 return;
