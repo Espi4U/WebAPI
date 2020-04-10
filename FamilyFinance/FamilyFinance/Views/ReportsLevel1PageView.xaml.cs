@@ -1,9 +1,11 @@
-﻿using System;
+﻿using FamilyFinance.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WebAPI.Models.APIModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,8 +15,18 @@ namespace FamilyFinance.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReportsLevel1PageView : ContentPage
     {
+        private APIClient _apiClient;
 
-        public ObservableCollection<Report> Reports { get; set; }
+        private List<Report> _reports;
+        public List<Report> Reports
+        {
+            get => _reports;
+            set
+            {
+                _reports = value;
+                OnPropertyChanged(nameof(Reports));
+            }
+        }
 
         public Report SelectedReport
         {
@@ -28,21 +40,41 @@ namespace FamilyFinance.Views
                 }
             }
         }
+
+        public ICommand GoToGenerateReportPageCommand { get; }
+
         public ReportsLevel1PageView()
         {
-            Reports = new ObservableCollection<Report>
-            {
-                new Report(){ Name="Report 1", Text="blablabla", Date=DateTime.Now},
-                new Report(){ Name="Report 2", Text="blablabla", Date=DateTime.Now},
-                new Report(){ Name="Report 3", Text="blablabla", Date=DateTime.Now},
-                new Report(){ Name="Report 4", Text="blablabla", Date=DateTime.Now},
-                new Report(){ Name="Report 5", Text="blablabla", Date=DateTime.Now},
-                new Report(){ Name="Report 6", Text="blablabla", Date=DateTime.Now},
-                new Report(){ Name="Report 7", Text="blablabla", Date=DateTime.Now},
-            };
+            _apiClient = new APIClient();
+
+            GoToGenerateReportPageCommand = new Command(GoToGenerateReportPage);
 
             BindingContext = this;
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            LoadReportsAsync();
+        }
+
+        private async void LoadReportsAsync()
+        {
+            var request = GlobalHelper.GetBaseRequest();
+            var response = await _apiClient.GetReportsAsync(request);
+            if(!response.BaseIsSuccess || !response.IsSuccess)
+            {
+                return;
+            }
+
+            Reports = response.Reports;
+        }
+
+        private void GoToGenerateReportPage()
+        {
+            //Navigation.PushAsync(page)
         }
     }
 }

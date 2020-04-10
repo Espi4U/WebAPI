@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WebAPI.Models.APIModels.Requests;
 using Xamarin.Forms;
 
 namespace FamilyFinance.Helpers
@@ -38,6 +39,15 @@ namespace FamilyFinance.Helpers
         {
             Application.Current.Properties["familyid"] = id;
             Application.Current.SavePropertiesAsync();
+        }
+
+        public static BaseRequest GetBaseRequest()
+        {
+            return new BaseRequest
+            {
+                FamilyId = GetFamilyId(),
+                PersonId = GetPersonId()
+            };
         }
     }
 }

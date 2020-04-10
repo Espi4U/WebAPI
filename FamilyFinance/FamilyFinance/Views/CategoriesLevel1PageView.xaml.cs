@@ -1,4 +1,5 @@
-﻿using Shared.Models.Requests.CategoriesRequests;
+﻿using FamilyFinance.Helpers;
+using Shared.Models.Requests.CategoriesRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WebAPI.Models.APIModels;
+using WebAPI.Models.APIModels.Requests;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,7 +19,17 @@ namespace FamilyFinance.Views
         private APIClient _apiClient;
 
         public Category SelectedCategory => null;
-        public List<Category> Categories { get; set; }
+
+        private List<Category> _categories;
+        public List<Category> Categories
+        {
+            get => _categories;
+            set
+            {
+                _categories = value;
+                OnPropertyChanged(nameof(Categories));
+            }
+        }
 
         public ICommand DeleteCommand { get; }
 
@@ -27,21 +39,15 @@ namespace FamilyFinance.Views
 
             DeleteCommand = new Command(DeleteAsync);
 
-            Categories = new List<Category>
-            {
-                new Category(){ Name = "Cat 1"},
-                new Category(){ Name = "Cat 2"},
-                new Category(){ Name = "Cat 3"},
-                new Category(){ Name = "Cat 4"},
-                new Category(){ Name = "Cat 5"},
-                new Category(){ Name = "Cat 6"},
-                new Category(){ Name = "Cat 7"},
-                new Category(){ Name = "Cat 8"},
-                new Category(){ Name = "Cat 9"},
-            };
-
             BindingContext = this;
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            LoadCategoriesAsync();
         }
 
         private async void DeleteAsync(object parameter)
@@ -57,6 +63,18 @@ namespace FamilyFinance.Views
             {
                 return;
             }
+        }
+
+        private async void LoadCategoriesAsync()
+        {
+            var request = GlobalHelper.GetBaseRequest();
+            var response = await _apiClient.GetCategoriesAsync(request);
+            if(!response.BaseIsSuccess || !response.IsSuccess)
+            {
+                return;
+            }
+
+            Categories = response.Categories;
         }
     }
 }
