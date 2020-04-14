@@ -32,12 +32,14 @@ namespace FamilyFinance.Views
         }
 
         public ICommand DeleteCommand { get; }
+        public ICommand AddCommand { get; }
 
         public CategoriesLevel1PageView()
         {
             _apiClient = new APIClient();
 
             DeleteCommand = new Command(DeleteAsync);
+            AddCommand = new Command(AddAsync);
 
             BindingContext = this;
             InitializeComponent();
@@ -74,6 +76,27 @@ namespace FamilyFinance.Views
             }
 
             Categories = response.Categories;
+        }
+
+        private async void AddAsync()
+        {
+            var result = "res"; // need dialog
+            if (!string.IsNullOrWhiteSpace(result))
+            {
+                var request = new CategoryRequest
+                {
+                    Category = new Category
+                    {
+                        Name = result
+                    }
+                };
+
+                var response = await _apiClient.AddCategoryAsync(request);
+                if(!response.BaseIsSuccess || !response.IsSuccess)
+                {
+                    return;
+                }
+            }
         }
     }
 }
