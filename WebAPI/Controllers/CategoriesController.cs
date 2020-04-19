@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
             _categoryService = categoryService;
         }
 
-        [Route("add_categoty"), HttpPost]
+        [Route("add_category"), HttpPost]
         public BaseResponse AddCategory([FromBody]CategoryRequest request) =>
             _categoryService.AddCategory(request);
 

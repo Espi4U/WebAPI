@@ -27,12 +27,14 @@ namespace FamilyFinance.Helpers
 
         public static int GetPersonId()
         {
-            return Convert.ToInt32(Application.Current.Properties["personid"]);
+            //return Convert.ToInt32(Application.Current.Properties["personid"]);
+            return 1;
         }
 
         public static int GetFamilyId()
         {
-            return Convert.ToInt32(Application.Current.Properties["familyid"]);
+            //return Convert.ToInt32(Application.Current.Properties["familyid"]);
+            return 1;
         }
 
         public static void SetPersonId(int id)
@@ -43,10 +45,15 @@ namespace FamilyFinance.Helpers
 
         public static BaseRequest GetBaseRequest()
         {
+            //return new BaseRequest
+            //{
+            //    FamilyId = GetFamilyId(),
+            //    PersonId = GetPersonId()
+            //};
             return new BaseRequest
             {
-                FamilyId = GetFamilyId(),
-                PersonId = GetPersonId()
+                FamilyId = 1,
+                PersonId = 1
             };
         }
     }

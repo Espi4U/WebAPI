@@ -1,5 +1,6 @@
 ﻿using FamilyFinance.Helpers;
 using Shared.Models.Requests.CategoriesRequests;
+using Shared.Models.Requests.FamiliesRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WebAPI.Models.APIModels;
 using WebAPI.Models.APIModels.Requests;
+using WebAPI.Models.APIModels.Requests.PersonsControllerRequests;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -80,23 +82,36 @@ namespace FamilyFinance.Views
 
         private async void AddAsync()
         {
-            var result = "res"; // need dialog
+            var result = await DisplayPromptAsync("Enter Category Name", "Please Enter A New Category Name");
             if (!string.IsNullOrWhiteSpace(result))
             {
                 var request = new CategoryRequest
                 {
                     Category = new Category
                     {
+                        FamilyId = GlobalHelper.GetFamilyId(),
+                        PersonId = GlobalHelper.GetPersonId(),
                         Name = result
                     }
                 };
 
                 var response = await _apiClient.AddCategoryAsync(request);
-                if(!response.BaseIsSuccess || !response.IsSuccess)
+                if (!response.BaseIsSuccess || !response.IsSuccess)
                 {
                     return;
                 }
+
+                LoadCategoriesAsync();
             }
+            //try
+            //{
+            //    await _apiClient.AddFamilyAsync(new FamilyRequest { Family = new Family { Id = 1, Name = "TestFamily" } });
+            //    await _apiClient.AddPersonAsync(new PersonRequest { Person = new Person { Id = 1, Name = "TestPerson", FamilyId = 1, Login = "test", PasswordHash = "test123", PINCode = 1234 } });
+            //}
+            //catch (Exception ex)
+            //{
+            //    var a = ex.Message;
+            //}
         }
     }
 }

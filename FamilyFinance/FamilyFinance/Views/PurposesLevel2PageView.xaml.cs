@@ -1,4 +1,5 @@
-﻿using Shared.Models.Requests.PurposesRequests;
+﻿using FamilyFinance.Models;
+using Shared.Models.Requests.PurposesRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace FamilyFinance.Views
 
         private async void EnlargeAsync()
         {
-            //goto edit page
+            await Navigation.PushAsync(new PurposesLevel3PageView(PurposesLevel3PageViewModes.Enlarge));
         }
 
         private async void DeleteAsync()

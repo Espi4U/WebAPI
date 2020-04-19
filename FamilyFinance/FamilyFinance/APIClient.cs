@@ -17,6 +17,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using WebAPI.Models.APIModels.Requests;
+using WebAPI.Models.APIModels.Requests.PersonsControllerRequests;
 using WebAPI.Models.APIModels.Requests.ReportsControllerRequests;
 using WebAPI.Models.APIModels.Responses;
 using Xamarin.Forms;
@@ -27,13 +28,19 @@ namespace FamilyFinance
     {
         static HttpClient httpClient;
 
-        public APIClient()
+        static APIClient()
         {
-            httpClient = new HttpClient()
+            HttpClientHandler clientHandler = new HttpClientHandler
             {
-                BaseAddress = new Uri("https://localhost:44373/api/v1/")
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+            };
+            httpClient = new HttpClient(clientHandler)
+            {
+                BaseAddress = new Uri("http://192.168.0.102:81/api/v1/")
             };
         }
+
+        public APIClient() { }
 
         #region REPORTS
 
@@ -52,10 +59,17 @@ namespace FamilyFinance
 
         #endregion
 
+        #region PERSON
+
+        public async Task<BaseResponse> AddPersonAsync(PersonRequest request) =>
+            await TryCallApiAsync<BaseResponse>("persons/add_person", request);
+
+        #endregion
+
         #region CATEGORIES
 
         public async Task<BaseResponse> AddCategoryAsync(CategoryRequest request) =>
-            await TryCallApiAsync<BaseResponse>("categories/add_categoty", request);
+            await TryCallApiAsync<BaseResponse>("categories/add_category", request);
 
         public async Task<ListCategoriesResponse> GetCategoriesAsync(BaseRequest request) =>
             await TryCallApiAsync<ListCategoriesResponse>("categories/get_categories", request);
@@ -71,7 +85,7 @@ namespace FamilyFinance
             await TryCallApiAsync<BaseResponse>("currencies/add_currency", request);
 
         public async Task<ListCurrenciesResponse> GetCurrenciesAsync(BaseRequest request) =>
-            await TryCallApiAsync<ListCurrenciesResponse>("currencies/get_currency", request);
+            await TryCallApiAsync<ListCurrenciesResponse>("currencies/get_currencies", request);
 
         public async Task<BaseResponse> DeleteCurrencyAsync(CurrencyRequest request) =>
             await TryCallApiAsync<BaseResponse>("currencies/delete_currency", request);

@@ -7,45 +7,78 @@
              x:Class="FamilyFinance.Views.CategoriesLevel1PageView"
              x:Name="page"
              Title="Categories">
-    <ListView HasUnevenRows="True"
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="addImage" TargetType="Image">
+                <Setter Property="HeightRequest" Value="60"/>
+                <Setter Property="WidthRequest" Value="60"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+            <Style x:Key="addLabel" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+                <Setter Property="FontSize" Value="Medium"/>
+            </Style>
+            <Style x:Key="addStackLayout" TargetType="StackLayout">
+                <Setter Property="Opacity" Value="0.3"/>
+                <Setter Property="Margin" Value="50"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout>
+        <StackLayout
+            Grid.Column="0"
+            Style="{StaticResource addStackLayout}">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding AddCommand}"/>
+            </StackLayout.GestureRecognizers>
+            <Image
+                Source="plus_icon.png"
+                Style="{StaticResource addImage}"/>
+            <Label
+                Text="Add Category"
+                Style="{StaticResource addLabel}"/>
+        </StackLayout>
+        <ListView HasUnevenRows="True"
               ItemsSource="{Binding Categories}"
               SelectedItem="{Binding SelectedCategory, Mode=TwoWay}">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <ViewCell.View>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Image
-                                Margin="10"
-                                HeightRequest="20"
-                                WidthRequest="20"
-                                Source="{Binding .,Converter={StaticResource ItemToIconConverter}}" />
-                            <Label
-                                Grid.Column="1"
-                                Margin="10"
-                                FontSize="Large"
-                                Text="{Binding Name}"/>
-                            <ImageButton
-                                Opacity="0.3"
-                                Grid.Column="2"
-                                Margin="10"
-                                HeightRequest="35"
-                                WidthRequest="35"
-                                HorizontalOptions="End"
-                                VerticalOptions="CenterAndExpand"
-                                BackgroundColor="Transparent"
-                                Source="delete_icon"
-                                Command="{Binding BindingContext.DeleteCommand, Source={x:Reference page}}"
-                                CommandParameter="{Binding .}"/>
-                        </Grid>
-                    </ViewCell.View>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Image
+                                    Margin="10"
+                                    HeightRequest="20"
+                                    WidthRequest="20"
+                                    Source="{Binding .,Converter={StaticResource ItemToIconConverter}}" />
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="10"
+                                    FontSize="Large"
+                                    Text="{Binding Name}"/>
+                                <ImageButton
+                                    Opacity="0.3"
+                                    Grid.Column="2"
+                                    Margin="10"
+                                    HeightRequest="35"
+                                    WidthRequest="35"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="CenterAndExpand"
+                                    BackgroundColor="Transparent"
+                                    Source="delete_icon"
+                                    Command="{Binding BindingContext.DeleteCommand, Source={x:Reference page}}"
+                                    CommandParameter="{Binding .}"/>
+                            </Grid>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
 </ContentPage>

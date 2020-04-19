@@ -1,10 +1,12 @@
 ﻿using FamilyFinance.Helpers;
+using FamilyFinance.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WebAPI.Models.APIModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,6 +17,8 @@ namespace FamilyFinance.Views
     public partial class PurposesLevel1PageView : ContentPage
     {
         private APIClient _apiClient;
+
+        public ICommand AddCommand { get; }
 
         private List<Purpose> _purposes;
         public List<Purpose> Purposes
@@ -44,6 +48,8 @@ namespace FamilyFinance.Views
         {
             _apiClient = new APIClient();
 
+            AddCommand = new Command(AddAsync);
+
             BindingContext = this;
             InitializeComponent();
         }
@@ -64,6 +70,11 @@ namespace FamilyFinance.Views
             }
 
             Purposes = response.Purposes;
+        }
+
+        private async void AddAsync()
+        {
+            await Navigation.PushAsync(new PurposesLevel3PageView(PurposesLevel3PageViewModes.AddNew));
         }
     }
 }
