@@ -6,17 +6,24 @@
              mc:Ignorable="d"
              x:Class="FamilyFinance.Views.PurposesLevel3PageView"
              Title="New Purpose">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="Large" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="20">
             <Label
-                Text="Purpose Name"
+                Text="Purpose Name:"
                 VerticalOptions="Center" 
                 HorizontalOptions="Start" />
             <Entry
                 Text="{Binding Purpose.Name, Mode=TwoWay}"
                 BackgroundColor="DarkGray"/>
             <Label
-                Text="Final Size"
+                Text="Final Size:"
                 VerticalOptions="Center" 
                 HorizontalOptions="Start" />
             <Entry
@@ -24,7 +31,7 @@
                 BackgroundColor="DarkGray"
                 Keyboard="Numeric"/>
             <Label
-                Text="Current Size"
+                Text="Current Size:"
                 VerticalOptions="Center" 
                 HorizontalOptions="Start" />
             <Entry

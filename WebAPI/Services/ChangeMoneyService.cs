@@ -1,5 +1,6 @@
 ﻿using Shared.Models.Requests.BaseRequests;
 using Shared.Models.Requests.ChangeMoneyRequests;
+using Shared.Models.Responses;
 using Shared.Models.Responses.ChangeMoneysResponses;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace WebAPI.Services
                     {
                         if(request.FamilyId == default && request.PersonId == default)
                         {
-                            response.BaseMessage = "BadRequest";
+                            response.BaseMessage = "Bad Request";
                             response.IsSuccess = false;
                         }
                         else
@@ -30,27 +31,6 @@ namespace WebAPI.Services
                             response.ChangeMoneys = request.FamilyId == default ? db.ChangesMoney.Where(x => x.PersonId == request.PersonId && x.Type == request.Type).ToList() :
                                     db.ChangesMoney.Where(x => x.FamilyId == request.FamilyId && x.Type == request.Type).ToList();
                         }
-                    }
-                }
-                catch
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
-                }
-
-                return response;
-            });
-        }
-
-        public ListChangeMoneysResponse GetDataForReport(BaseRequest request/*need change*/)
-        {
-            return GetResponse(() => {
-                var response = new ListChangeMoneysResponse();
-                try
-                {
-                    using (FamilyFinanceContext db = new FamilyFinanceContext())
-                    {
-                        // code here
                     }
                 }
                 catch
@@ -170,6 +150,37 @@ namespace WebAPI.Services
                 return response;
             });
         }
+
+        public BaseResponse AddIncomeOrExpense(ChangeMoneyRequest request)
+        {
+            return GetResponse(() => {
+                var response = new BaseResponse();
+                try
+                {
+                    using (FamilyFinanceContext db = new FamilyFinanceContext())
+                    {
+                        if(request.ChangeMoney.FamilyId == default && request.ChangeMoney.PersonId == default)
+                        {
+                            response.BaseIsSuccess = false;
+                            response.BaseMessage = "Base Request";
+                        }
+                        else
+                        {
+                            db.ChangesMoney.Add(request.ChangeMoney);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                catch
+                {
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = "Bad request";
+                }
+
+                return response;
+            });
+        }
+
         public ListChangeMoneysResponse GetAdviceForTimePeriod(BaseRequest request/*need change*/)
         {
             return GetResponse(() => {

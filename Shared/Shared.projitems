@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Category.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChangeMoney.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Currency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\enums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Family.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Person.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Purpose.cs" />

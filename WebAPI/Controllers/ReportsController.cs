@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Shared.Models.Requests.BaseRequests;
+using Shared.Models.Requests.ChangeMoneyRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.ReportsResponses;
 using WebAPI.Models;
@@ -43,6 +44,35 @@ namespace WebAPI.Controllers
         public ReportResponse GenerateReportPerTimePeriod([FromBody]GetResultsForTimePeriodRequest request)
         {
             var response = new ReportResponse();
+            try
+            {
+                response.Report = new Report 
+                { 
+                    Text = "",
+                    Date = DateTime.Now,
+                    Name = $"Report per {DateTime.Now}",
+                    FamilyId = request.FamilyId,
+                    PersonId = request.PersonId
+                };
+
+                var allIncomesOrExpensesRequest = new GetIncomesOrExpensesRequest
+                {
+                    FamilyId = request.FamilyId,
+                    PersonId = request.PersonId,
+                    Type = "I"
+                };
+                var allIncomes = _changeMoneyService.GetIncomesOrExpenses(allIncomesOrExpensesRequest);
+
+                allIncomesOrExpensesRequest.Type = "E";
+                var allExpenses = _changeMoneyService.GetIncomesOrExpenses(allIncomesOrExpensesRequest);
+
+                response.Report.Text += $"Incomes on sum";
+            }
+            catch(Exception ex)
+            {
+                response.BaseIsSuccess = false;
+                response.BaseMessage = ex.Message;
+            }
 
             return response;
         }

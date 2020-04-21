@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WebAPI.Models.APIModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,6 +15,9 @@ namespace FamilyFinance.Views
     public partial class PursesLevel1PageView : ContentPage
     {
         private APIClient _apiClient;
+
+        public ICommand AddCommand { get; }
+
         public Purse SelectedPurse
         {
             get => null;
@@ -35,6 +39,8 @@ namespace FamilyFinance.Views
         {
             _apiClient = new APIClient();
 
+            AddCommand = new Command(AddAsync);
+
             BindingContext = this;
             InitializeComponent();
         }
@@ -55,6 +61,11 @@ namespace FamilyFinance.Views
             }
 
             Purses = response.Purses;
+        }
+
+        private async void AddAsync()
+        {
+            //goto add page
         }
     }
 }

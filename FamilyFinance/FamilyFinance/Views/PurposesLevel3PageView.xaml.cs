@@ -1,5 +1,5 @@
 ﻿using FamilyFinance.Helpers;
-using FamilyFinance.Models;
+using Shared.Models;
 using Shared.Models.Requests.PurposesRequests;
 using System;
 using System.Collections.Generic;
