@@ -25,23 +25,23 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost, Route("get_all")]
-        public ListChangeMoneysResponse GetIncomesOrExpenses([FromBody]GetIncomesOrExpensesRequest request) =>
-            _changeMoneyService.GetIncomesOrExpenses(request);
+        public async Task<ListChangeMoneysResponse> GetIncomesOrExpensesAsync([FromBody]GetIncomesOrExpensesRequest request) =>
+            await Task.Run(() => _changeMoneyService.GetIncomesOrExpenses(request));
 
         [HttpPost, Route("get_largest")]
-        public ChangeMoneyResponse GetLargestIncomeOrExpense([FromBody]GetIncomesOrExpensesRequest request) =>
-            _changeMoneyService.GetLargestIncomeOrExpense(request);
+        public async Task<ChangeMoneyResponse> GetLargestIncomeOrExpenseAsync([FromBody]GetIncomesOrExpensesRequest request) =>
+            await Task.Run(() => _changeMoneyService.GetLargestIncomeOrExpense(request));
 
         [HttpPost, Route("get_smallest")]
-        public ChangeMoneyResponse GetSmallestIncomeOrExpense([FromBody]GetIncomesOrExpensesRequest request) =>
-            _changeMoneyService.GetSmallestIncomeOrExpense(request);
+        public async Task<ChangeMoneyResponse> GetSmallestIncomeOrExpenseAsync([FromBody]GetIncomesOrExpensesRequest request) =>
+            await Task.Run(() => _changeMoneyService.GetSmallestIncomeOrExpense(request));
 
         [HttpPost, Route("get_per_time_period")]
-        public ListChangeMoneysResponse GetResultForTimePeriod([FromBody]GetResultsForTimePeriodRequest request) =>
-            _changeMoneyService.GetResultForTimePeriod(request);
+        public async Task<ListChangeMoneysResponse> GetResultForTimePeriodAsync([FromBody]GetResultsForTimePeriodRequest request) =>
+            await Task.Run(() => _changeMoneyService.GetResultForTimePeriod(request));
 
         [HttpPost, Route("add")]
-        public BaseResponse AddIncomeOrExpense([FromBody]ChangeMoneyRequest request) =>
-            _changeMoneyService.AddIncomeOrExpense(request);
+        public async Task<BaseResponse> AddIncomeOrExpenseAsync([FromBody]ChangeMoneyRequest request) =>
+            await Task.Run(() => _changeMoneyService.AddIncomeOrExpense(request));
     }
 }

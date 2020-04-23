@@ -2,12 +2,14 @@
 using Newtonsoft.Json;
 using Shared.Models.Requests.BaseRequests;
 using Shared.Models.Requests.CategoriesRequests;
+using Shared.Models.Requests.ChangeMoneyRequests;
 using Shared.Models.Requests.CurrenciesRequests;
 using Shared.Models.Requests.FamiliesRequests;
 using Shared.Models.Requests.PurposesRequests;
 using Shared.Models.Requests.PursesRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.CategoriesResponses;
+using Shared.Models.Responses.ChangeMoneysResponses;
 using Shared.Models.Responses.CurrenciesResponses;
 using Shared.Models.Responses.PurposesResponses;
 using Shared.Models.Responses.PursesResponses;
@@ -119,6 +121,22 @@ namespace FamilyFinance
         #endregion
 
         #region CHANGEMONEYS
+
+        public async Task<ListChangeMoneysResponse> GetIncomesOrExpensesAsync(GetIncomesOrExpensesRequest request) =>
+            await TryCallApiAsync<ListChangeMoneysResponse>("changemoneys/get_all", request);
+
+        public async Task<ChangeMoneyResponse> GetLargestIncomeOrExpenseAsync(GetIncomesOrExpensesRequest request) =>
+            await TryCallApiAsync<ChangeMoneyResponse>("changemoneys/get_largest", request);
+
+        public async Task<ChangeMoneyResponse> GetSmallestIncomeOrExpenseAsync(GetIncomesOrExpensesRequest request) =>
+            await TryCallApiAsync<ChangeMoneyResponse>("changemoneys/get_smallest", request);
+
+        public async Task<ListChangeMoneysResponse> GetResultForTimePeriodAsync(GetResultsForTimePeriodRequest request) =>
+            await TryCallApiAsync<ListChangeMoneysResponse>("changemoneys/get_per_time_period", request);
+
+        public async Task<BaseResponse> AddIncomeOrExpenseAsync(ChangeMoneyRequest request) =>
+            await TryCallApiAsync<BaseResponse>("changemoneys/add", request);
+
         #endregion
 
 
