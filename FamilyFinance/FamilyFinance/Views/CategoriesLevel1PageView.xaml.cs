@@ -62,9 +62,10 @@ namespace FamilyFinance.Views
             {
                 Category = category
             };
-            var responce = await _apiClient.DeleteCategoryAsync(request);
-            if(!responce.BaseIsSuccess || !responce.IsSuccess)
+            var response = await _apiClient.DeleteCategoryAsync(request);
+            if(!response.BaseIsSuccess || !response.IsSuccess)
             {
+                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
         }
@@ -74,6 +75,7 @@ namespace FamilyFinance.Views
             var response = await _apiClient.GetCategoriesAsync(GlobalHelper.GetBaseRequest());
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
+                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
@@ -98,20 +100,12 @@ namespace FamilyFinance.Views
                 var response = await _apiClient.AddCategoryAsync(request);
                 if (!response.BaseIsSuccess || !response.IsSuccess)
                 {
+                    AlertHelper.ShowAlertMessage(response, this);
                     return;
                 }
 
                 LoadCategoriesAsync();
             }
-            //try
-            //{
-            //    await _apiClient.AddFamilyAsync(new FamilyRequest { Family = new Family { Id = 1, Name = "TestFamily" } });
-            //    await _apiClient.AddPersonAsync(new PersonRequest { Person = new Person { Id = 1, Name = "TestPerson", FamilyId = 1, Login = "test", PasswordHash = "test123", PINCode = 1234 } });
-            //}
-            //catch (Exception ex)
-            //{
-            //    var a = ex.Message;
-            //}
         }
     }
 }

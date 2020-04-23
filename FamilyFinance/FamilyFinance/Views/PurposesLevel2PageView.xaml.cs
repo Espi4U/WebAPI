@@ -1,4 +1,5 @@
-﻿using Shared.Models;
+﻿using FamilyFinance.Helpers;
+using Shared.Models;
 using Shared.Models.Requests.PurposesRequests;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,7 @@ namespace FamilyFinance.Views
             var response = await _apiClient.DeletePurposeAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
+                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 

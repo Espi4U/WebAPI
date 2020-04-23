@@ -38,6 +38,7 @@ namespace FamilyFinance.Views
             var responce = await _apiClient.DeleteReportAsync(request);
             if(!responce.BaseIsSuccess || !responce.IsSuccess)
             {
+                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 

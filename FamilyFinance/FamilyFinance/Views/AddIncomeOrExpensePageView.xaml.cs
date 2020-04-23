@@ -82,7 +82,12 @@ namespace FamilyFinance.Views
             {
                 ChangeMoney = ChangeMoney
             };
-            // update api client
+            var response = await _apiClient.AddIncomeOrExpenseAsync(request);
+            if(!response.BaseIsSuccess || !response.IsSuccess)
+            {
+                AlertHelper.ShowAlertMessage(response, this);
+                return;
+            }
         }
 
         private async void LoadCategoriesAsync()
@@ -90,6 +95,7 @@ namespace FamilyFinance.Views
             var response = await _apiClient.GetCategoriesAsync(GlobalHelper.GetBaseRequest());
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
+                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
@@ -101,6 +107,7 @@ namespace FamilyFinance.Views
             var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
+                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 

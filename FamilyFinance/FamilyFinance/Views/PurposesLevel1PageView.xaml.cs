@@ -66,6 +66,7 @@ namespace FamilyFinance.Views
             var response = await _apiClient.GetPurposesAsync(GlobalHelper.GetBaseRequest());
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
+                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 

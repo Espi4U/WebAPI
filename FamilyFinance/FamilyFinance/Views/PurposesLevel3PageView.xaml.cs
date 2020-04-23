@@ -73,6 +73,7 @@ namespace FamilyFinance.Views
             var response = await _apiClient.AddPurposeAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
+                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
@@ -84,6 +85,7 @@ namespace FamilyFinance.Views
             var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
+                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
