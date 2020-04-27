@@ -25,6 +25,7 @@
             <converters:PurposeProgressToColorConverter x:Key="PurposeProgressToColorConverter"/>
             <converters:PurposeProgressToPercentConverter x:Key="PurposeProgressToPercentConverter"/>
             <converters:ItemToIconConverter x:Key="ItemToIconConverter"/>
+            <converters:BoolReverseConverter x:Key="BoolReverseConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

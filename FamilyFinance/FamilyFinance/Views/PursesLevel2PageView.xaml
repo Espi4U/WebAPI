@@ -4,8 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="FamilyFinance.Views.PurposesLevel3PageView"
-             Title="Нова Ціль Заощадження">
+             x:Class="FamilyFinance.Views.PursesLevel2PageView"
+             x:Name="Page">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
@@ -16,28 +16,26 @@
     <ContentPage.Content>
         <StackLayout Margin="20">
             <Label
-                Text="Назва Цілі Заощадження:"
+                Text="Назва:"
                 VerticalOptions="Center" 
                 HorizontalOptions="Start" />
             <Entry
-                Text="{Binding Purpose.Name, Mode=TwoWay}"
+                Text="{Binding Purse.Name, Mode=TwoWay}"
                 BackgroundColor="DarkGray"/>
             <Label
-                Text="Необхідно:"
+                Text="Розмір:"
                 VerticalOptions="Center" 
                 HorizontalOptions="Start" />
             <Entry
-                Text="{Binding Purpose.FinalSize, Mode=TwoWay}"
+                Text="{Binding Purse.Size, Mode=TwoWay}"
                 BackgroundColor="DarkGray"
                 Keyboard="Numeric"/>
-            <Label
-                Text="Зараз є:"
-                VerticalOptions="Center" 
-                HorizontalOptions="Start" />
-            <Entry
-                Text="{Binding Purpose.CurrentSize, Mode=TwoWay}"
-                BackgroundColor="DarkGray"
-                Keyboard="Numeric"/>
+            <Picker
+                FontSize="Large"       
+                Title="Валюта"        
+                ItemsSource="{Binding Currencies}"
+                SelectedItem="{Binding Purse.Currency, Mode=TwoWay}"
+                ItemDisplayBinding="{Binding Name}"/>
             <ImageButton
                 HeightRequest="100"
                 WidthRequest="100"

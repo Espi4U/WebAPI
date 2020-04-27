@@ -46,7 +46,7 @@
                     CommandParameter="purposes"/>
             </StackLayout.GestureRecognizers>
             <Image Source="purpose_icon.png" />
-            <Label Text="Purposes" />
+            <Label Text="Цілі" />
         </StackLayout>
         <StackLayout
             Grid.Row="0"
@@ -57,7 +57,7 @@
                     CommandParameter="purses"/>
             </StackLayout.GestureRecognizers>
             <Image Source="purse_icon.png" />
-            <Label Text="Purses" />
+            <Label Text="Гаманці" />
         </StackLayout>
         <StackLayout
             Grid.Row="1"
@@ -68,7 +68,7 @@
                     CommandParameter="reports"/>
             </StackLayout.GestureRecognizers>
             <Image Source="report_icon.png" />
-            <Label Text="Reports" />
+            <Label Text="Звіти" />
         </StackLayout>
         <StackLayout
             Grid.Row="1"
@@ -79,29 +79,7 @@
                     CommandParameter="categories"/>
             </StackLayout.GestureRecognizers>
             <Image Source="category_icon.png" />
-            <Label Text="Categories" />
-        </StackLayout>
-        <StackLayout
-            Grid.Row="2"
-            Grid.Column="0">
-            <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer
-                    Command="{Binding NavigateToCommand}"
-                    CommandParameter="currencies"/>
-            </StackLayout.GestureRecognizers>
-            <Image Source="currency_icon.png" />
-            <Label Text="Currencies" />
-        </StackLayout>
-        <StackLayout
-            Grid.Row="2"
-            Grid.Column="1">
-            <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer
-                    Command="{Binding NavigateToCommand}"
-                    CommandParameter="cash"/>
-            </StackLayout.GestureRecognizers>
-            <Image Source="cash_icon.png" />
-            <Label Text="Cash" />
+            <Label Text="Категорії" />
         </StackLayout>
     </Grid>
 </ContentPage>

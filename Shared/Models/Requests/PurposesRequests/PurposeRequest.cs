@@ -8,7 +8,6 @@ namespace Shared.Models.Requests.PurposesRequests
 {
     public class PurposeRequest
     {
-        [JsonProperty("purpose")]
         public Purpose Purpose { get; set; }
     }
 }

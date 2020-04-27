@@ -8,7 +8,6 @@ namespace Shared.Models.Responses.CurrenciesResponses
 {
     public class ListCurrenciesResponse : BaseResponse
     {
-        [JsonProperty("currencies")]
         public List<Currency> Currencies { get; set; }
     }
 }

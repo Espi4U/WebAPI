@@ -19,31 +19,31 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="0.2*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Button
+        <Image
+            Source="main"
+            Opacity="0.3"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand"/>
+        <Grid
             Grid.Row="1"
-            Grid.Column="2"
-            Grid.RowSpan="1"
-            Grid.ColumnSpan="2"
-            Text="INCOME"
-            Style="{StaticResource homePagePlusMinusButtons}"
-            Command="{Binding AddNewIncomeOrExpenseCommand}"
-            BackgroundColor="{x:Static local:Theme.PlusButtonBackgroundColor}"/>
-        <Button
-            Grid.Row="1"
-            Grid.Column="0"
-            Grid.RowSpan="1"
-            Grid.ColumnSpan="2"
-            Text="EXPENSE"
-            Style="{StaticResource homePagePlusMinusButtons}"
-            Command="{Binding AddNewIncomeOrExpenseCommand}"
-            BackgroundColor="{x:Static local:Theme.MinusButtonBackgroundColor}"/>
+            HeightRequest="1"
+            Opacity="0.3"
+            BackgroundColor="Black"
+            Margin="15,0,15,0"/>
+        <StackLayout
+             Grid.Row="2"       
+             Style="{StaticResource addStackLayout}">              
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding AddCommand}"            
+                    CommandParameter="I"/>
+            </StackLayout.GestureRecognizers>
+            <Image
+                Source="plus_icon"            
+                Style="{StaticResource addImage}"/>
+        </StackLayout>
     </Grid>
 </ContentPage>

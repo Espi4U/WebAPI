@@ -4,32 +4,16 @@ namespace WebAPI.Models.APIModels
 {
     public class Purpose
     {
-        [JsonProperty("id")]
         public int Id { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; } // назва цілі заощадження
-
-        [JsonProperty("finalsize")]
-        public double FinalSize { get; set; } // кінцева ціль заощадження
-
-        [JsonProperty("currentsize")]
-        public double CurrentSize { get; set; } // теперішня ціль заощадження
-
-        [JsonProperty("currency")]
-        public Currency Currency { get; set; } // валюта цілі заощадження
-
-        [JsonProperty("familyid")]
-        public int? FamilyId { get; set; }
-
-        [JsonProperty("family")]
-        public Family Family { get; set; } // сім'я власник цілі заощадження
-
-        [JsonProperty("personid")]
-        public int? PersonId { get; set; }
-
-        [JsonProperty("person")]
-        public Person Person { get; set; }  // член сім'ї власник цілі заощадження
+        public string Name { get; set; }
+        public double FinalSize { get; set; }
+        public double CurrentSize { get; set; }
+        public int CurrencyId { get; set; }
+        public Currency Currency { get; set; }
+        public int FamilyId { get; set; }
+        public Family Family { get; set; }
+        public int PersonId { get; set; }
+        public Person Person { get; set; }
 
         [JsonIgnore]
         public double PurposeProgress

@@ -8,7 +8,6 @@ namespace Shared.Models.Requests.CategoriesRequests
 {
     public class CategoryRequest
     {
-        [JsonProperty("category")]
         public Category Category { get; set; }
     }
 }

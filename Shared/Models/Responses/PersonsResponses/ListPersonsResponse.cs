@@ -9,7 +9,6 @@ namespace WebAPI.Models.APIModels.Responses.PersonsControllerResponses
 {
     public class ListPersonsResponse : BaseResponse
     {
-        [JsonProperty("persons")]
         public List<Person> Persons { get; set; }
     }
 }

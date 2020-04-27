@@ -11,20 +11,20 @@ namespace FamilyFinance.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is Category)
-            {
-                Category item = (Category)value;
-                return item.FamilyId == null ? "user_icon" : "family_icon";
-            }
-            else if(value is Report)
+            if(value is Report)
             {
                 Report item = (Report)value;
-                return item.FamilyId == null ? "user_icon" : "family_icon";
+                return item.FamilyId == default ? "user_icon" : "family_icon";
             }
             else if(value is Purpose)
             {
                 Purpose item = (Purpose)value;
-                return item.FamilyId == null ? "user_icon" : "family_icon";
+                return item.FamilyId == default ? "user_icon" : "family_icon";
+            }
+            else if (value is Purse)
+            {
+                Purse item = (Purse)value;
+                return item.FamilyId == default ? "user_icon" : "family_icon";
             }
             else
             {

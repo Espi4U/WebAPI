@@ -8,7 +8,6 @@ namespace Shared.Models.Responses.PersonsResponses
 {
     public class PersonResponse : BaseResponse
     {
-        [JsonProperty("person")]
         public Person Person { get; set; }
     }
 }

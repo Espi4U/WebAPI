@@ -8,7 +8,6 @@ namespace Shared.Models.Responses.CategoriesResponses
 {
     public class ListCategoriesResponse : BaseResponse
     {
-        [JsonProperty("categories")]
         public List<Category> Categories { get; set; }
     }
 }

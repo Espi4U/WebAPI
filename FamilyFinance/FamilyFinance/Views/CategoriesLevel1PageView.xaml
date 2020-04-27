@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="FamilyFinance.Views.CategoriesLevel1PageView"
              x:Name="page"
-             Title="Categories">
+             Title="Категорії">
     <StackLayout>
         <StackLayout
             Grid.Column="0"
@@ -18,7 +18,7 @@
                 Source="plus_icon.png"
                 Style="{StaticResource addImage}"/>
             <Label
-                Text="Add Category"
+                Text="Додати Категорію"
                 Style="{StaticResource addLabel}"/>
         </StackLayout>
         <ListView HasUnevenRows="True"
@@ -44,7 +44,7 @@
                                     Margin="10"
                                     FontSize="Large"
                                     Text="{Binding Name}"/>
-                                <ImageButton
+                                <!--<Image
                                     Opacity="0.3"
                                     Grid.Column="2"
                                     Margin="10"
@@ -53,9 +53,7 @@
                                     HorizontalOptions="End"
                                     VerticalOptions="CenterAndExpand"
                                     BackgroundColor="Transparent"
-                                    Source="delete_icon"
-                                    Command="{Binding BindingContext.DeleteCommand, Source={x:Reference page}}"
-                                    CommandParameter="{Binding .}"/>
+                                    Source="delete_icon"/>-->
                             </Grid>
                         </ViewCell.View>
                     </ViewCell>

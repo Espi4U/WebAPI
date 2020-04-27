@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FamilyFinance.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,8 +36,8 @@ namespace FamilyFinance.Views
             {
                 Report = Report
             };
-            var responce = await _apiClient.DeleteReportAsync(request);
-            if(!responce.BaseIsSuccess || !responce.IsSuccess)
+            var response = await _apiClient.DeleteReportAsync(request);
+            if(!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
                 return;

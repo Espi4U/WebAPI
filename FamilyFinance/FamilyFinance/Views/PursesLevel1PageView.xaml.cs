@@ -1,4 +1,5 @@
 ﻿using FamilyFinance.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,8 @@ namespace FamilyFinance.Views
         private async void LoadPursesAsync()
         {
             var response = await _apiClient.GetPursesAsync(GlobalHelper.GetBaseRequest());
-            if(!response.BaseIsSuccess || !response.IsSuccess)
+            var a = JsonConvert.SerializeObject(GlobalHelper.GetBaseRequest());
+            if (!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
                 return;
@@ -66,7 +68,7 @@ namespace FamilyFinance.Views
 
         private async void AddAsync()
         {
-            //goto add page
+            await Navigation.PushAsync(new PursesLevel2PageView());
         }
     }
 }

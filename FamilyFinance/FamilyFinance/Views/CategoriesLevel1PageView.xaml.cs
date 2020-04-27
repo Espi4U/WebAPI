@@ -20,7 +20,14 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        public Category SelectedCategory => null;
+        public Category SelectedCategory
+        {
+            get => null;
+            set
+            {
+                OnPropertyChanged(nameof(SelectedCategory));
+            }
+        }
 
         private List<Category> _categories;
         public List<Category> Categories
@@ -91,8 +98,6 @@ namespace FamilyFinance.Views
                 {
                     Category = new Category
                     {
-                        FamilyId = GlobalHelper.GetFamilyId(),
-                        PersonId = GlobalHelper.GetPersonId(),
                         Name = result
                     }
                 };

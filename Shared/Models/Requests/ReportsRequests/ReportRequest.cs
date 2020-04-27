@@ -8,7 +8,6 @@ namespace WebAPI.Models.APIModels.Requests.ReportsControllerRequests
 {
     public class ReportRequest
     {
-        [JsonProperty("report")]
         public Report Report { get; set; }
     }
 }

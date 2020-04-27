@@ -9,7 +9,6 @@ namespace Shared.Models.Requests.CurrenciesRequests
 {
     public class CurrencyRequest
     {
-        [JsonProperty("currency")]
         public Currency Currency { get; set; }
     }
 }

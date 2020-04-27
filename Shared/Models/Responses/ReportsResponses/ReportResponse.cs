@@ -8,7 +8,6 @@ namespace Shared.Models.Responses.ReportsResponses
 {
     public class ReportResponse : BaseResponse
     {
-        [JsonProperty("report")]
         public Report Report { get; set; }
     }
 }

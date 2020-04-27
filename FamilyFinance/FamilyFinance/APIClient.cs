@@ -38,7 +38,7 @@ namespace FamilyFinance
             };
             httpClient = new HttpClient(clientHandler)
             {
-                BaseAddress = new Uri("http://192.168.0.102:81/api/v1/")
+                BaseAddress = new Uri("http://192.168.0.102:86/api/v1/")
             };
         }
 

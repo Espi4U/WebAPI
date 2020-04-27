@@ -55,16 +55,7 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.PersonId == default && request.FamilyId == default)
-                        {
-                            response.BaseIsSuccess = false;
-                            response.BaseMessage = "Bad request";
-                        }
-                        else
-                        {
-                            response.Categories = request.PersonId == default ? db.Categories.Where(x => x.FamilyId == request.FamilyId).ToList() :
-                            db.Categories.Where(x => x.PersonId == request.PersonId).ToList();
-                        }
+                        response.Categories = db.Categories.ToList();
                     }
                 }
                 catch

@@ -1,4 +1,5 @@
-﻿using Shared.Models.Requests.PursesRequests;
+﻿using Microsoft.EntityFrameworkCore;
+using Shared.Models.Requests.PursesRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.PursesResponses;
 using System;
@@ -37,10 +38,10 @@ namespace WebAPI.Services
                         }
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
                     response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
+                    response.BaseMessage = ex.InnerException.Message;
                 }
 
                 return response;
@@ -62,8 +63,8 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            response.Purses = request.PersonId == default ? db.Purses.Where(x => x.FamilyId == request.FamilyId).ToList() :
-                            db.Purses.Where(x => x.PersonId == request.PersonId).ToList();
+                            response.Purses = request.PersonId == default ? db.Purses.Where(x => x.FamilyId == request.FamilyId).Include(c => c.Currency).ToList() :
+                            db.Purses.Where(x => x.PersonId == request.PersonId).Include(c => c.Currency).ToList();
                         }
                     }
                 }

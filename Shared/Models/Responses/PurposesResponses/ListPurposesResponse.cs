@@ -8,7 +8,6 @@ namespace Shared.Models.Responses.PurposesResponses
 {
     public class ListPurposesResponse : BaseResponse
     {
-        [JsonProperty("purposes")]
         public List<Purpose> Purposes { get; set; }
     }
 }

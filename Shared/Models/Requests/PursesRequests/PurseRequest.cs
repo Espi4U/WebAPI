@@ -8,7 +8,6 @@ namespace Shared.Models.Requests.PursesRequests
 {
     public class PurseRequest
     {
-        [JsonProperty("purse")]
         public Purse Purse { get; set; }
     }
 }

@@ -9,7 +9,6 @@ namespace WebAPI.Models.APIModels.Responses
 {
     public class ListReportsResponse : BaseResponse
     {
-        [JsonProperty("reports")]
         public List<Report> Reports { get; set; }
     }
 }

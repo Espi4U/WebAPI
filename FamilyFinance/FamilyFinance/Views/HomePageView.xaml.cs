@@ -12,21 +12,21 @@ namespace FamilyFinance.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePageView : ContentPage
     {
-        public ICommand AddNewIncomeOrExpenseCommand { get; }
+        public ICommand AddCommand { get; }
 
         public HomePageView()
         {
             NavigationPage.SetHasNavigationBar(this, false);
 
-            AddNewIncomeOrExpenseCommand = new Command(AddNewIncomeOrExpense);
+            AddCommand = new Command(GoToAddNewIncomeOrExpensePage);
 
             BindingContext = this;
             InitializeComponent();
         }
 
-        public void AddNewIncomeOrExpense(object parameter)
+        public void GoToAddNewIncomeOrExpensePage(object parameter)
         {
-            //go to next page
+            Navigation.PushAsync(new AddIncomeOrExpensePageView());
         }
     }
 }

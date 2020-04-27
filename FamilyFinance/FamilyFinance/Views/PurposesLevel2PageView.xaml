@@ -55,14 +55,14 @@
                     <TapGestureRecognizer Command="{Binding EnlargeCommand}"/>
                 </StackLayout.GestureRecognizers>
                 <Image Source="plus_icon.png" />
-                <Label Text="Enlarge" />
+                <Label Text="Збільшити" />
             </StackLayout>
             <StackLayout Grid.Column="1">
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding DeleteCommand}"/>
                 </StackLayout.GestureRecognizers>
                 <Image Source="delete_icon.png" />
-                <Label Text="Delete" />
+                <Label Text="Видалити" />
             </StackLayout>
         </Grid>
     </Grid>
