@@ -23,16 +23,8 @@ namespace WebAPI.Controllers
             _currencyService = currencyService;
         }
 
-        [Route("add_currency"), HttpPost]
-        public BaseResponse AddCurrency([FromBody]CurrencyRequest request) =>
-            _currencyService.AddCurrency(request);
-
         [Route("get_currencies"), HttpPost]
         public ListCurrenciesResponse GetCurrencies([FromBody]BaseRequest request) =>
             _currencyService.GetCurrencies(request);
-
-        [Route("delete_currency"), HttpPost]
-        public BaseResponse DeleteCurrency([FromBody]CurrencyRequest request) =>
-            _currencyService.DeleteCurrency(request);
     }
 }

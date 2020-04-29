@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Models;
+using WebAPI.Models.APIModels;
 using WebAPI.Models.APIModels.Requests;
 
 namespace WebAPI.Services
@@ -20,19 +21,31 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.Purpose == default)
+                        if (request.Purpose == null)
                         {
                             response.BaseIsSuccess = false;
-                            response.BaseMessage = "Cannot add empty purse";
+                            response.BaseMessage = "Не можна додати порожню ціль заощадження";
                         }
-                        else if (db.Purposes.Contains(request.Purpose))
+                        else if (db.Purposes.Any(x => x.Name == request.Purpose.Name))
                         {
                             response.BaseIsSuccess = false;
-                            response.BaseMessage = "Purse is already exist";
+                            response.BaseMessage = "Така ціль заощадження вже є";
                         }
                         else
                         {
-                            db.Purposes.Add(request.Purpose);
+                            var currency = db.Currencies.Where(x => x.Name == request.Purpose.Currency.Name).FirstOrDefault();
+
+                            var model = new Purpose
+                            {
+                                Name = request.Purpose.Name,
+                                FinalSize = request.Purpose.FinalSize,
+                                CurrentSize = request.Purpose.CurrentSize,
+                                Currency = currency,
+                                FamilyId = request.Purpose.FamilyId,
+                                PersonId = request.Purpose.PersonId
+                            };
+
+                            db.Purposes.Add(model);
                             db.SaveChanges();
                         }
                     }
@@ -40,7 +53,7 @@ namespace WebAPI.Services
                 catch
                 {
                     response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
                 }
 
                 return response;
@@ -55,14 +68,14 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.PersonId == default && request.FamilyId == default)
+                        if (request.PersonId == 0 && request.FamilyId == 0)
                         {
                             response.BaseIsSuccess = false;
-                            response.BaseMessage = "Bad request";
+                            response.BaseMessage = Shared.Constants.BAD_REQUEST;
                         }
                         else
                         {
-                            response.Purposes = request.PersonId == default ? db.Purposes.Where(x => x.FamilyId == request.FamilyId).ToList() :
+                            response.Purposes = request.PersonId == 0 ? db.Purposes.Where(x => x.FamilyId == request.FamilyId).ToList() :
                             db.Purposes.Where(x => x.PersonId == request.PersonId).ToList();
                         }
                     }
@@ -70,7 +83,7 @@ namespace WebAPI.Services
                 catch
                 {
                     response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
                 }
 
                 return response;
@@ -94,7 +107,7 @@ namespace WebAPI.Services
                 catch
                 {
                     response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
                 }
 
                 return response;

@@ -56,7 +56,6 @@ namespace FamilyFinance.Views
         private async void LoadPursesAsync()
         {
             var response = await _apiClient.GetPursesAsync(GlobalHelper.GetBaseRequest());
-            var a = JsonConvert.SerializeObject(GlobalHelper.GetBaseRequest());
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);

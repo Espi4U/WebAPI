@@ -23,20 +23,20 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.PersonId == default && request.FamilyId == default)
+                        if (request.PersonId == 0 && request.FamilyId == 0)
                         {
                             response.BaseIsSuccess = false;
-                            response.BaseMessage = "Bad request";
+                            response.BaseMessage = Shared.Constants.BAD_REQUEST;
                         }
                         else
                         {
-                            if(request.PersonId != default && request.FamilyId != default)
+                            if(request.PersonId != 0 && request.FamilyId != 0)
                             {
                                 response.Reports = db.Reports.Where(x => x.PersonId == request.PersonId || x.FamilyId == request.FamilyId).ToList();
                             }
                             else
                             {
-                                response.Reports = request.PersonId == default ? db.Reports.Where(x => x.FamilyId == request.FamilyId).ToList() :
+                                response.Reports = request.PersonId == 0 ? db.Reports.Where(x => x.FamilyId == request.FamilyId).ToList() :
                                 db.Reports.Where(x => x.PersonId == request.PersonId).ToList();
                             }
                         }
@@ -45,7 +45,7 @@ namespace WebAPI.Services
                 catch
                 {
                     response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
                 }
 
                 return response;
@@ -69,7 +69,7 @@ namespace WebAPI.Services
                 catch
                 {
                     response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
                 }
 
                 return response;

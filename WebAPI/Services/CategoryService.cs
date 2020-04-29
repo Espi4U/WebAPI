@@ -1,4 +1,6 @@
-﻿using Shared.Models.Requests.CategoriesRequests;
+﻿using Microsoft.VisualBasic;
+using Shared;
+using Shared.Models.Requests.CategoriesRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.CategoriesResponses;
 using System;
@@ -40,7 +42,7 @@ namespace WebAPI.Services
                 catch
                 {
                     response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
                 }
 
                 return response;
@@ -61,7 +63,7 @@ namespace WebAPI.Services
                 catch
                 {
                     response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
                 }
 
                 return response;
@@ -85,7 +87,7 @@ namespace WebAPI.Services
                 catch
                 {
                     response.BaseIsSuccess = false;
-                    response.BaseMessage = "Bad request";
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
                 }
 
                 return response;

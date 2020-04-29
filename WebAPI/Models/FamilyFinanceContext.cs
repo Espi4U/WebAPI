@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 using Shared.Models;
 using WebAPI.Models.APIModels;
 
@@ -12,7 +13,7 @@ namespace WebAPI.Models
         public DbSet<Purse> Purses { get; set; }
         public DbSet<Purpose> Purposes { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<ChangeMoney> ChangesMoney { get; set; }
+        public DbSet<ChangeMoney> ChangeMoneys { get; set; }
         public DbSet<Currency> Currencies { get; set; }
 
         public FamilyFinanceContext()
@@ -23,6 +24,14 @@ namespace WebAPI.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("server=localhost;UserId=root;Password=espi4u;database=espdb1;");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Category>().Property(x => x.Id).ValueGeneratedNever();
+            modelBuilder.Entity<Currency>().Property(x => x.Id).ValueGeneratedNever();
         }
     }
 }
