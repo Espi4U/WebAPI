@@ -42,9 +42,11 @@ namespace FamilyFinance.Views
             }
         }
 
-        public PursesLevel2PageView()
+        public PursesLevel2PageView(List<Currency> currencies)
         {
             _apiClient = new APIClient();
+
+            Currencies = currencies;
 
             SaveCommand = new Command(SaveAsync);
 
@@ -56,25 +58,6 @@ namespace FamilyFinance.Views
 
             BindingContext = this;
             InitializeComponent();
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            LoadCurrenciesAsync();
-        }
-
-        private async void LoadCurrenciesAsync()
-        {
-            var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
-            if(!response.BaseIsSuccess || !response.IsSuccess)
-            {
-                AlertHelper.ShowAlertMessage(response, this);
-                return;
-            }
-
-            Currencies = response.Currencies;
         }
 
         private async void SaveAsync()

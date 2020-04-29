@@ -68,20 +68,20 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.PersonId == 0 && request.FamilyId == 0)
+                        if (request.PersonId == null && request.FamilyId == null)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = Shared.Constants.BAD_REQUEST;
                         }
                         else
                         {
-                            if(request.PersonId != 0 || request.FamilyId != 0)
+                            if(request.PersonId != null || request.FamilyId != null)
                             {
                                 response.Purposes = db.Purposes.Where(x => x.FamilyId == request.FamilyId || x.PersonId == request.PersonId).ToList();
                             }
                             else
                             {
-                                response.Purposes = request.PersonId == 0 ?
+                                response.Purposes = request.PersonId == null ?
                                 db.Purposes.Where(x => x.FamilyId == request.FamilyId).ToList():
                                 db.Purposes.Where(x => x.PersonId == request.PersonId).ToList();
                             }

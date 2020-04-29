@@ -22,20 +22,20 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if(request.FamilyId == 0 && request.PersonId == 0)
+                        if(request.FamilyId == null && request.PersonId == null)
                         {
                             response.BaseMessage = Shared.Constants.NEED_AUTHORIZE;
                             response.IsSuccess = false;
                         }
                         else
                         {
-                            if(request.PersonId != 0 || request.FamilyId != 0)
+                            if(request.PersonId != null || request.FamilyId != null)
                             {
                                 response.ChangeMoneys = db.ChangeMoneys.Where(x => x.Type == request.Type && (x.FamilyId == request.FamilyId || x.PersonId == request.PersonId)).ToList();
                             }
                             else
                             {
-                                response.ChangeMoneys = request.FamilyId == 0 ?
+                                response.ChangeMoneys = request.FamilyId == null ?
                                 db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.Type == request.Type).ToList():
                                 db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.Type == request.Type).ToList();
                             }
@@ -60,20 +60,20 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.FamilyId == 0 && request.PersonId == 0)
+                        if (request.FamilyId == null && request.PersonId == null)
                         {
                             response.BaseMessage = Shared.Constants.NEED_AUTHORIZE;
                             response.IsSuccess = false;
                         }
                         else
                         {
-                            if (request.PersonId != 0 || request.FamilyId != 0)
+                            if (request.PersonId != null || request.FamilyId != null)
                             {
                                 response.ChangeMoney = db.ChangeMoneys.Where(x => x.Type == request.Type && (x.FamilyId == request.FamilyId || x.PersonId == request.PersonId)).Max();
                             }
                             else
                             {
-                                response.ChangeMoney = request.FamilyId == 0 ?
+                                response.ChangeMoney = request.FamilyId == null ?
                                 db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.Type == request.Type).Max():
                                 db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.Type == request.Type).Max();
                             }
@@ -98,20 +98,20 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.FamilyId == 0 && request.PersonId == 0)
+                        if (request.FamilyId == null && request.PersonId == null)
                         {
                             response.BaseMessage = Shared.Constants.BAD_REQUEST;
                             response.IsSuccess = false;
                         }
                         else
                         {
-                            if (request.PersonId != 0 || request.FamilyId != 0)
+                            if (request.PersonId != null || request.FamilyId != null)
                             {
                                 response.ChangeMoney = db.ChangeMoneys.Where(x => x.Type == request.Type && (x.FamilyId == request.FamilyId || x.PersonId == request.PersonId)).Min();
                             }
                             else
                             {
-                                response.ChangeMoney = request.FamilyId == 0 ?
+                                response.ChangeMoney = request.FamilyId == null ?
                                 db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.Type == request.Type).Min():
                                 db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.Type == request.Type).Min();
                             }
@@ -143,13 +143,13 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            if (request.PersonId != 0 || request.FamilyId != 0)
+                            if (request.PersonId != null || request.FamilyId != null)
                             {
                                 response.ChangeMoneys = db.ChangeMoneys.Where(x => (x.PersonId == request.PersonId || x.FamilyId ==request.FamilyId) && (x.Date >= request.Start && x.Date <= request.End)).ToList();
                             }
                             else
                             {
-                                response.ChangeMoneys = request.FamilyId == 0 ?
+                                response.ChangeMoneys = request.FamilyId == null ?
                                 db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && (x.Date >= request.Start && x.Date <= request.End)).ToList():
                                 db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && (x.Date >= request.Start && x.Date <= request.End)).ToList();
                             }
@@ -180,7 +180,7 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if(request.ChangeMoney.FamilyId == 0 && request.ChangeMoney.PersonId == 0)
+                        if(request.ChangeMoney.FamilyId == null && request.ChangeMoney.PersonId == null)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = Shared.Constants.NEED_AUTHORIZE;

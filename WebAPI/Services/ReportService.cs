@@ -23,20 +23,20 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.PersonId == 0 && request.FamilyId == 0)
+                        if (request.PersonId == null && request.FamilyId == null)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = Shared.Constants.BAD_REQUEST;
                         }
                         else
                         {
-                            if(request.PersonId != 0 && request.FamilyId != 0)
+                            if(request.PersonId != null && request.FamilyId != null)
                             {
                                 response.Reports = db.Reports.Where(x => x.PersonId == request.PersonId || x.FamilyId == request.FamilyId).ToList();
                             }
                             else
                             {
-                                response.Reports = request.PersonId == 0 ?
+                                response.Reports = request.PersonId == null ?
                                 db.Reports.Where(x => x.FamilyId == request.FamilyId).ToList():
                                 db.Reports.Where(x => x.PersonId == request.PersonId).ToList();
                             }

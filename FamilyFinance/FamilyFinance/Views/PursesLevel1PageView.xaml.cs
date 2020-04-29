@@ -36,6 +36,17 @@ namespace FamilyFinance.Views
             }
         }
 
+        private List<Currency> _currencies;
+        public List<Currency> Currencies
+        {
+            get => _currencies;
+            set
+            {
+                _currencies = value;
+                OnPropertyChanged(nameof(Currencies));
+            }
+        }
+
         public PursesLevel1PageView()
         {
             _apiClient = new APIClient();
@@ -50,6 +61,7 @@ namespace FamilyFinance.Views
         {
             base.OnAppearing();
 
+            LoadCurrenciesAsync();
             LoadPursesAsync();
         }
 
@@ -67,7 +79,24 @@ namespace FamilyFinance.Views
 
         private async void AddAsync()
         {
-            await Navigation.PushAsync(new PursesLevel2PageView());
+            await Navigation.PushAsync(new PursesLevel2PageView(Currencies));
+        }
+
+        private async void LoadCurrenciesAsync()
+        {
+            var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
+            if (!response.BaseIsSuccess || !response.IsSuccess)
+            {
+                AlertHelper.ShowAlertMessage(response, this);
+                return;
+            }
+
+            Currencies = response.Currencies;
+        }
+
+        public string CurrencyIdToName(int id)
+        {
+            return Currencies.Where(x => x.Id == id).FirstOrDefault().Name;
         }
     }
 }

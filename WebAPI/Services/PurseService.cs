@@ -67,20 +67,20 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.PersonId == 0 && request.FamilyId == 0)
+                        if (request.PersonId == null && request.FamilyId == null)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = Shared.Constants.NEED_AUTHORIZE;
                         }
                         else
                         {
-                            if(request.PersonId != 0 || request.FamilyId != 0)
+                            if(request.PersonId != null || request.FamilyId != null)
                             {
                                 response.Purses = db.Purses.Where(x => x.FamilyId == request.FamilyId || x.PersonId == request.PersonId).ToList();
                             }
                             else
                             {
-                                response.Purses = request.PersonId == 0 ?
+                                response.Purses = request.PersonId == null ?
                                 db.Purses.Where(x => x.FamilyId == request.FamilyId).ToList():
                                 db.Purses.Where(x => x.PersonId == request.PersonId).ToList();
                             }
