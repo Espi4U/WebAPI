@@ -29,8 +29,16 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            response.ChangeMoneys = request.FamilyId == 0 ? db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.Type == request.Type).ToList() :
-                                    db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.Type == request.Type).ToList();
+                            if(request.PersonId != 0 || request.FamilyId != 0)
+                            {
+                                response.ChangeMoneys = db.ChangeMoneys.Where(x => x.Type == request.Type && (x.FamilyId == request.FamilyId || x.PersonId == request.PersonId)).ToList();
+                            }
+                            else
+                            {
+                                response.ChangeMoneys = request.FamilyId == 0 ?
+                                db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.Type == request.Type).ToList():
+                                db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.Type == request.Type).ToList();
+                            }
                         }
                     }
                 }
@@ -59,13 +67,15 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            response.ChangeMoney = request.FamilyId == 0 ? db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.Type == request.Type).Max() :
-                                    db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.Type == request.Type).Max();
-
-                            if (response.ChangeMoney == null)
+                            if (request.PersonId != 0 || request.FamilyId != 0)
                             {
-                                response.BaseMessage = Shared.Constants.NOT_FOUND;
-                                response.IsSuccess = false;
+                                response.ChangeMoney = db.ChangeMoneys.Where(x => x.Type == request.Type && (x.FamilyId == request.FamilyId || x.PersonId == request.PersonId)).Max();
+                            }
+                            else
+                            {
+                                response.ChangeMoney = request.FamilyId == 0 ?
+                                db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.Type == request.Type).Max():
+                                db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.Type == request.Type).Max();
                             }
                         }
                     }
@@ -95,13 +105,15 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            response.ChangeMoney = request.FamilyId == 0 ? db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.Type == request.Type).Min() :
-                                    db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.Type == request.Type).Min();
-
-                            if (response.ChangeMoney == default)
+                            if (request.PersonId != 0 || request.FamilyId != 0)
                             {
-                                response.BaseMessage = Shared.Constants.NOT_FOUND;
-                                response.IsSuccess = false;
+                                response.ChangeMoney = db.ChangeMoneys.Where(x => x.Type == request.Type && (x.FamilyId == request.FamilyId || x.PersonId == request.PersonId)).Min();
+                            }
+                            else
+                            {
+                                response.ChangeMoney = request.FamilyId == 0 ?
+                                db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.Type == request.Type).Min():
+                                db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.Type == request.Type).Min();
                             }
                         }
                     }
@@ -131,8 +143,16 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            response.ChangeMoneys = request.FamilyId == 0 ? db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && (x.Date >= request.Start && x.Date <= request.End)).ToList() :
-                                    db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && (x.Date >= request.Start && x.Date <= request.End)).ToList();
+                            if (request.PersonId != 0 || request.FamilyId != 0)
+                            {
+                                response.ChangeMoneys = db.ChangeMoneys.Where(x => (x.PersonId == request.PersonId || x.FamilyId ==request.FamilyId) && (x.Date >= request.Start && x.Date <= request.End)).ToList();
+                            }
+                            else
+                            {
+                                response.ChangeMoneys = request.FamilyId == 0 ?
+                                db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && (x.Date >= request.Start && x.Date <= request.End)).ToList():
+                                db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && (x.Date >= request.Start && x.Date <= request.End)).ToList();
+                            }
 
                             if (response.ChangeMoneys == default)
                             {
@@ -185,27 +205,6 @@ namespace WebAPI.Services
                             db.ChangeMoneys.Add(model);
                             db.SaveChanges();
                         }
-                    }
-                }
-                catch
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
-                }
-
-                return response;
-            });
-        }
-
-        public ListChangeMoneysResponse GetAdviceForTimePeriod(BaseRequest request/*need change*/)
-        {
-            return GetResponse(() => {
-                var response = new ListChangeMoneysResponse();
-                try
-                {
-                    using (FamilyFinanceContext db = new FamilyFinanceContext())
-                    {
-                        // code here
                     }
                 }
                 catch

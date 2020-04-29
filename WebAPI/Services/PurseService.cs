@@ -74,8 +74,16 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            response.Purses = request.PersonId == 0 ? db.Purses.Where(x => x.FamilyId == request.FamilyId).ToList() :
-                            db.Purses.Where(x => x.PersonId == request.PersonId).ToList();
+                            if(request.PersonId != 0 || request.FamilyId != 0)
+                            {
+                                response.Purses = db.Purses.Where(x => x.FamilyId == request.FamilyId || x.PersonId == request.PersonId).ToList();
+                            }
+                            else
+                            {
+                                response.Purses = request.PersonId == 0 ?
+                                db.Purses.Where(x => x.FamilyId == request.FamilyId).ToList():
+                                db.Purses.Where(x => x.PersonId == request.PersonId).ToList();
+                            }
                         }
                     }
                 }

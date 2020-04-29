@@ -36,7 +36,8 @@ namespace WebAPI.Services
                             }
                             else
                             {
-                                response.Reports = request.PersonId == 0 ? db.Reports.Where(x => x.FamilyId == request.FamilyId).ToList() :
+                                response.Reports = request.PersonId == 0 ?
+                                db.Reports.Where(x => x.FamilyId == request.FamilyId).ToList():
                                 db.Reports.Where(x => x.PersonId == request.PersonId).ToList();
                             }
                         }
