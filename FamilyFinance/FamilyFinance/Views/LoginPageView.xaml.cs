@@ -32,7 +32,7 @@ namespace FamilyFinance.Views
             InitializeComponent();
         }
 
-        public void LogIn()
+        private void LogIn()
         {
             var request = new LoginRequest
             {

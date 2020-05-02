@@ -12,5 +12,6 @@ namespace WebAPI.Models.APIModels
         public List<Purpose> Purposes { get; set; }
         public List<Purse> Purses { get; set; }
         public List<Report> Reports { get; set; }
+        public List<InviteKey> InviteKeys { get; set; }
     }
 }

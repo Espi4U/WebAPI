@@ -24,10 +24,6 @@ namespace WebAPI.Controllers
             _personService = personService;
         }
 
-        [Route("get_persons"), HttpPost]
-        public async Task<ListPersonsResponse> GetPersonsAsync([FromBody]BaseRequest request) =>
-            await Task.Run(()=> _personService.GetPersons(request));
-
         [Route("add_person"), HttpPost]
         public async Task<BaseResponse> AddPersonAsync([FromBody]PersonRequest request) =>
             await Task.Run(() => _personService.AddPerson(request));

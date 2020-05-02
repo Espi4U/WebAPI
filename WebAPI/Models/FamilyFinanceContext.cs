@@ -15,10 +15,12 @@ namespace WebAPI.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<ChangeMoney> ChangeMoneys { get; set; }
         public DbSet<Currency> Currencies { get; set; }
+        public DbSet<InviteKey> InviteKeys { get; set; }
 
         public FamilyFinanceContext()
         {
-            Database.EnsureCreated();
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,9 +31,6 @@ namespace WebAPI.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Category>().Property(x => x.Id).ValueGeneratedNever();
-            modelBuilder.Entity<Currency>().Property(x => x.Id).ValueGeneratedNever();
         }
     }
 }
