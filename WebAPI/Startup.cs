@@ -50,6 +50,7 @@ namespace WebAPI
             services.AddTransient<PurposeService>();
             services.AddTransient<PurseService>();
             services.AddTransient<ReportService>();
+            services.AddTransient<InviteKeyService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

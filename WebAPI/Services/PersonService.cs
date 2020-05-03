@@ -1,4 +1,6 @@
-﻿using Shared;
+﻿using Microsoft.EntityFrameworkCore;
+using Shared;
+using Shared.Models.Requests;
 using Shared.Models.Requests.BaseRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.PersonsResponses;
@@ -17,52 +19,6 @@ namespace WebAPI.Services
 {
     public class PersonService : BaseService
     {
-        public BaseResponse AddPerson(PersonRequest request)
-        {
-            return GetResponse(() => {
-                var response = new BaseResponse();
-                try
-                {
-                    using (FamilyFinanceContext db = new FamilyFinanceContext())
-                    {
-                        if (request.Person == null)
-                        {
-                            response.BaseIsSuccess = false;
-                            response.BaseMessage = "Не можна додати порожню особу";
-                        }
-                        else if (db.Persons.Any(x=> x.Name == request.Person.Name && x.FamilyId == request.Person.FamilyId))
-                        {
-                            response.BaseIsSuccess = false;
-                            response.BaseMessage = "Така особа вже є";
-                        }
-                        else
-                        {
-                            var family = db.Families.Where(x => x.Id == request.Person.FamilyId).FirstOrDefault();
-
-                            var model = new Person
-                            {
-                                Name = request.Person.Name,
-                                Role = request.Person.Role,
-                                Login = request.Person.Login,
-                                Password = request.Person.Password,
-                                Family = family
-                            };
-
-                            db.Persons.Add(model);
-                            db.SaveChanges();
-                        }
-                    }
-                }
-                catch
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = Constants.BAD_REQUEST;
-                }
-
-                return response;
-            });
-        }
-
         public LoginResponse Login(LoginRequest request)
         {
             return GetResponse(() => {
@@ -94,6 +50,105 @@ namespace WebAPI.Services
                                 response.FamilyId = currentPerson.FamilyId;
                                 response.PersonId = currentPerson.Id;
                                 response.FamilyName = heresFamily.Name;
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = Constants.BAD_REQUEST;
+                }
+
+                return response;
+            });
+        }
+
+        public BaseResponse RegistrationNew(RegistrationRequest request)
+        {
+            return GetResponse(() => {
+                var response = new BaseResponse();
+                try
+                {
+                    using (FamilyFinanceContext db = new FamilyFinanceContext())
+                    {
+                        if (request == null)
+                        {
+                            response.BaseIsSuccess = false;
+                            response.BaseMessage = "Помилка, пусті дані";
+                        }
+                        else
+                        {
+                            var family = new Family
+                            {
+                                Name = request.FamilyName
+                            };
+
+                            db.Families.Add(family);
+
+                            var person = new Person
+                            {
+                                Name = request.PersonName,
+                                Role = "H",
+                                Family = family,
+                                Login = request.Login,
+                                Password = request.Password
+                            };
+
+                            db.Persons.Add(person);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                catch
+                {
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = Constants.BAD_REQUEST;
+                }
+
+                return response;
+            });
+        }
+
+        public BaseResponse RegistrationNewWithKey(RegistrationRequest request)
+        {
+            return GetResponse(() => {
+                var response = new BaseResponse();
+                try
+                {
+                    using (FamilyFinanceContext db = new FamilyFinanceContext())
+                    {
+                        if (request == null)
+                        {
+                            response.BaseIsSuccess = false;
+                            response.BaseMessage = "Помилка, пусті дані";
+                        }
+                        else if (request.Key != null && request.FamilyId != null)
+                        {
+                            if(db.InviteKeys.Any(x => x.FamilyId == request.FamilyId && x.Key == request.Key))
+                            {
+                                response.BaseIsSuccess = false;
+                                response.BaseMessage = "Помилка, Невірний ключ";
+                            }
+                            else
+                            {
+                                var key = db.InviteKeys.Where(x => x.Key == request.Key).FirstOrDefault();
+                                db.InviteKeys.Remove(key);
+
+                                var family = db.Families.Where(x => x.Id == request.FamilyId).FirstOrDefault();
+
+                                var person = new Person
+                                {
+                                    Name = request.PersonName,
+                                    Role = "U",
+                                    Family = family,
+                                    Login = request.Login,
+                                    Password = request.Password
+                                };
+
+                                db.Persons.Add(person);
+                                db.SaveChanges();
+
                             }
                         }
                     }

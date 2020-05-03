@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Models.Requests;
+using Shared.Models.Requests.BaseRequests;
 using Shared.Models.Responses;
 using WebAPI.Models;
 using WebAPI.Models.APIModels;
@@ -24,8 +26,16 @@ namespace WebAPI.Controllers
             _personService = personService;
         }
 
-        [Route("add_person"), HttpPost]
-        public async Task<BaseResponse> AddPersonAsync([FromBody]PersonRequest request) =>
-            await Task.Run(() => _personService.AddPerson(request));
+        [HttpPost, Route("login")]
+        public async Task<LoginResponse> Login([FromBody]LoginRequest request) =>
+            await Task.Run(() => _personService.Login(request));
+
+        [HttpPost, Route("registration_new")]
+        public async Task<BaseResponse> RegistrationNew([FromBody]RegistrationRequest request) =>
+            await Task.Run(() => _personService.RegistrationNew(request));
+
+        [HttpPost, Route("registration_new_with_key")]
+        public async Task<BaseResponse> RegistrationNewWithKey([FromBody]RegistrationRequest request) =>
+            await Task.Run(() => _personService.RegistrationNewWithKey(request));
     }
 }

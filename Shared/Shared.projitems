@@ -32,6 +32,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\PersonsRequests\PersonRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\PurposesRequests\PurposeRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\PursesRequests\PurseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\RegistrationRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\ReportsRequests\ReportRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ApiResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\BaseResponse.cs" />
