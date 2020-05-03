@@ -43,6 +43,13 @@ namespace FamilyFinance.Helpers
             Application.Current.SavePropertiesAsync();
         }
 
+        public static void Logout()
+        {
+            Application.Current.Properties["familyid"] = null;
+            Application.Current.Properties["personid"] = null;
+            Application.Current.SavePropertiesAsync();
+        }
+
         public static BaseRequest GetBaseRequest()
         {
             //return new BaseRequest

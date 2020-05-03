@@ -9,6 +9,5 @@ namespace Shared.Models.Requests.BaseRequests
     {
         public string Login { get; set; }
         public string Password { get; set; }
-        public int PINCode { get; set; }
     }
 }

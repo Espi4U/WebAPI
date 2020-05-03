@@ -6,8 +6,11 @@ using System.Text;
 namespace Shared.Models.Responses
 {
     public class LoginResponse : BaseResponse
-    {
-        public int PersonId { get; set; }
-        public string Token { get; set; }
+    { 
+        public int? FamilyId { get; set; }
+        public int? PersonId { get; set; }
+        public string PersonName { get; set; }
+        public string FamilyName { get; set; }
+        public string Role { get; set; }
     }
 }

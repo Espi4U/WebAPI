@@ -46,6 +46,7 @@ namespace FamilyFinance.Views
 
             SendEmailAsync(key);
             SaveKeyToDatabaseAsync(key);
+            EmailAddress = string.Empty;
         }
 
         private async void SendEmailAsync(string key)
