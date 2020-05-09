@@ -1,5 +1,6 @@
 ﻿using FamilyFinance.Helpers;
 using Newtonsoft.Json;
+using Shared.Models.Requests;
 using Shared.Models.Requests.BaseRequests;
 using Shared.Models.Requests.CategoriesRequests;
 using Shared.Models.Requests.ChangeMoneyRequests;
@@ -54,17 +55,16 @@ namespace FamilyFinance
 
         #endregion
 
-        #region FAMILY
-
-        public async Task<BaseResponse> AddFamilyAsync(FamilyRequest request) =>
-            await TryCallApiAsync<BaseResponse>("families/add_family", request);
-
-        #endregion
-
         #region PERSON
 
-        public async Task<BaseResponse> AddPersonAsync(PersonRequest request) =>
-            await TryCallApiAsync<BaseResponse>("persons/add_person", request);
+        public async Task<LoginResponse> LoginAsync(LoginRequest request) =>
+            await TryCallApiAsync<LoginResponse>("persons/login", request);
+
+        public async Task<BaseResponse> RegistrationNewAsync(RegistrationRequest request) =>
+            await TryCallApiAsync<BaseResponse>("persons/registration_new", request);
+
+        public async Task<BaseResponse> RegistrationNewWithKeyAsync(RegistrationRequest request) =>
+            await TryCallApiAsync<BaseResponse>("persons/registration_new_with_key", request);
 
         #endregion
 
@@ -83,14 +83,8 @@ namespace FamilyFinance
 
         #region CURRENCIES
 
-        public async Task<BaseResponse> AddCurrencyAsync(CurrencyRequest request) =>
-            await TryCallApiAsync<BaseResponse>("currencies/add_currency", request);
-
         public async Task<ListCurrenciesResponse> GetCurrenciesAsync(BaseRequest request) =>
             await TryCallApiAsync<ListCurrenciesResponse>("currencies/get_currencies", request);
-
-        public async Task<BaseResponse> DeleteCurrencyAsync(CurrencyRequest request) =>
-            await TryCallApiAsync<BaseResponse>("currencies/delete_currency", request);
 
         #endregion
 
@@ -136,23 +130,6 @@ namespace FamilyFinance
 
         public async Task<BaseResponse> AddIncomeOrExpenseAsync(ChangeMoneyRequest request) =>
             await TryCallApiAsync<BaseResponse>("changemoneys/add", request);
-
-        #endregion
-
-
-        #region ACCOUNT
-
-        public async void LogInAsync(LoginRequest request)
-        {
-            var response = await TryCallApiAsync<LoginResponse>("account/login", request);
-            if (!response.BaseIsSuccess)
-            {
-                return;
-            }
-
-            GlobalHelper.WritePersonId(response.PersonId);
-            GlobalHelper.WriteToken(response.Token);
-        }
 
         #endregion
 
