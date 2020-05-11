@@ -62,7 +62,10 @@
     <EmbeddedResource Update="Views\PursesLevel2PageView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\RegistrationPageView.xaml">
+    <EmbeddedResource Update="Views\RegistrationNewPageView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\RegistrationNewWithKeyPageView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ReportsLevel1PageView.xaml">

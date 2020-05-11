@@ -1,4 +1,5 @@
-﻿using Shared.Models.Requests.BaseRequests;
+﻿using FamilyFinance.Helpers;
+using Shared.Models.Requests.BaseRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,34 +15,41 @@ namespace FamilyFinance.Views
     public partial class LoginPageView : ContentPage
     {
         private APIClient _apiClient;
-        public string Login { get; set; }
 
+        public string Login { get; set; }
         public string Password { get; set; }
 
-        public int PINCode { get; set; }
-
-        public ICommand LogInCommand { get; }
+        public ICommand LoginCommand { get; }
 
         public LoginPageView()
         {
             _apiClient = new APIClient();
 
-            LogInCommand = new Command(LogIn);
+            LoginCommand = new Command(LoginAsync);
 
             BindingContext = this;
             InitializeComponent();
         }
 
-        private void LogIn()
+        private async void LoginAsync()
         {
             var request = new LoginRequest
             {
                 Login = Login,
-                Password = Password,
-                PINCode = PINCode
+                Password = Password
             };
+            var response = await _apiClient.LoginAsync(request);
+            if(!response.BaseIsSuccess || !response.IsSuccess)
+            {
+                AlertHelper.ShowAlertMessage(response, this);
+                return;
+            }
 
-            _apiClient.LogInAsync(request);
+            GlobalHelper.SetPersonId(response.PersonId);
+            GlobalHelper.SetFamilyId(response.FamilyId);
+            GlobalHelper.SetFamilyName(response.FamilyName);
+            GlobalHelper.SetPersonName(response.PersonName);
+            GlobalHelper.SetRole(response.Role);
         }
     }
 }

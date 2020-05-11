@@ -8,23 +8,6 @@ namespace FamilyFinance.Helpers
 {
     public static class GlobalHelper
     {
-        public static void WriteToken(string token)
-        {
-            Application.Current.Properties["token"] = token;
-            Application.Current.SavePropertiesAsync();
-        }
-
-        public static string GetToken()
-        {
-            return Application.Current.Properties["token"].ToString();
-        }
-
-        public static void WritePersonId(int id)
-        {
-            Application.Current.Properties["personid"] = id;
-            Application.Current.SavePropertiesAsync();
-        }
-
         public static int GetPersonId()
         {
             //return Convert.ToInt32(Application.Current.Properties["personid"]);
@@ -37,9 +20,47 @@ namespace FamilyFinance.Helpers
             return 1;
         }
 
-        public static void SetPersonId(int id)
+        public static string GetPersonName()
+        {
+            return Convert.ToString(Application.Current.Properties["personname"]);
+        }
+
+        public static string GetFamilyName()
+        {
+            return Convert.ToString(Application.Current.Properties["familyname"]);
+        }
+
+        public static string GetRole()
+        {
+            return Convert.ToString(Application.Current.Properties["role"]);
+        }
+
+        public static void SetPersonId(int? id)
         {
             Application.Current.Properties["familyid"] = id;
+            Application.Current.SavePropertiesAsync();
+        }
+
+        public static void SetFamilyId(int? id)
+        {
+            Application.Current.Properties["familyid"] = id;
+            Application.Current.SavePropertiesAsync();
+        }
+
+        public static void SetPersonName(string personName)
+        {
+            Application.Current.Properties["personname"] = personName;
+            Application.Current.SavePropertiesAsync();
+        }
+
+        public static void SetFamilyName(string familyName)
+        {
+            Application.Current.Properties["familyname"] = familyName;
+            Application.Current.SavePropertiesAsync();
+        }
+        public static void SetRole(string role)
+        {
+            Application.Current.Properties["role"] = role;
             Application.Current.SavePropertiesAsync();
         }
 
@@ -47,6 +68,9 @@ namespace FamilyFinance.Helpers
         {
             Application.Current.Properties["familyid"] = null;
             Application.Current.Properties["personid"] = null;
+            Application.Current.Properties["familyname"] = null;
+            Application.Current.Properties["personname"] = null;
+            Application.Current.Properties["role"] = null;
             Application.Current.SavePropertiesAsync();
         }
 

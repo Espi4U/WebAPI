@@ -10,10 +10,8 @@
         <Entry Text="{Binding Login, Mode=TwoWay}" />
         <Label Text="Password" />
         <Entry Text="{Binding Password}" />
-        <Label Text="PIN Code" />
-        <Entry Text="{Binding PINCode}" />
         <Button 
            Text="LogIn"
-            Command="{Binding LogInCommand}" />
+            Command="{Binding LoginCommand}" />
     </StackLayout>
 </ContentPage>
