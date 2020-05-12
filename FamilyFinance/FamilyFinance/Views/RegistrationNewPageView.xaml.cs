@@ -33,6 +33,8 @@ namespace FamilyFinance.Views
         {
             _apiClient = new APIClient();
 
+            Model = new RegistrationRequest();
+
             RegistrationCommand = new Command(RegistrationAsync);
 
             BindingContext = this;

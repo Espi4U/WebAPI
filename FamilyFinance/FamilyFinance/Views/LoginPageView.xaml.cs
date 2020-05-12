@@ -28,6 +28,7 @@ namespace FamilyFinance.Views
         }
 
         public ICommand LoginCommand { get; }
+        public ICommand RegistrationCommand { get; }
 
         public LoginPageView()
         {
@@ -36,9 +37,11 @@ namespace FamilyFinance.Views
             Model = new LoginRequest();
 
             LoginCommand = new Command(LoginAsync);
+            RegistrationCommand = new Command(RegistrationAsync);
 
             BindingContext = this;
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         private async void LoginAsync()
@@ -56,7 +59,19 @@ namespace FamilyFinance.Views
             GlobalHelper.SetPersonName(response.PersonName);
             GlobalHelper.SetRole(response.Role);
 
-            Navigation.PushAsync(new MainPageView());
+            await Navigation.PushAsync(new MainPageView());
+        }
+
+        private async void RegistrationAsync(object parameter)
+        {
+            if(parameter.ToString() == "NEW")
+            {
+                await Navigation.PushAsync(new RegistrationNewPageView());
+            }
+            else
+            {
+                await Navigation.PushAsync(new RegistrationNewWithKeyPageView());
+            }
         }
     }
 }

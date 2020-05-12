@@ -6,12 +6,24 @@
              mc:Ignorable="d"
              x:Class="FamilyFinance.Views.LoginPageView">
     <StackLayout>
-        <Label Text="Login" />
+        <Label Text="Логін" />
         <Entry Text="{Binding Model.Login, Mode=TwoWay}" />
-        <Label Text="Password" />
+        <Label Text="Пароль" />
         <Entry Text="{Binding Model.Password, Mode=TwoWay}" />
         <Button 
            Text="Пустіть Мене"
             Command="{Binding LoginCommand}" />
+        <StackLayout Orientation="Horizontal">
+            <Button 
+                Text="Реєстрація Нової Сім'ї"
+                HorizontalOptions="Start"
+                Command="{Binding RegistrationCommand}"
+                CommandParameter="NEW"/>
+            <Button
+                Text="В Мене Є Код Доступу"
+                HorizontalOptions="End"
+                Command="{Binding RegistrationCommand}"
+                CommandParameter="NEWWITHKEY"/>
+        </StackLayout>
     </StackLayout>
 </ContentPage>
