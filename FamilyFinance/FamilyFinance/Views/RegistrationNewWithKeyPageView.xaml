@@ -5,11 +5,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="FamilyFinance.Views.RegistrationNewWithKeyPageView">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+    <StackLayout>
+        <Label Text="Ключ Доступу" />
+        <Entry Text="{Binding Model.Key, Mode=TwoWay}" />
+        <Label Text="Ваше Ім'я" />
+        <Entry Text="{Binding Model.PersonName, Mode=TwoWay}" />
+        <Label Text="Логін" />
+        <Entry Text="{Binding Model.Login, Mode=TwoWay}" />
+        <Label Text="Пароль" />
+        <Entry Text="{Binding Model.Password, Mode=TwoWay}" />
+        <Button
+            Text="Реєстрація"
+            Command="{Binding RegistrationCommand}" />
+    </StackLayout>
 </ContentPage>

@@ -8,16 +8,25 @@ namespace FamilyFinance.Helpers
 {
     public static class GlobalHelper
     {
+        static GlobalHelper()
+        {
+            SetPersonId(null);
+            SetFamilyId(null);
+            SetPersonName(null);
+            SetFamilyName(null);
+            SetRole(null);
+        }
+
         public static int GetPersonId()
         {
-            //return Convert.ToInt32(Application.Current.Properties["personid"]);
-            return 1;
+            return Convert.ToInt32(Application.Current.Properties["personid"]);
+            //return 1;
         }
 
         public static int GetFamilyId()
         {
-            //return Convert.ToInt32(Application.Current.Properties["familyid"]);
-            return 1;
+            return Convert.ToInt32(Application.Current.Properties["familyid"]);
+            //return 1;
         }
 
         public static string GetPersonName()
@@ -37,7 +46,7 @@ namespace FamilyFinance.Helpers
 
         public static void SetPersonId(int? id)
         {
-            Application.Current.Properties["familyid"] = id;
+            Application.Current.Properties["personid"] = id;
             Application.Current.SavePropertiesAsync();
         }
 

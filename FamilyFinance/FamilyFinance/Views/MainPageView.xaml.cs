@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
@@ -12,6 +13,12 @@ namespace FamilyFinance.Views
     {
         public MainPageView()
         {
+            var existingPages = Navigation.NavigationStack.ToList();
+            foreach (var page in existingPages)
+            {
+                Navigation.RemovePage(page);
+            }
+
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
             On<Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);

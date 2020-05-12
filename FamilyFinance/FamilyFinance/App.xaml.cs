@@ -11,7 +11,7 @@ namespace FamilyFinance
         {
             InitializeComponent();
 
-            MainPage = new MainPageView();
+            MainPage = new NavigationPage(new StartPageView());
         }
 
         protected override void OnStart()

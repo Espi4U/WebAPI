@@ -16,14 +16,24 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        public string Login { get; set; }
-        public string Password { get; set; }
+        private LoginRequest _model;
+        public LoginRequest Model
+        {
+            get => _model;
+            set
+            {
+                _model = value;
+                OnPropertyChanged(nameof(Model));
+            }
+        }
 
         public ICommand LoginCommand { get; }
 
         public LoginPageView()
         {
             _apiClient = new APIClient();
+
+            Model = new LoginRequest();
 
             LoginCommand = new Command(LoginAsync);
 
@@ -33,12 +43,7 @@ namespace FamilyFinance.Views
 
         private async void LoginAsync()
         {
-            var request = new LoginRequest
-            {
-                Login = Login,
-                Password = Password
-            };
-            var response = await _apiClient.LoginAsync(request);
+            var response = await _apiClient.LoginAsync(Model);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
@@ -50,6 +55,8 @@ namespace FamilyFinance.Views
             GlobalHelper.SetFamilyName(response.FamilyName);
             GlobalHelper.SetPersonName(response.PersonName);
             GlobalHelper.SetRole(response.Role);
+
+            Navigation.PushAsync(new MainPageView());
         }
     }
 }

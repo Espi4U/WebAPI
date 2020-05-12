@@ -7,11 +7,11 @@
              x:Class="FamilyFinance.Views.LoginPageView">
     <StackLayout>
         <Label Text="Login" />
-        <Entry Text="{Binding Login, Mode=TwoWay}" />
+        <Entry Text="{Binding Model.Login, Mode=TwoWay}" />
         <Label Text="Password" />
-        <Entry Text="{Binding Password}" />
+        <Entry Text="{Binding Model.Password, Mode=TwoWay}" />
         <Button 
-           Text="LogIn"
+           Text="Пустіть Мене"
             Command="{Binding LoginCommand}" />
     </StackLayout>
 </ContentPage>

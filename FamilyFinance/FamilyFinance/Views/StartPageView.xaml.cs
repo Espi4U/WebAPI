@@ -16,18 +16,18 @@ namespace FamilyFinance.Views
         public StartPageView()
         {
 
-            BindingContext = this;
+            GoToNextPage();
             InitializeComponent();
         }
 
 
         private void GoToNextPage()
         {
-            if(GlobalHelper.GetFamilyId() == null ||
-                GlobalHelper.GetPersonId() == null ||
-                GlobalHelper.GetRole() == null ||
-                GlobalHelper.GetPersonName() == null ||
-                GlobalHelper.GetFamilyName() == null)
+            if(GlobalHelper.GetFamilyId() == 0 ||
+                GlobalHelper.GetPersonId() == 0 ||
+                GlobalHelper.GetRole() == "" ||
+                GlobalHelper.GetPersonName() == "" ||
+                GlobalHelper.GetFamilyName() == "")
             {
                 Navigation.PushAsync(new LoginPageView());
             }
