@@ -4,18 +4,22 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="FamilyFinance.Views.RegistrationNewWithKeyPageView">
-    <StackLayout>
-        <Label Text="Ключ Доступу" />
-        <Entry Text="{Binding Model.Key, Mode=TwoWay}" />
-        <Label Text="Ваше Ім'я" />
-        <Entry Text="{Binding Model.PersonName, Mode=TwoWay}" />
-        <Label Text="Логін" />
-        <Entry Text="{Binding Model.Login, Mode=TwoWay}" />
-        <Label Text="Пароль" />
-        <Entry Text="{Binding Model.Password, Mode=TwoWay}" />
-        <Button
-            Text="Реєстрація"
-            Command="{Binding RegistrationCommand}" />
-    </StackLayout>
+             x:Class="FamilyFinance.Views.RegistrationNewWithKeyPageView"
+             Title="Долучитися До Сім'ї">
+    <Grid HorizontalOptions="FillAndExpand"
+          VerticalOptions="CenterAndExpand">
+        <StackLayout Margin="20">
+            <Label Text="Ключ Доступу" />
+            <Entry Text="{Binding Model.Key, Mode=TwoWay}" />
+            <Label Text="Ваше Ім'я" />
+            <Entry Text="{Binding Model.PersonName, Mode=TwoWay}" />
+            <Label Text="Логін" />
+            <Entry Text="{Binding Model.Login, Mode=TwoWay}" />
+            <Label Text="Пароль" />
+            <Entry Text="{Binding Model.Password, Mode=TwoWay}" />
+            <Button
+                Text="Реєстрація"
+                Command="{Binding RegistrationCommand}" />
+        </StackLayout>
+    </Grid>
 </ContentPage>

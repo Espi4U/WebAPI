@@ -16,6 +16,28 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
+        private string _loginEM;
+        public string LoginEM
+        {
+            get => _loginEM;
+            set
+            {
+                _loginEM = value;
+                OnPropertyChanged(nameof(LoginEM));
+            }
+        }
+
+        private string _passwordEM;
+        public string PasswordEM
+        {
+            get => _passwordEM;
+            set
+            {
+                _passwordEM = value;
+                OnPropertyChanged(nameof(PasswordEM));
+            }
+        }
+
         private LoginRequest _model;
         public LoginRequest Model
         {
@@ -46,6 +68,11 @@ namespace FamilyFinance.Views
 
         private async void LoginAsync()
         {
+            //if (!ValideteModel())
+            //{
+            //    return;
+            //}
+
             var response = await _apiClient.LoginAsync(Model);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
@@ -72,6 +99,24 @@ namespace FamilyFinance.Views
             {
                 await Navigation.PushAsync(new RegistrationNewWithKeyPageView());
             }
+        }
+
+        private bool ValideteModel()
+        {
+            LoginEM = "";
+            PasswordEM = "";
+            bool isValid = true;
+            if (!ValidationHelper.IsValidName(Model.Login))
+            {
+                LoginEM = "Невірний формат логіну";
+                isValid = false;
+            }
+            if (!ValidationHelper.IsValidName(Model.Password))
+            {
+                PasswordEM = "Невірний формат пароля";
+                isValid = false;
+            }
+            return isValid;
         }
     }
 }

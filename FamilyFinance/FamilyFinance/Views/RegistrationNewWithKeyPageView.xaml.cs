@@ -33,6 +33,8 @@ namespace FamilyFinance.Views
         {
             _apiClient = new APIClient();
 
+            Model = new RegistrationRequest();
+
             RegistrationCommand = new Command(RegistrationAsync);
 
             BindingContext = this;
@@ -41,14 +43,16 @@ namespace FamilyFinance.Views
 
         private async void RegistrationAsync()
         {
-            var response = await _apiClient.RegistrationNewAsync(Model);
+            Model.FamilyId = GlobalHelper.GetFamilyId();
+
+            var response = await _apiClient.RegistrationNewWithKeyAsync(Model);
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
-            Navigation.PushAsync(new LoginPageView());
+            await Navigation.PushAsync(new LoginPageView());
         }
     }
 }

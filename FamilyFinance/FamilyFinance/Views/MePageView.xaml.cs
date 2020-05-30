@@ -76,6 +76,12 @@ namespace FamilyFinance.Views
                 FamilyId = GlobalHelper.GetFamilyId(),
                 Key = key
             };
+            var response = await _apiClient.AddInviteKey(request);
+            if(!response.BaseIsSuccess || !response.IsSuccess)
+            {
+                AlertHelper.ShowAlertMessage(response, this);
+                return;
+            }
         }
     }
 }

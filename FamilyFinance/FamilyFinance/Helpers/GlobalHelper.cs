@@ -85,16 +85,16 @@ namespace FamilyFinance.Helpers
 
         public static BaseRequest GetBaseRequest()
         {
-            //return new BaseRequest
-            //{
-            //    FamilyId = GetFamilyId(),
-            //    PersonId = GetPersonId()
-            //};
             return new BaseRequest
             {
-                FamilyId = 1,
-                PersonId = 1
+                FamilyId = GetFamilyId(),
+                PersonId = GetPersonId()
             };
+            //return new BaseRequest
+            //{
+            //    FamilyId = 1,
+            //    PersonId = 1
+            //};
         }
     }
 }

@@ -125,7 +125,7 @@ namespace WebAPI.Services
                         }
                         else if (request.Key != null && request.FamilyId != null)
                         {
-                            if(db.InviteKeys.Any(x => x.FamilyId == request.FamilyId && x.Key == request.Key))
+                            if(!db.InviteKeys.Any(x => x.FamilyId == request.FamilyId && x.Key == request.Key))
                             {
                                 response.BaseIsSuccess = false;
                                 response.BaseMessage = "Помилка, Невірний ключ";

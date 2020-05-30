@@ -21,7 +21,7 @@ namespace WebAPI.Controllers
         }
 
         [Route("add_invite_key"), HttpPost]
-        public BaseResponse GetCurrencies([FromBody]InviteKeyRequest request) =>
+        public BaseResponse AddInviteKey([FromBody]InviteKeyRequest request) =>
             _inviteKeyService.AddInviteKey(request);
     }
 }

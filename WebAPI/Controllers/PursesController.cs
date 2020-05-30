@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models.Requests;
 using Shared.Models.Requests.PursesRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.PursesResponses;
@@ -32,5 +33,9 @@ namespace WebAPI.Controllers
         [Route("delete_purse"), HttpPost]
         public BaseResponse DeletePurse([FromBody]PurseRequest request) =>
             _purseService.DeletePurse(request);
+
+        [Route("withdraw"), HttpPost]
+        public BaseResponse Withdraw([FromBody]WithdrawFromPurseRequest request) =>
+            _purseService.Withdraw(request);
     }
 }

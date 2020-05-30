@@ -4,13 +4,11 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="FamilyFinance.Views.MePageView">
+             x:Class="FamilyFinance.Views.MePageView"
+             Title="Запросити Нового Члена Сім'ї">
     <StackLayout
         Spacing="1"
-        Margin="10">
-        <Label
-            HorizontalOptions="CenterAndExpand"
-            Text="Запросити Нового Члена Сім'ї"/>
+        Margin="20">
         <Label Text="Введіть Email"/>
         <Entry Text="{Binding EmailAddress, Mode=TwoWay}"/>
         <Button

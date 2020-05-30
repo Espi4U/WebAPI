@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Shared.Models.Requests;
 using Shared.Models.Requests.PursesRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.PursesResponses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using WebAPI.Models;
 using WebAPI.Models.APIModels;
@@ -97,6 +99,44 @@ namespace WebAPI.Services
             });
         }
 
+        public ListPursesResponse GetPursesByCurrency(GetPursesByCurrencyRequest request)
+        {
+            return GetResponse(() => {
+                var response = new ListPursesResponse();
+                try
+                {
+                    using (FamilyFinanceContext db = new FamilyFinanceContext())
+                    {
+                        if (request.PersonId == null && request.FamilyId == null)
+                        {
+                            response.BaseIsSuccess = false;
+                            response.BaseMessage = Shared.Constants.NEED_AUTHORIZE;
+                        }
+                        else
+                        {
+                            if (request.PersonId != null || request.FamilyId != null)
+                            {
+                                response.Purses = db.Purses.Where(x => (x.FamilyId == request.FamilyId || x.PersonId == request.PersonId) && x.CurrencyId == request.CurrencyId).ToList();
+                            }
+                            else
+                            {
+                                response.Purses = request.PersonId == null ?
+                                db.Purses.Where(x => x.FamilyId == request.FamilyId && x.CurrencyId == request.CurrencyId).ToList():
+                                db.Purses.Where(x => x.PersonId == request.PersonId && x.CurrencyId == request.CurrencyId).ToList();
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
+                }
+
+                return response;
+            });
+        }
+
         public BaseResponse DeletePurse(PurseRequest request)
         {
             return GetResponse(() => {
@@ -108,6 +148,31 @@ namespace WebAPI.Services
                         var purse = db.Purses.Where(x => x.Id == request.Purse.Id).FirstOrDefault();
 
                         db.Purses.Remove(purse);
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
+                }
+
+                return response;
+            });
+        }
+
+        public BaseResponse Withdraw(WithdrawFromPurseRequest request)
+        {
+            return GetResponse(() => {
+                var response = new BaseResponse();
+                try
+                {
+                    using (FamilyFinanceContext db = new FamilyFinanceContext())
+                    {
+                        var purse = db.Purses.Where(x => x.Id == request.Purse.Id).FirstOrDefault();
+
+                        purse.Size -= request.Size;
+                        db.Purses.Update(purse);
                         db.SaveChanges();
                     }
                 }

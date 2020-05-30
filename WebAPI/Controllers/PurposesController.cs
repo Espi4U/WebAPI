@@ -34,5 +34,9 @@ namespace WebAPI.Controllers
         [Route("delete_purpose"), HttpPost]
         public BaseResponse DeletePurpose([FromBody]PurposeRequest request) =>
             _purposeService.DeletePurpose(request);
+
+        [Route("update_purpose"), HttpPost]
+        public BaseResponse UpdatePurpose([FromBody]PurposeRequest request) =>
+            _purposeService.UpdatePurpose(request);
     }
 }

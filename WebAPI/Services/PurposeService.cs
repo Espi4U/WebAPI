@@ -50,10 +50,10 @@ namespace WebAPI.Services
                         }
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
                     response.BaseIsSuccess = false;
-                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
+                    response.BaseMessage = ex.InnerException.Message;
                 }
 
                 return response;
@@ -109,6 +109,37 @@ namespace WebAPI.Services
                         var purpose = db.Purposes.Where(x => x.Id == request.Purpose.Id).FirstOrDefault();
 
                         db.Purposes.Remove(purpose);
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
+                }
+
+                return response;
+            });
+        }
+
+        public BaseResponse UpdatePurpose(PurposeRequest request)
+        {
+            return GetResponse(() => {
+                var response = new BaseResponse();
+                try
+                {
+                    using (FamilyFinanceContext db = new FamilyFinanceContext())
+                    {
+                        var purpose = db.Purposes.Where(x => x.Id == request.Purpose.Id).FirstOrDefault();
+
+                        if(purpose != null)
+                        {
+                            purpose.Name = request.Purpose.Name;
+                            purpose.FinalSize = request.Purpose.FinalSize;
+                            purpose.CurrentSize = request.Purpose.CurrentSize;
+                        }
+
+                        db.Purposes.Update(purpose);
                         db.SaveChanges();
                     }
                 }

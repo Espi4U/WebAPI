@@ -37,7 +37,7 @@ namespace FamilyFinance.Views
 
         private async void EnlargeAsync()
         {
-            await Navigation.PushAsync(new PurposesLevel3PageView(PurposesLevel3PageViewModes.Enlarge));
+            await Navigation.PushAsync(new PurposesLevel3PageView(Purpose));
         }
 
         private async void DeleteAsync()

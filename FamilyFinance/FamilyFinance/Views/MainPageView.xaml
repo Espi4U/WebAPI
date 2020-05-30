@@ -13,28 +13,28 @@
     BackgroundColor="LightGray">
     <TabbedPage.Children>
         <NavigationPage
-            Title="Home"
+            Title="Головна"
             IconImageSource="home_icon.png">
             <x:Arguments>
                 <views:HomePageView />
             </x:Arguments>
         </NavigationPage>
         <NavigationPage
-            Title="Lists"
+            Title="Списки"
             IconImageSource="list_icon.png">
             <x:Arguments>
                 <views:ListPageView />
             </x:Arguments>
         </NavigationPage>
         <NavigationPage
-            Title="Me"
+            Title="Я"
             IconImageSource="user_icon.png">
             <x:Arguments>
                 <views:MePageView />
             </x:Arguments>
         </NavigationPage>
         <NavigationPage
-            Title="Family"
+            Title="Сім'я"
             IconImageSource="family_icon.png">
             <x:Arguments>
                 <views:MePageView />

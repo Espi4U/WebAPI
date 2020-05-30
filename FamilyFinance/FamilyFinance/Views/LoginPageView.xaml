@@ -5,25 +5,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="FamilyFinance.Views.LoginPageView">
-    <StackLayout>
-        <Label Text="Логін" />
-        <Entry Text="{Binding Model.Login, Mode=TwoWay}" />
-        <Label Text="Пароль" />
-        <Entry Text="{Binding Model.Password, Mode=TwoWay}" />
-        <Button 
-           Text="Пустіть Мене"
-            Command="{Binding LoginCommand}" />
-        <StackLayout Orientation="Horizontal">
+    <Grid
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="CenterAndExpand">
+        <StackLayout Margin="20">
+            <Label Text="Логін" />
+            <Entry Text="{Binding Model.Login, Mode=TwoWay}" />
+            <Label
+                Text="{Binding LoginEM}"
+                TextColor="Red" />
+            <Label Text="Пароль" />
+            <Entry Text="{Binding Model.Password, Mode=TwoWay}" />
+            <Label
+                Text="{Binding PasswordEM}"
+                TextColor="Red" />
+            <Button 
+                Text="Пустіть Мене"
+                Command="{Binding LoginCommand}" />
             <Button 
                 Text="Реєстрація Нової Сім'ї"
-                HorizontalOptions="Start"
                 Command="{Binding RegistrationCommand}"
                 CommandParameter="NEW"/>
             <Button
-                Text="В Мене Є Код Доступу"
-                HorizontalOptions="End"
+                Text="В Мене Є Ключ Доступу"
                 Command="{Binding RegistrationCommand}"
                 CommandParameter="NEWWITHKEY"/>
         </StackLayout>
-    </StackLayout>
+    </Grid>
 </ContentPage>

@@ -40,9 +40,21 @@ namespace FamilyFinance.Views
             }
         }
 
-        public ICommand SaveCommand { get; }
+        private List<Purse> _purses;
+        public List<Purse> Purses
+        {
+            get => _purses;
+            set
+            {
+                _purses = value;
+                OnPropertyChanged(nameof(Purses));
+            }
+        }
 
-        public PurposesLevel3PageView(PurposesLevel3PageViewModes mode)
+        public ICommand SaveCommand { get; }
+        public ICommand DeleteCommand { get; }
+
+        public PurposesLevel3PageView(Purpose purpose = null)
         {
             _apiClient = new APIClient();
             Purpose = new Purpose
@@ -51,7 +63,17 @@ namespace FamilyFinance.Views
                 PersonId = GlobalHelper.GetPersonId()
             };
 
-            SaveCommand = new Command(SaveAsync);
+            if(purpose == null)
+            {
+                SaveCommand = new Command(SaveAsync);
+            }
+            else
+            {
+                Purpose = purpose;
+                SaveCommand = new Command(UpdateAsync);
+            }
+
+            DeleteCommand = new Command(DeleteAsync);
 
             BindingContext = this;
             InitializeComponent();
@@ -66,6 +88,7 @@ namespace FamilyFinance.Views
 
         private async void SaveAsync()
         {
+            this.Purpose.Currency = new Currency { Name = "Українська гривня" };
             var request = new PurposeRequest
             {
                 Purpose = Purpose
@@ -80,6 +103,27 @@ namespace FamilyFinance.Views
             await Navigation.PopAsync();
         }
 
+        private async void UpdateAsync()
+        {
+            var request = new PurposeRequest
+            {
+                Purpose = Purpose
+            };
+            var response = await _apiClient.UpdatePurposeAsync(request);
+            if (!response.BaseIsSuccess || !response.IsSuccess)
+            {
+                AlertHelper.ShowAlertMessage(response, this);
+                return;
+            }
+
+            await Navigation.PopAsync();
+        }
+
+        private async void DeleteAsync()
+        {
+            await Navigation.PopAsync();
+        }
+
         private async void LoadCurrenciesAsync()
         {
             var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
@@ -90,6 +134,18 @@ namespace FamilyFinance.Views
             }
 
             Currencies = response.Currencies;
+        }
+
+        private async void LoadPursesAsync()
+        {
+            var response = await _apiClient.GetPursesAsync(GlobalHelper.GetBaseRequest());
+            if(!response.IsSuccess || !response.BaseIsSuccess)
+            {
+                AlertHelper.ShowAlertMessage(response, this);
+                return;
+            }
+
+            Purses = response.Purses;
         }
     }
 }

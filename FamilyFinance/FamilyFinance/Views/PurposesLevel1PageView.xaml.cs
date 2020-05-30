@@ -75,7 +75,7 @@ namespace FamilyFinance.Views
 
         private async void AddAsync()
         {
-            await Navigation.PushAsync(new PurposesLevel3PageView(PurposesLevel3PageViewModes.AddNew));
+            await Navigation.PushAsync(new PurposesLevel3PageView());
         }
     }
 }

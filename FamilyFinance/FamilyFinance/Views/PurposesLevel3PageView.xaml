@@ -38,6 +38,8 @@
                 Text="{Binding Purpose.CurrentSize, Mode=TwoWay}"
                 BackgroundColor="DarkGray"
                 Keyboard="Numeric"/>
+            <Picker Title="Валюта" />
+            <Picker Title="Гаманець" />
             <ImageButton
                 HeightRequest="100"
                 WidthRequest="100"

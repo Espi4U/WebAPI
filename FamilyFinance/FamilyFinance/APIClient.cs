@@ -45,6 +45,13 @@ namespace FamilyFinance
 
         public APIClient() { }
 
+        #region INVITEKEYS
+
+        public async Task<BaseResponse> AddInviteKey(InviteKeyRequest request) =>
+            await TryCallApiAsync<BaseResponse>("invitekeys/add_invite_key", request);
+
+        #endregion
+
         #region REPORTS
 
         public async Task<ListReportsResponse> GetReportsAsync(BaseRequest request) =>
@@ -99,6 +106,9 @@ namespace FamilyFinance
         public async Task<BaseResponse> DeletePurposeAsync(PurposeRequest request) =>
             await TryCallApiAsync<BaseResponse>("purposes/delete_purpose", request);
 
+        public async Task<BaseResponse> UpdatePurposeAsync(PurposeRequest request) =>
+            await TryCallApiAsync<BaseResponse>("purposes/update_purpose", request);
+
         #endregion
 
         #region PURSES
@@ -111,6 +121,9 @@ namespace FamilyFinance
 
         public async Task<BaseResponse> DeletePurseAsync(PurseRequest request) =>
             await TryCallApiAsync<BaseResponse>("purses/delete_purse", request);
+
+        public async Task<BaseResponse> WithdrawAsync(WithdrawFromPurseRequest request) =>
+            await TryCallApiAsync<BaseResponse>("purses/withdraw", request);
 
         #endregion
 
