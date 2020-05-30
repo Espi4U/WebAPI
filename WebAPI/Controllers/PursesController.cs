@@ -26,6 +26,10 @@ namespace WebAPI.Controllers
         public ListPursesResponse GetPurses([FromBody]BaseRequest request) =>
             _purseService.GetPurses(request);
 
+        [Route("get_purses_by_currency"), HttpPost]
+        public ListPursesResponse GetPursesByCurrency([FromBody]GetPursesByCurrencyRequest request) =>
+            _purseService.GetPursesByCurrency(request);
+
         [Route("add_purse"), HttpPost]
         public BaseResponse AddPurse([FromBody]PurseRequest request) =>
             _purseService.AddPurse(request);

@@ -119,6 +119,9 @@ namespace FamilyFinance
         public async Task<ListPursesResponse> GetPursesAsync(BaseRequest request) =>
             await TryCallApiAsync<ListPursesResponse>("purses/get_purses", request);
 
+        public async Task<ListPursesResponse> GetPursesByCurrencyAsync(GetPursesByCurrencyRequest request) =>
+            await TryCallApiAsync<ListPursesResponse>("purses/get_purses_by_currency", request);
+
         public async Task<BaseResponse> DeletePurseAsync(PurseRequest request) =>
             await TryCallApiAsync<BaseResponse>("purses/delete_purse", request);
 
