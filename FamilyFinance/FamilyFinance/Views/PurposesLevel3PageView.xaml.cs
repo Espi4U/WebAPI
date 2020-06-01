@@ -1,5 +1,6 @@
 ﻿using FamilyFinance.Helpers;
 using Shared.Models;
+using Shared.Models.Requests;
 using Shared.Models.Requests.PurposesRequests;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace FamilyFinance.Views
             set
             {
                 _purpose = value;
+                LoadPursesAsync(Purpose.CurrencyId);
                 OnPropertyChanged(nameof(Purpose));
             }
         }
@@ -136,9 +138,15 @@ namespace FamilyFinance.Views
             Currencies = response.Currencies;
         }
 
-        private async void LoadPursesAsync()
+        private async void LoadPursesAsync(int currencyId)
         {
-            var response = await _apiClient.GetPursesAsync(GlobalHelper.GetBaseRequest());
+            var request = new GetPursesByCurrencyRequest
+            {
+                CurrencyId = currencyId,
+                FamilyId = GlobalHelper.GetFamilyId(),
+                PersonId = GlobalHelper.GetPersonId()
+            };
+            var response = await _apiClient.GetPursesByCurrencyAsync(request);
             if(!response.IsSuccess || !response.BaseIsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);

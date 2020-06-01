@@ -1,4 +1,5 @@
 ﻿using FamilyFinance.Helpers;
+using Shared.Models.Requests;
 using Shared.Models.Requests.ChangeMoneyRequests;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,59 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        private ChangeMoney _changeMoney;
-        public ChangeMoney ChangeMoney
+        private string _name;
+        public string Name
         {
-            get => _changeMoney;
+            get => _name;
             set
             {
-                _changeMoney = value;
-                OnPropertyChanged(nameof(ChangeMoney));
+                _name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
+
+        private int _size;
+        public int Size
+        {
+            get => _size;
+            set
+            {
+                _size = value;
+                OnPropertyChanged(nameof(Size));
+            }
+        }
+
+        private Category _category;
+        public Category Category
+        {
+            get => _category;
+            set
+            {
+                _category = value;
+                OnPropertyChanged(nameof(Category));
+            }
+        }
+
+        private Currency _currency;
+        public Currency Currency
+        {
+            get => _currency;
+            set
+            {
+                _currency = value;
+                LoadPursesByCurrencyIdAsync(Currency.Id);
+                OnPropertyChanged(nameof(Currency));
+            }
+        }
+
+        private Purse _purse;
+        public Purse Purse
+        {
+            get => _purse;
+            set
+            {
+                _purse = value;
+                OnPropertyChanged(nameof(Purse));
             }
         }
 
@@ -50,19 +96,24 @@ namespace FamilyFinance.Views
             }
         }
 
-        public ICommand AddCommand { get; }
+        private List<Purse> _purses;
+        public List<Purse> Purses
+        {
+            get => _purses;
+            set
+            {
+                _purses = value;
+                OnPropertyChanged(nameof(Purses));
+            }
+        }
+
+        public ICommand AddNewIncomeOrExpenseCommand { get; }
 
         public AddIncomeOrExpensePageView()
         {
             _apiClient = new APIClient();
 
-            ChangeMoney = new ChangeMoney
-            {
-                FamilyId = GlobalHelper.GetFamilyId(),
-                PersonId = GlobalHelper.GetPersonId()
-            };
-
-            AddCommand = new Command(AddAsync);
+            AddNewIncomeOrExpenseCommand = new Command(AddNewIncomeOrExpenseAsync);
 
             BindingContext = this;
             InitializeComponent();
@@ -76,11 +127,19 @@ namespace FamilyFinance.Views
             LoadCurrenciesAsync();
         }
 
-        private async void AddAsync()
+        private async void AddNewIncomeOrExpenseAsync(object parameter)
         {
             var request = new ChangeMoneyRequest
             {
-                ChangeMoney = ChangeMoney
+                Name = Name,
+                Size = Size,
+                Type = parameter as string,
+                Date = DateTime.Now,
+                Category = Category,
+                Currency = Currency,
+                Purse = Purse,
+                FamilyId = GlobalHelper.GetFamilyId(),
+                PersonId = GlobalHelper.GetPersonId()
             };
             var response = await _apiClient.AddIncomeOrExpenseAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
@@ -112,6 +171,24 @@ namespace FamilyFinance.Views
             }
 
             Currencies = response.Currencies;
+        }
+
+        private async void LoadPursesByCurrencyIdAsync(int currencyId)
+        {
+            var request = new GetPursesByCurrencyRequest
+            {
+                CurrencyId = currencyId,
+                FamilyId = GlobalHelper.GetFamilyId(),
+                PersonId = GlobalHelper.GetPersonId()
+            };
+            var response = await _apiClient.GetPursesByCurrencyAsync(request);
+            if(!response.IsSuccess || !response.BaseIsSuccess)
+            {
+                AlertHelper.ShowAlertMessage(response, this);
+                return;
+            }
+
+            Purses = response.Purses;
         }
     }
 }

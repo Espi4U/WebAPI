@@ -180,26 +180,26 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if(request.ChangeMoney.FamilyId == null && request.ChangeMoney.PersonId == null)
+                        if(request.FamilyId == null && request.PersonId == null)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = Shared.Constants.NEED_AUTHORIZE;
                         }
                         else
                         {
-                            var category = db.Categories.Where(x => x.Name == request.ChangeMoney.Category.Name).FirstOrDefault();
-                            var currency = db.Currencies.Where(x => x.Name == request.ChangeMoney.Currency.Name).FirstOrDefault();
+                            var category = db.Categories.Where(x => x.Name == request.Category.Name).FirstOrDefault();
+                            var currency = db.Currencies.Where(x => x.Name == request.Currency.Name).FirstOrDefault();
 
                             var model = new ChangeMoney
                             {
-                                Name = request.ChangeMoney.Name,
-                                Size = request.ChangeMoney.Size,
-                                Date = request.ChangeMoney.Date,
-                                Type = request.ChangeMoney.Type,
+                                Name = request.Name,
+                                Size = request.Size,
+                                Date = request.Date,
+                                Type = request.Type,
                                 Category = category,
                                 Currency = currency,
-                                FamilyId = request.ChangeMoney.FamilyId,
-                                PersonId = request.ChangeMoney.PersonId
+                                FamilyId = request.FamilyId,
+                                PersonId = request.PersonId
                             };
 
                             db.ChangeMoneys.Add(model);

@@ -16,74 +16,83 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Margin="20">
-            <Label
-                Text="Назва:"
-                VerticalOptions="Center" 
-                HorizontalOptions="Start" />
-            <Entry
-                Text="{Binding ChangeMoney.Name, Mode=TwoWay}"
-                BackgroundColor="DarkGray"/>
-            <Label
-                Text="Розмір:"
-                VerticalOptions="Center" 
-                HorizontalOptions="Start" />
-            <Entry
-                Text="{Binding ChangeMoney.FinalSize, Mode=TwoWay}"
-                BackgroundColor="DarkGray"
-                Keyboard="Numeric"/>
+            <Picker
+                FontSize="Large"
+                Title="Для початку оберіть валюту"       
+                ItemsSource="{Binding Currencies}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Currency, Mode=TwoWay}"
+                HorizontalOptions="FillAndExpand"/>
             <StackLayout
-                HeightRequest="70"
-                Orientation="Horizontal">
+                Spacing="2"
+                IsVisible="{Binding Purses, Converter={StaticResource ListSizeToVisibleConverter}}">
                 <Picker
                     FontSize="Large"
-                    Title="Категорія"
-                    ItemsSource="{Binding Categories}"
+                    Title="Оберіть гаманець"       
+                    ItemsSource="{Binding Purses}"
                     ItemDisplayBinding="{Binding Name}"
-                    Margin="40,0,0,0" />
-                <Picker
-                    FontSize="Large"
-                    Title="Валюта"
-                    ItemsSource="{Binding Currencies}"
-                    ItemDisplayBinding="{Binding Name}"
-                    HorizontalOptions="EndAndExpand"
-                    Margin="0,0,40,0"/>
-            </StackLayout>
-            <StackLayout
-                Margin="0,50,0,0"
-                Orientation="Horizontal">
+                    SelectedItem="{Binding Purse, Mode=TwoWay}"
+                    HorizontalOptions="FillAndExpand"/>
                 <StackLayout
-                    HorizontalOptions="StartAndExpand"
-                    Style="{StaticResource addStackLayout}">
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding AddCommand}"
-                            CommandParameter="I"/>
-                    </StackLayout.GestureRecognizers>
-                    <Image
-                        Source="plus_icon_green"
-                        Style="{StaticResource addImage}"/>
+                    Spacing="2"
+                    IsVisible="{Binding Purse, Converter={StaticResource NullToVisibleConverter}}">
                     <Label
-                        Text="Дохід"
-                        TextColor="{x:Static local:Theme.PlusGreenColor}"
-                        FontSize="Large"
-                        Style="{StaticResource addLabel}"/>
-                </StackLayout>
-                <StackLayout
-                    HorizontalOptions="EndAndExpand"
-                    Style="{StaticResource addStackLayout}">
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding AddCommand}"
-                            CommandParameter="E"/>
-                    </StackLayout.GestureRecognizers>
-                    <Image
-                        Source="minus_icon_red"
-                        Style="{StaticResource addImage}"/>
+                        Text="Назва:"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Start" />
+                    <Entry
+                        Text="{Binding Name, Mode=TwoWay}"
+                        BackgroundColor="DarkGray"/>
                     <Label
-                        Text="Витрата"
-                        TextColor="{x:Static local:Theme.MinusRedColor}"
-                        FontSize="Large"
-                        Style="{StaticResource addLabel}"/>
+                        Text="Розмір:"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Start" />
+                    <StackLayout Orientation="Horizontal">
+                        <Slider
+                            Minimum="0"
+                            Maximum="{Binding Purse.Size, Mode=TwoWay}"
+                            Value="{Binding Size, Mode=TwoWay}"
+                            HorizontalOptions="FillAndExpand"/>
+                        <Label Text="{Binding Size}" />
+                    </StackLayout>
+                    <StackLayout
+                        Margin="0,50,0,0"
+                        Orientation="Horizontal">
+                        <StackLayout
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource addStackLayout}">
+                            <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding AddCommand}"
+                                CommandParameter="I"/>
+                            </StackLayout.GestureRecognizers>
+                            <Image
+                                Source="plus_icon_green"
+                                Style="{StaticResource addImage}"/>
+                            <Label
+                                Text="Дохід"
+                                TextColor="{x:Static local:Theme.PlusGreenColor}"
+                                FontSize="Large"
+                                Style="{StaticResource addLabel}"/>
+                        </StackLayout>
+                        <StackLayout
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource addStackLayout}">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding AddCommand}"
+                                    CommandParameter="E"/>
+                            </StackLayout.GestureRecognizers>
+                            <Image
+                                Source="minus_icon_red"
+                                Style="{StaticResource addImage}"/>
+                            <Label
+                                Text="Витрата"
+                                TextColor="{x:Static local:Theme.MinusRedColor}"
+                                FontSize="Large"
+                                Style="{StaticResource addLabel}"/>
+                        </StackLayout>
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
         </StackLayout>
