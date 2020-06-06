@@ -20,12 +20,13 @@ namespace WebAPI.Models
         public FamilyFinanceContext()
         {
             //Database.EnsureDeleted();
-            //Database.EnsureCreated();
+            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("server=localhost;UserId=root;Password=espi4u;database=espdb1;");
+            //optionsBuilder.UseMySql("server=localhost;UserId=root;Password=espi4u;database=espdb1;");
+            optionsBuilder.UseMySql("server=db4free.net;UserId=dyplomwebapi7355;Password=dyplomwebapi7355;database=dyplomwebapi7355;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
