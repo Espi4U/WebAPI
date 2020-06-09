@@ -176,6 +176,8 @@ namespace FamilyFinance.Views
                 AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
+
+            await Navigation.PopAsync();
         }
 
         private async void LoadCategoriesAsync()
