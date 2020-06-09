@@ -187,8 +187,27 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            var category = db.Categories.Where(x => x.Name == request.Category.Name).FirstOrDefault();
+                            var category = db.Categories.Where(x => x.Name == request.Category.Name && x.FamilyId == request.FamilyId).FirstOrDefault();
                             var currency = db.Currencies.Where(x => x.Name == request.Currency.Name).FirstOrDefault();
+                            var purse = db.Purses.Where(x => x.Name == request.Purse.Name && x.FamilyId == request.FamilyId).FirstOrDefault();
+
+                            if(request.Type == "I")
+                            {
+                                purse.Size += request.Size;
+                            }
+                            else
+                            {
+                                if(request.Size < purse.Size)
+                                {
+                                    purse.Size -= request.Size;
+                                }
+                                else
+                                {
+                                    response.BaseIsSuccess = false;
+                                    response.BaseMessage = "Недостатньо коштів для операції";
+                                }
+                            }
+                            db.Purses.Update(purse);
 
                             var model = new ChangeMoney
                             {
@@ -196,6 +215,7 @@ namespace WebAPI.Services
                                 Size = request.Size,
                                 Date = request.Date,
                                 Type = request.Type,
+                                Purse = purse,
                                 Category = category,
                                 Currency = currency,
                                 FamilyId = request.FamilyId,

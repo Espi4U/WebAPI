@@ -160,30 +160,5 @@ namespace WebAPI.Services
                 return response;
             });
         }
-
-        public BaseResponse Withdraw(WithdrawFromPurseRequest request)
-        {
-            return GetResponse(() => {
-                var response = new BaseResponse();
-                try
-                {
-                    using (FamilyFinanceContext db = new FamilyFinanceContext())
-                    {
-                        var purse = db.Purses.Where(x => x.Id == request.Purse.Id).FirstOrDefault();
-
-                        purse.Size -= request.Size;
-                        db.Purses.Update(purse);
-                        db.SaveChanges();
-                    }
-                }
-                catch
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
-                }
-
-                return response;
-            });
-        }
     }
 }

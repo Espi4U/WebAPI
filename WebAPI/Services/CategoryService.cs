@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Models;
+using WebAPI.Models.APIModels;
 using WebAPI.Models.APIModels.Requests;
 
 namespace WebAPI.Services
@@ -25,16 +26,23 @@ namespace WebAPI.Services
                         if (request.Category == default)
                         {
                             response.BaseIsSuccess = false;
-                            response.BaseMessage = "Cannot add empty category";
+                            response.BaseMessage = "Не можна додати порожню категорію";
                         }
-                        else if (db.Categories.Contains(request.Category))
+                        else if (db.Categories.Any(x=>x.Name == request.Category.Name && x.FamilyId == request.Category.FamilyId))
                         {
                             response.BaseIsSuccess = false;
-                            response.BaseMessage = "Categoty is already exist";
+                            response.BaseMessage = "Така категорія вже існує";
                         }
                         else
                         {
-                            db.Categories.Add(request.Category);
+                            var family = db.Families.Where(x => x.Id == request.Category.FamilyId).FirstOrDefault();
+
+                            var model = new Category
+                            {
+                                Name = request.Category.Name,
+                                Family = family
+                            };
+                            db.Categories.Add(model);
                             db.SaveChanges();
                         }
                     }
@@ -57,7 +65,7 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        response.Categories = db.Categories.ToList();
+                        response.Categories = db.Categories.Where(x => x.FamilyId == request.FamilyId).ToList();
                     }
                 }
                 catch

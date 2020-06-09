@@ -22,7 +22,8 @@
             <Button 
                 Text="Пустіть Мене"
                 Command="{Binding LoginCommand}" />
-            <Button 
+            <Button
+                Margin="0,30,0,0"
                 Text="Реєстрація Нової Сім'ї"
                 Command="{Binding RegistrationCommand}"
                 CommandParameter="NEW"/>

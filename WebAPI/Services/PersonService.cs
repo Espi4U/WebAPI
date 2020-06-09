@@ -86,6 +86,11 @@ namespace WebAPI.Services
 
                             db.Families.Add(family);
 
+                            db.Categories.Add(new Category { Name = "Інше", Family = family });
+
+                            var uah = db.Currencies.Where(x => x.Name == "Українська Гривня").FirstOrDefault();
+                            db.Purses.Add(new Purse { Name = "Універсальний гривневий гаманець", Size = 0, Currency = uah, Family = family });
+
                             var person = new Person
                             {
                                 Name = request.PersonName,

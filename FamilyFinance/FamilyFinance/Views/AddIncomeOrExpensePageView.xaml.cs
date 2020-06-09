@@ -40,6 +40,34 @@ namespace FamilyFinance.Views
             }
         }
 
+        public int MaxSliderOrStepperValue
+        {
+            get
+            {
+                if (Purse != null)
+                {
+                    return IsIncome ? 5000 : Purse.Size;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+        }
+
+        private bool _isIncome;
+        public bool IsIncome
+        {
+            get => _isIncome;
+            set
+            {
+                _isIncome = value;
+                Size = 0;
+                OnPropertyChanged(nameof(IsIncome));
+                OnPropertyChanged(nameof(MaxSliderOrStepperValue));
+            }
+        }
+
         private Category _category;
         public Category Category
         {
@@ -71,6 +99,7 @@ namespace FamilyFinance.Views
             {
                 _purse = value;
                 OnPropertyChanged(nameof(Purse));
+                OnPropertyChanged(nameof(MaxSliderOrStepperValue));
             }
         }
 
@@ -127,13 +156,13 @@ namespace FamilyFinance.Views
             LoadCurrenciesAsync();
         }
 
-        private async void AddNewIncomeOrExpenseAsync(object parameter)
+        private async void AddNewIncomeOrExpenseAsync()
         {
             var request = new ChangeMoneyRequest
             {
                 Name = Name,
                 Size = Size,
-                Type = parameter as string,
+                Type = IsIncome ? "I" : "E",
                 Date = DateTime.Now,
                 Category = Category,
                 Currency = Currency,

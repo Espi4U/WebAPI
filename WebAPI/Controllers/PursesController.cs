@@ -37,9 +37,5 @@ namespace WebAPI.Controllers
         [Route("delete_purse"), HttpPost]
         public BaseResponse DeletePurse([FromBody]PurseRequest request) =>
             _purseService.DeletePurse(request);
-
-        [Route("withdraw"), HttpPost]
-        public BaseResponse Withdraw([FromBody]WithdrawFromPurseRequest request) =>
-            _purseService.Withdraw(request);
     }
 }

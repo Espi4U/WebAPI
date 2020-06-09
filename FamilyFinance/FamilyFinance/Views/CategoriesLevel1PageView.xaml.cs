@@ -41,14 +41,14 @@ namespace FamilyFinance.Views
         }
 
         public ICommand DeleteCommand { get; }
-        public ICommand AddCommand { get; }
+        public ICommand AddNewCategoryCommand { get; }
 
         public CategoriesLevel1PageView()
         {
             _apiClient = new APIClient();
 
             DeleteCommand = new Command(DeleteAsync);
-            AddCommand = new Command(AddAsync);
+            AddNewCategoryCommand = new Command(AddNewCategoryAsync);
 
             BindingContext = this;
             InitializeComponent();
@@ -89,7 +89,7 @@ namespace FamilyFinance.Views
             Categories = response.Categories;
         }
 
-        private async void AddAsync()
+        private async void AddNewCategoryAsync()
         {
             var result = await DisplayPromptAsync("Enter Category Name", "Please Enter A New Category Name");
             if (!string.IsNullOrWhiteSpace(result))
@@ -98,7 +98,8 @@ namespace FamilyFinance.Views
                 {
                     Category = new Category
                     {
-                        Name = result
+                        Name = result,
+                        FamilyId = GlobalHelper.GetFamilyId()
                     }
                 };
 
