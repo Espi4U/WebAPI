@@ -14,6 +14,5 @@ namespace WebAPI.Models.APIModels
         public Family Family { get; set; }
         public int? PersonId { get; set; }
         public Person Person { get; set; }
-        public List<ChangeMoney> ChangeMoneys { get; set; }
     }
 }

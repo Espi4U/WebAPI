@@ -12,8 +12,6 @@ namespace WebAPI.Models.APIModels
         public string Type { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-        public int PurseId { get; set; }
-        public Purse Purse { get; set; }
         public int CurrencyId { get; set; }
         public Currency Currency { get; set; }
         public int? FamilyId { get; set; }

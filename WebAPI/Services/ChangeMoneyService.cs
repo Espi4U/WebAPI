@@ -214,7 +214,6 @@ namespace WebAPI.Services
                                 Size = request.Size,
                                 Date = request.Date,
                                 Type = request.Type,
-                                Purse = purse,
                                 Category = category,
                                 Currency = currency,
                                 FamilyId = request.FamilyId,
@@ -229,7 +228,7 @@ namespace WebAPI.Services
                 catch(Exception ex)
                 {
                     response.BaseIsSuccess = false;
-                    response.BaseMessage = ex.Message + "Inner: " + ex.InnerException.Message;
+                    response.BaseMessage = ex.Message + "; Inner: " + ex.InnerException.Message;
                 }
 
                 return response;
