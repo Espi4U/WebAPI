@@ -52,18 +52,18 @@
             </Grid.ColumnDefinitions>
             <StackLayout Grid.Column="0">
                 <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding EnlargeCommand}"/>
+                    <TapGestureRecognizer Command="{Binding EnlargePurposeCommand}"/>
                 </StackLayout.GestureRecognizers>
                 <Image Source="plus_icon.png" />
                 <Label Text="Збільшити" />
             </StackLayout>
-            <StackLayout Grid.Column="1">
+            <!--<StackLayout Grid.Column="1">
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding DeleteCommand}"/>
                 </StackLayout.GestureRecognizers>
                 <Image Source="delete_icon.png" />
                 <Label Text="Видалити" />
-            </StackLayout>
+            </StackLayout>-->
         </Grid>
     </Grid>
 </ContentPage>

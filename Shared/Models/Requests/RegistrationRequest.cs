@@ -11,6 +11,5 @@ namespace Shared.Models.Requests
         public string Login { get; set; }
         public string Password { get; set; }
         public string Key { get; set; } = null;
-        public int? FamilyId { get; set; } = null;
     }
 }

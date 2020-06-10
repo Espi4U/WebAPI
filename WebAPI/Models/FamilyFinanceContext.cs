@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Shared.Models;
 using WebAPI.Models.APIModels;
+using System;
 
 namespace WebAPI.Models
 {
@@ -26,7 +27,10 @@ namespace WebAPI.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseMySql("server=localhost;UserId=root;Password=espi4u;database=espdb1;");
-            optionsBuilder.UseMySql("server=db4free.net;UserId=dyplomwebapi7355;Password=dyplomwebapi7355;database=dyplomwebapi7355;");
+            optionsBuilder.UseMySql("server=db4free.net;UserId=dyplomwebapi7355;Password=dyplomwebapi7355;database=dyplomwebapi7355;", builder =>
+            {
+                builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+            });
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -18,8 +18,6 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        public ICommand AddCommand { get; }
-
         private List<Purpose> _purposes;
         public List<Purpose> Purposes
         {
@@ -44,11 +42,13 @@ namespace FamilyFinance.Views
             }
         }
 
+        public ICommand AddNewPurposeCommand { get; }
+
         public PurposesLevel1PageView()
         {
             _apiClient = new APIClient();
 
-            AddCommand = new Command(AddAsync);
+            AddNewPurposeCommand = new Command(AddNewPurposeAsync);
 
             BindingContext = this;
             InitializeComponent();
@@ -73,7 +73,7 @@ namespace FamilyFinance.Views
             Purposes = response.Purposes;
         }
 
-        private async void AddAsync()
+        private async void AddNewPurposeAsync()
         {
             await Navigation.PushAsync(new PurposesLevel3PageView());
         }

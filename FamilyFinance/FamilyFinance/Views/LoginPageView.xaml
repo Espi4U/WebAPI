@@ -10,15 +10,9 @@
         VerticalOptions="CenterAndExpand">
         <StackLayout Margin="20">
             <Label Text="Логін" />
-            <Entry Text="{Binding Model.Login, Mode=TwoWay}" />
-            <Label
-                Text="{Binding LoginEM}"
-                TextColor="Red" />
+            <Entry Text="{Binding Login, Mode=TwoWay}" />
             <Label Text="Пароль" />
-            <Entry Text="{Binding Model.Password, Mode=TwoWay}" />
-            <Label
-                Text="{Binding PasswordEM}"
-                TextColor="Red" />
+            <Entry Text="{Binding Password, Mode=TwoWay}" />
             <Button 
                 Text="Пустіть Мене"
                 Command="{Binding LoginCommand}" />

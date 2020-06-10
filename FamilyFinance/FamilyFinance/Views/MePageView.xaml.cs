@@ -55,8 +55,8 @@ namespace FamilyFinance.Views
             {
                 var message = new EmailMessage
                 {
-                    Subject = "Hello",
-                    Body = $"Use this invite key to registration: {key}",
+                    Subject = "Вітання!",
+                    Body = $"Використайте цей код для реєстрації: {key}",
                     To = new List<string> { EmailAddress },
                 };
                 await Email.ComposeAsync(message);

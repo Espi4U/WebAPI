@@ -40,14 +40,12 @@ namespace FamilyFinance.Views
             }
         }
 
-        public ICommand DeleteCommand { get; }
         public ICommand AddNewCategoryCommand { get; }
 
         public CategoriesLevel1PageView()
         {
             _apiClient = new APIClient();
 
-            DeleteCommand = new Command(DeleteAsync);
             AddNewCategoryCommand = new Command(AddNewCategoryAsync);
 
             BindingContext = this;
@@ -59,22 +57,6 @@ namespace FamilyFinance.Views
             base.OnAppearing();
 
             LoadCategoriesAsync();
-        }
-
-        private async void DeleteAsync(object parameter)
-        {
-            Category category = (Category)parameter;
-
-            var request = new CategoryRequest
-            {
-                Category = category
-            };
-            var response = await _apiClient.DeleteCategoryAsync(request);
-            if(!response.BaseIsSuccess || !response.IsSuccess)
-            {
-                AlertHelper.ShowAlertMessage(response, this);
-                return;
-            }
         }
 
         private async void LoadCategoriesAsync()

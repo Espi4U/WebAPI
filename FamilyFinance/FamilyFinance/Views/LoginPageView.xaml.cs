@@ -16,36 +16,25 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        private string _loginEM;
-        public string LoginEM
+        private string _login;
+        public string Login
         {
-            get => _loginEM;
+            get => _login;
             set
             {
-                _loginEM = value;
-                OnPropertyChanged(nameof(LoginEM));
+                _login = value;
+                OnPropertyChanged(nameof(Login));
             }
         }
 
-        private string _passwordEM;
-        public string PasswordEM
+        private string _password;
+        public string Password
         {
-            get => _passwordEM;
+            get => _password;
             set
             {
-                _passwordEM = value;
-                OnPropertyChanged(nameof(PasswordEM));
-            }
-        }
-
-        private LoginRequest _model;
-        public LoginRequest Model
-        {
-            get => _model;
-            set
-            {
-                _model = value;
-                OnPropertyChanged(nameof(Model));
+                _password = value;
+                OnPropertyChanged(nameof(Password));
             }
         }
 
@@ -56,24 +45,23 @@ namespace FamilyFinance.Views
         {
             _apiClient = new APIClient();
 
-            Model = new LoginRequest();
-
             LoginCommand = new Command(LoginAsync);
             RegistrationCommand = new Command(RegistrationAsync);
 
             BindingContext = this;
             InitializeComponent();
+
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
         private async void LoginAsync()
         {
-            //if (!ValideteModel())
-            //{
-            //    return;
-            //}
-
-            var response = await _apiClient.LoginAsync(Model);
+            var request = new LoginRequest
+            {
+                Login = Login,
+                Password = Password
+            };
+            var response = await _apiClient.LoginAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
@@ -99,24 +87,6 @@ namespace FamilyFinance.Views
             {
                 await Navigation.PushAsync(new RegistrationNewWithKeyPageView());
             }
-        }
-
-        private bool ValideteModel()
-        {
-            LoginEM = "";
-            PasswordEM = "";
-            bool isValid = true;
-            if (!ValidationHelper.IsValidName(Model.Login))
-            {
-                LoginEM = "Невірний формат логіну";
-                isValid = false;
-            }
-            if (!ValidationHelper.IsValidName(Model.Password))
-            {
-                PasswordEM = "Невірний формат пароля";
-                isValid = false;
-            }
-            return isValid;
         }
     }
 }

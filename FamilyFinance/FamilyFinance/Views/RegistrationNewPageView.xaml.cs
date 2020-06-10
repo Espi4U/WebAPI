@@ -16,14 +16,47 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        private RegistrationRequest _model;
-        public RegistrationRequest Model
+        private string _familyName;
+        public string FamilyName
         {
-            get => _model;
+            get => _familyName;
             set
             {
-                _model = value;
-                OnPropertyChanged(nameof(Model));
+                _familyName = value;
+                OnPropertyChanged(nameof(FamilyName));
+            }
+        }
+
+        private string _personName;
+        public string PersonName
+        {
+            get => _personName;
+            set
+            {
+                _personName = value;
+                OnPropertyChanged(nameof(PersonName));
+            }
+        }
+
+        private string _login;
+        public string Login
+        {
+            get => _login;
+            set
+            {
+                _login = value;
+                OnPropertyChanged(nameof(Login));
+            }
+        }
+
+        private string _password;
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                _password = value;
+                OnPropertyChanged(nameof(Password));
             }
         }
 
@@ -33,8 +66,6 @@ namespace FamilyFinance.Views
         {
             _apiClient = new APIClient();
 
-            Model = new RegistrationRequest();
-
             RegistrationCommand = new Command(RegistrationAsync);
 
             BindingContext = this;
@@ -43,14 +74,21 @@ namespace FamilyFinance.Views
 
         private async void RegistrationAsync()
         {
-            var response = await _apiClient.RegistrationNewAsync(Model);
+            var request = new RegistrationRequest
+            {
+                FamilyName = FamilyName,
+                PersonName = PersonName,
+                Login = Login,
+                Password = Password,
+            };
+            var response = await _apiClient.RegistrationNewAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
-            Navigation.PushAsync(new LoginPageView());
+            await Navigation.PushAsync(new LoginPageView());
         }
     }
 }

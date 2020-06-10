@@ -6,8 +6,8 @@ namespace WebAPI.Models.APIModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public double FinalSize { get; set; }
-        public double CurrentSize { get; set; }
+        public int FinalSize { get; set; }
+        public int CurrentSize { get; set; }
         public int CurrencyId { get; set; }
         public Currency Currency { get; set; }
         public int? FamilyId { get; set; }

@@ -24,26 +24,26 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.Purse == null)
+                        if (request == null)
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = "Не можна додати порожній гаманець";
                         }
-                        else if (db.Purses.Any(x => x.Name == request.Purse.Name))
+                        else if (db.Purses.Any(x => x.Name == request.Name))
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = "Гаманець з такою назвою вже існує";
                         }
                         else
                         {
-                            var currency = db.Currencies.Where(x => x.Name == request.Purse.Currency.Name).FirstOrDefault();
+                            var currency = db.Currencies.Where(x => x.Id == request.CurrencyId).FirstOrDefault();
                             var model = new Purse
                             {
-                                Name = request.Purse.Name,
-                                Size = request.Purse.Size,
+                                Name = request.Name,
+                                Size = request.Size,
                                 Currency = currency,
-                                FamilyId = request.Purse.FamilyId,
-                                PersonId = request.Purse.PersonId
+                                FamilyId = request.FamilyId,
+                                PersonId = request.PersonId
                             };
 
                             db.Purses.Add(model);
@@ -145,10 +145,10 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        var purse = db.Purses.Where(x => x.Id == request.Purse.Id).FirstOrDefault();
+                        //var purse = db.Purses.Where(x => x.Id == request.Purse.Id).FirstOrDefault();
 
-                        db.Purses.Remove(purse);
-                        db.SaveChanges();
+                        //db.Purses.Remove(purse);
+                        //db.SaveChanges();
                     }
                 }
                 catch

@@ -17,8 +17,6 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        public ICommand AddCommand { get; }
-
         public Purse SelectedPurse
         {
             get => null;
@@ -36,22 +34,13 @@ namespace FamilyFinance.Views
             }
         }
 
-        private List<Currency> _currencies;
-        public List<Currency> Currencies
-        {
-            get => _currencies;
-            set
-            {
-                _currencies = value;
-                OnPropertyChanged(nameof(Currencies));
-            }
-        }
+        public ICommand AddNewPurseCommand { get; }
 
         public PursesLevel1PageView()
         {
             _apiClient = new APIClient();
 
-            AddCommand = new Command(AddAsync);
+            AddNewPurseCommand = new Command(AddNewPurseAsync);
 
             BindingContext = this;
             InitializeComponent();
@@ -61,7 +50,6 @@ namespace FamilyFinance.Views
         {
             base.OnAppearing();
 
-            LoadCurrenciesAsync();
             LoadPursesAsync();
         }
 
@@ -77,26 +65,9 @@ namespace FamilyFinance.Views
             Purses = response.Purses;
         }
 
-        private async void AddAsync()
+        private async void AddNewPurseAsync()
         {
-            await Navigation.PushAsync(new PursesLevel2PageView(Currencies));
-        }
-
-        private async void LoadCurrenciesAsync()
-        {
-            var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
-            if (!response.BaseIsSuccess || !response.IsSuccess)
-            {
-                AlertHelper.ShowAlertMessage(response, this);
-                return;
-            }
-
-            Currencies = response.Currencies;
-        }
-
-        public string CurrencyIdToName(int id)
-        {
-            return Currencies.Where(x => x.Id == id).FirstOrDefault().Name;
+            await Navigation.PushAsync(new PursesLevel2PageView());
         }
     }
 }

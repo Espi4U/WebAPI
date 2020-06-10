@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models.Requests;
 using Shared.Models.Requests.PurposesRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.PurposesResponses;
@@ -31,12 +32,8 @@ namespace WebAPI.Controllers
         public BaseResponse AddPurpose([FromBody]PurposeRequest request) =>
             _purposeService.AddPurpose(request);
 
-        [Route("delete_purpose"), HttpPost]
-        public BaseResponse DeletePurpose([FromBody]PurposeRequest request) =>
-            _purposeService.DeletePurpose(request);
-
         [Route("update_purpose"), HttpPost]
-        public BaseResponse UpdatePurpose([FromBody]PurposeRequest request) =>
+        public BaseResponse UpdatePurpose([FromBody]UpdatePurposeRequest request) =>
             _purposeService.UpdatePurpose(request);
     }
 }

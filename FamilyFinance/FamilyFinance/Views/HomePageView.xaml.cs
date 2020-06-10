@@ -12,19 +12,19 @@ namespace FamilyFinance.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePageView : ContentPage
     {
-        public ICommand AddCommand { get; }
+        public ICommand OpenAddNewIncomeOrExpensePageCommand { get; }
 
         public HomePageView()
         {
             NavigationPage.SetHasNavigationBar(this, false);
 
-            AddCommand = new Command(GoToAddNewIncomeOrExpensePage);
+            OpenAddNewIncomeOrExpensePageCommand = new Command(OpenAddNewIncomeOrExpensePage);
 
             BindingContext = this;
             InitializeComponent();
         }
 
-        public void GoToAddNewIncomeOrExpensePage(object parameter)
+        public void OpenAddNewIncomeOrExpensePage(object parameter)
         {
             Navigation.PushAsync(new AddIncomeOrExpensePageView());
         }

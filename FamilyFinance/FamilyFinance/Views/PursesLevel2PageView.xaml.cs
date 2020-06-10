@@ -18,18 +18,40 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        public ICommand SaveCommand { get; }
-
-        private Purse _purse;
-        public Purse Purse
+        private string _name;
+        public string Name
         {
-            get => _purse;
+            get => _name;
             set
             {
-                _purse = value;
-                OnPropertyChanged(nameof(Purse));
+                _name = value;
+                OnPropertyChanged(nameof(Name));
             }
         }
+
+        private int _size;
+        public int Size
+        {
+            get => _size;
+            set
+            {
+                _size = value;
+                OnPropertyChanged(nameof(Size));
+            }
+        }
+
+        private Currency _currency;
+        public Currency Currency
+        {
+            get => _currency;
+            set
+            {
+                _currency = value;
+                OnPropertyChanged(nameof(Currency));
+            }
+        }
+
+        public ICommand SavePurseCommand { get; }
 
         private List<Currency> _currencies;
         public List<Currency> Currencies
@@ -42,29 +64,32 @@ namespace FamilyFinance.Views
             }
         }
 
-        public PursesLevel2PageView(List<Currency> currencies)
+        public PursesLevel2PageView()
         {
             _apiClient = new APIClient();
 
-            Currencies = currencies;
-
-            SaveCommand = new Command(SaveAsync);
-
-            Purse = new Purse
-            {
-                FamilyId = GlobalHelper.GetFamilyId(),
-                PersonId = GlobalHelper.GetPersonId()
-            };
+            SavePurseCommand = new Command(SavePurseAsync);
 
             BindingContext = this;
             InitializeComponent();
         }
 
-        private async void SaveAsync()
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            LoadCurrenciesAsync();
+        }
+
+        private async void SavePurseAsync()
         {
             var request = new PurseRequest
             {
-                Purse = Purse
+                Name = Name,
+                Size = Size,
+                CurrencyId = Currency.Id,
+                FamilyId = GlobalHelper.GetFamilyId(),
+                PersonId = GlobalHelper.GetPersonId()
             };
             var response = await _apiClient.AddPurseAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
@@ -76,9 +101,16 @@ namespace FamilyFinance.Views
             await Navigation.PopAsync();
         }
 
-        public string GetNameByCurrencyId(int id)
+        private async void LoadCurrenciesAsync()
         {
-            return Currencies.Where(x=> x.Id == id).FirstOrDefault().Name;
+            var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
+            if (!response.BaseIsSuccess || !response.IsSuccess)
+            {
+                AlertHelper.ShowAlertMessage(response, this);
+                return;
+            }
+
+            Currencies = response.Currencies;
         }
     }
 }

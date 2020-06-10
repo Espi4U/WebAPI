@@ -19,15 +19,37 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        private Purpose _purpose;
-        public Purpose Purpose
+        private string _name;
+        public string Name
         {
-            get => _purpose;
+            get => _name;
             set
             {
-                _purpose = value;
-                LoadPursesAsync(Purpose.CurrencyId);
-                OnPropertyChanged(nameof(Purpose));
+                _name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
+
+        private int _finalSize;
+        public int FinalSize
+        {
+            get => _finalSize;
+            set
+            {
+                _finalSize = value;
+                OnPropertyChanged(nameof(FinalSize));
+            }
+        }
+
+        private Currency _currency;
+        public Currency Currency
+        {
+            get => _currency;
+            set
+            {
+                _currency = value;
+                LoadPursesByCurrencyIdAsync(Currency.Id);
+                OnPropertyChanged(nameof(Currency));
             }
         }
 
@@ -54,28 +76,12 @@ namespace FamilyFinance.Views
         }
 
         public ICommand SaveCommand { get; }
-        public ICommand DeleteCommand { get; }
 
-        public PurposesLevel3PageView(Purpose purpose = null)
+        public PurposesLevel3PageView()
         {
             _apiClient = new APIClient();
-            Purpose = new Purpose
-            {
-                FamilyId = GlobalHelper.GetFamilyId(),
-                PersonId = GlobalHelper.GetPersonId()
-            };
 
-            if(purpose == null)
-            {
-                SaveCommand = new Command(SaveAsync);
-            }
-            else
-            {
-                Purpose = purpose;
-                SaveCommand = new Command(UpdateAsync);
-            }
-
-            DeleteCommand = new Command(DeleteAsync);
+            SaveCommand = new Command(SaveAsync);
 
             BindingContext = this;
             InitializeComponent();
@@ -90,10 +96,13 @@ namespace FamilyFinance.Views
 
         private async void SaveAsync()
         {
-            this.Purpose.Currency = new Currency { Name = "Українська гривня" };
             var request = new PurposeRequest
             {
-                Purpose = Purpose
+                Name = Name,
+                FinalSize = FinalSize,
+                CurrencyId = Currency.Id,
+                FamilyId = GlobalHelper.GetFamilyId(),
+                PersonId = GlobalHelper.GetPersonId()
             };
             var response = await _apiClient.AddPurposeAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
@@ -102,27 +111,6 @@ namespace FamilyFinance.Views
                 return;
             }
 
-            await Navigation.PopAsync();
-        }
-
-        private async void UpdateAsync()
-        {
-            var request = new PurposeRequest
-            {
-                Purpose = Purpose
-            };
-            var response = await _apiClient.UpdatePurposeAsync(request);
-            if (!response.BaseIsSuccess || !response.IsSuccess)
-            {
-                AlertHelper.ShowAlertMessage(response, this);
-                return;
-            }
-
-            await Navigation.PopAsync();
-        }
-
-        private async void DeleteAsync()
-        {
             await Navigation.PopAsync();
         }
 
@@ -138,7 +126,7 @@ namespace FamilyFinance.Views
             Currencies = response.Currencies;
         }
 
-        private async void LoadPursesAsync(int currencyId)
+        private async void LoadPursesByCurrencyIdAsync(int currencyId)
         {
             var request = new GetPursesByCurrencyRequest
             {
@@ -147,7 +135,7 @@ namespace FamilyFinance.Views
                 PersonId = GlobalHelper.GetPersonId()
             };
             var response = await _apiClient.GetPursesByCurrencyAsync(request);
-            if(!response.IsSuccess || !response.BaseIsSuccess)
+            if (!response.IsSuccess || !response.BaseIsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
                 return;

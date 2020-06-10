@@ -37,9 +37,7 @@
              Grid.Row="2"       
              Style="{StaticResource addStackLayout}">              
             <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer
-                    Command="{Binding AddCommand}"            
-                    CommandParameter="I"/>
+                <TapGestureRecognizer Command="{Binding OpenAddNewIncomeOrExpensePageCommand}" />
             </StackLayout.GestureRecognizers>
             <Image
                 Source="plus_icon"            

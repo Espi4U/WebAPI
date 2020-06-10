@@ -11,7 +11,7 @@
             Grid.Column="0"
             Style="{StaticResource addStackLayout}">
             <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding AddCommand}"/>
+                <TapGestureRecognizer Command="{Binding AddNewPurposeCommand}"/>
             </StackLayout.GestureRecognizers>
             <Image
                 Source="plus_icon.png"

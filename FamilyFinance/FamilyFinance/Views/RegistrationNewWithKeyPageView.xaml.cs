@@ -16,14 +16,47 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        private RegistrationRequest _model;
-        public RegistrationRequest Model
+        private string _key;
+        public string Key
         {
-            get => _model;
+            get => _key;
             set
             {
-                _model = value;
-                OnPropertyChanged(nameof(Model));
+                _key = value;
+                OnPropertyChanged(nameof(Key));
+            }
+        }
+
+        private string _personName;
+        public string PersonName
+        {
+            get => _personName;
+            set
+            {
+                _personName = value;
+                OnPropertyChanged(nameof(PersonName));
+            }
+        }
+
+        private string _login;
+        public string Login
+        {
+            get => _login;
+            set
+            {
+                _login = value;
+                OnPropertyChanged(nameof(Login));
+            }
+        }
+
+        private string _password;
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                _password = value;
+                OnPropertyChanged(nameof(Password));
             }
         }
 
@@ -33,8 +66,6 @@ namespace FamilyFinance.Views
         {
             _apiClient = new APIClient();
 
-            Model = new RegistrationRequest();
-
             RegistrationCommand = new Command(RegistrationAsync);
 
             BindingContext = this;
@@ -43,9 +74,14 @@ namespace FamilyFinance.Views
 
         private async void RegistrationAsync()
         {
-            Model.FamilyId = GlobalHelper.GetFamilyId();
-
-            var response = await _apiClient.RegistrationNewWithKeyAsync(Model);
+            var request = new RegistrationRequest
+            {
+                PersonName = PersonName,
+                Login = Login,
+                Password = Password,
+                Key = Key,
+            };
+            var response = await _apiClient.RegistrationNewWithKeyAsync(request);
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);

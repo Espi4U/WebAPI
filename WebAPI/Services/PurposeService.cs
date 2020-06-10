@@ -1,4 +1,5 @@
-﻿using Shared.Models.Requests.PurposesRequests;
+﻿using Shared.Models.Requests;
+using Shared.Models.Requests.PurposesRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.PurposesResponses;
 using System;
@@ -21,28 +22,23 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        if (request.Purpose == null)
-                        {
-                            response.BaseIsSuccess = false;
-                            response.BaseMessage = "Не можна додати порожню ціль заощадження";
-                        }
-                        else if (db.Purposes.Any(x => x.Name == request.Purpose.Name))
+                        if (db.Purposes.Any(x => x.Name == request.Name && x.FamilyId == request.FamilyId))
                         {
                             response.BaseIsSuccess = false;
                             response.BaseMessage = "Така ціль заощадження вже є";
                         }
                         else
                         {
-                            var currency = db.Currencies.Where(x => x.Name == request.Purpose.Currency.Name).FirstOrDefault();
+                            var currency = db.Currencies.Where(x => x.Id == request.CurrencyId).FirstOrDefault();
 
                             var model = new Purpose
                             {
-                                Name = request.Purpose.Name,
-                                FinalSize = request.Purpose.FinalSize,
-                                CurrentSize = request.Purpose.CurrentSize,
+                                Name = request.Name,
+                                FinalSize = request.FinalSize,
+                                CurrentSize = 0,
                                 Currency = currency,
-                                FamilyId = request.Purpose.FamilyId,
-                                PersonId = request.Purpose.PersonId
+                                FamilyId = request.FamilyId,
+                                PersonId = request.PersonId
                             };
 
                             db.Purposes.Add(model);
@@ -98,7 +94,7 @@ namespace WebAPI.Services
             });
         }
 
-        public BaseResponse DeletePurpose(PurposeRequest request)
+        public BaseResponse UpdatePurpose(UpdatePurposeRequest request)
         {
             return GetResponse(() => {
                 var response = new BaseResponse();
@@ -106,41 +102,21 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        var purpose = db.Purposes.Where(x => x.Id == request.Purpose.Id).FirstOrDefault();
+                        var purpose = db.Purposes.Where(x => x.Id == request.PurposeId).FirstOrDefault();
+                        var purse = db.Purses.Where(x => x.Id == request.PurseId).FirstOrDefault();
 
-                        db.Purposes.Remove(purpose);
-                        db.SaveChanges();
-                    }
-                }
-                catch
-                {
-                    response.BaseIsSuccess = false;
-                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
-                }
-
-                return response;
-            });
-        }
-
-        public BaseResponse UpdatePurpose(PurposeRequest request)
-        {
-            return GetResponse(() => {
-                var response = new BaseResponse();
-                try
-                {
-                    using (FamilyFinanceContext db = new FamilyFinanceContext())
-                    {
-                        var purpose = db.Purposes.Where(x => x.Id == request.Purpose.Id).FirstOrDefault();
-
-                        if(purpose != null)
+                        if(purpose != null && purse != null)
                         {
-                            purpose.Name = request.Purpose.Name;
-                            purpose.FinalSize = request.Purpose.FinalSize;
-                            purpose.CurrentSize = request.Purpose.CurrentSize;
-                        }
+                            purpose.FinalSize += request.NewSize;
 
-                        db.Purposes.Update(purpose);
-                        db.SaveChanges();
+                            db.Purposes.Update(purpose);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            response.BaseIsSuccess = false;
+                            response.BaseMessage = "Помилка додавання";
+                        }
                     }
                 }
                 catch

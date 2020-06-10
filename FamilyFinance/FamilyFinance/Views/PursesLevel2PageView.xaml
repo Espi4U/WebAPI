@@ -20,21 +20,21 @@
                 VerticalOptions="Center" 
                 HorizontalOptions="Start" />
             <Entry
-                Text="{Binding Purse.Name, Mode=TwoWay}"
+                Text="{Binding Name, Mode=TwoWay}"
                 BackgroundColor="DarkGray"/>
             <Label
                 Text="Розмір:"
                 VerticalOptions="Center" 
                 HorizontalOptions="Start" />
             <Entry
-                Text="{Binding Purse.Size, Mode=TwoWay}"
+                Text="{Binding Size, Mode=TwoWay}"
                 BackgroundColor="DarkGray"
                 Keyboard="Numeric"/>
             <Picker
                 FontSize="Large"       
                 Title="Валюта"        
                 ItemsSource="{Binding Currencies}"
-                SelectedItem="{Binding Purse.Currency, Mode=TwoWay}"
+                SelectedItem="{Binding Currency, Mode=TwoWay}"
                 ItemDisplayBinding="{Binding Name}"/>
             <ImageButton
                 HeightRequest="100"

@@ -128,19 +128,20 @@ namespace WebAPI.Services
                             response.BaseIsSuccess = false;
                             response.BaseMessage = "Помилка, пусті дані";
                         }
-                        else if (request.Key != null && request.FamilyId != null)
+                        else if (request.Key != null)
                         {
-                            if(!db.InviteKeys.Any(x => x.FamilyId == request.FamilyId && x.Key == request.Key))
+                            if(!db.InviteKeys.Any(x => x.Key == request.Key))
                             {
                                 response.BaseIsSuccess = false;
                                 response.BaseMessage = "Помилка, Невірний ключ";
                             }
                             else
                             {
+                                var familyId = db.InviteKeys.Where(x => x.Key == request.Key).FirstOrDefault().FamilyId;
                                 var key = db.InviteKeys.Where(x => x.Key == request.Key).FirstOrDefault();
                                 db.InviteKeys.Remove(key);
 
-                                var family = db.Families.Where(x => x.Id == request.FamilyId).FirstOrDefault();
+                                var family = db.Families.Where(x => x.Id == familyId).FirstOrDefault();
 
                                 var person = new Person
                                 {

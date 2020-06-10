@@ -19,8 +19,7 @@ namespace FamilyFinance.Views
         private APIClient _apiClient;
         public Purpose Purpose { get; set; }
 
-        public ICommand EnlargeCommand { get; }
-        public ICommand DeleteCommand { get; }
+        public ICommand EnlargePurposeCommand { get; }
 
         public PurposesLevel2PageView(Purpose purpose)
         {
@@ -28,31 +27,16 @@ namespace FamilyFinance.Views
 
             Purpose = purpose;
 
-            EnlargeCommand = new Command(EnlargeAsync);
-            DeleteCommand = new Command(DeleteAsync);
+            EnlargePurposeCommand = new Command(EnlargePurposeAsync);
 
             BindingContext = this;
             InitializeComponent();
         }
 
-        private async void EnlargeAsync()
+        private async void EnlargePurposeAsync()
         {
-            await Navigation.PushAsync(new PurposesLevel3PageView(Purpose));
-        }
-
-        private async void DeleteAsync()
-        {
-            var request = new PurposeRequest
-            {
-                Purpose = Purpose
-            };
-            var response = await _apiClient.DeletePurposeAsync(request);
-            if(!response.BaseIsSuccess || !response.IsSuccess)
-            {
-                AlertHelper.ShowAlertMessage(response, this);
-                return;
-            }
-
+            //need go to enlarge page
+            await Navigation.PushAsync(new PurposesLevel3PageView());
         }
     }
 }

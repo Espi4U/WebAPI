@@ -189,6 +189,7 @@ namespace WebAPI.Services
                         {
                             var category = db.Categories.Where(x => x.Name == request.Category.Name && x.FamilyId == request.FamilyId).FirstOrDefault();
                             var currency = db.Currencies.Where(x => x.Name == request.Currency.Name).FirstOrDefault();
+
                             var purse = db.Purses.Where(x => x.Name == request.Purse.Name && x.FamilyId == request.FamilyId).FirstOrDefault();
                             if (request.Type == "I")
                             {

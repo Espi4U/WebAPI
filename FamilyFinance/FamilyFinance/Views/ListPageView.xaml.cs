@@ -26,8 +26,7 @@ namespace FamilyFinance.Views
 
         private void NavigateTo(object parameter)
         {
-            string path = parameter.ToString();
-            switch (path)
+            switch (parameter.ToString())
             {
                 case "purposes":
                     Navigation.PushAsync(new PurposesLevel1PageView());
