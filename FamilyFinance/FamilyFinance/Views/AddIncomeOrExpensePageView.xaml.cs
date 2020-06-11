@@ -1,4 +1,5 @@
-﻿using FamilyFinance.Helpers;
+﻿using Acr.UserDialogs;
+using FamilyFinance.Helpers;
 using Shared.Models.Requests;
 using Shared.Models.Requests.ChangeMoneyRequests;
 using System;
@@ -194,14 +195,22 @@ namespace FamilyFinance.Views
 
         private async void LoadCurrenciesAsync()
         {
-            var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
-            if(!response.BaseIsSuccess || !response.IsSuccess)
+            try
             {
-                AlertHelper.ShowAlertMessage(response, this);
-                return;
-            }
+                UserDialogs.Instance.ShowLoading();
+                var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
+                if (!response.BaseIsSuccess || !response.IsSuccess)
+                {
+                    AlertHelper.ShowAlertMessage(response, this);
+                    return;
+                }
 
-            Currencies = response.Currencies;
+                Currencies = response.Currencies;
+            }
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
         }
 
         private async void LoadPursesByCurrencyIdAsync(int currencyId)
