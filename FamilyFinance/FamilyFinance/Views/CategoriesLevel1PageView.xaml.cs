@@ -1,4 +1,5 @@
-﻿using FamilyFinance.Helpers;
+﻿using Acr.UserDialogs;
+using FamilyFinance.Helpers;
 using Shared.Models.Requests.CategoriesRequests;
 using Shared.Models.Requests.FamiliesRequests;
 using System;
@@ -56,7 +57,15 @@ namespace FamilyFinance.Views
         {
             base.OnAppearing();
 
-            LoadCategoriesAsync();
+            try
+            {
+                UserDialogs.Instance.ShowLoading();
+                LoadCategoriesAsync();
+            }
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
         }
 
         private async void LoadCategoriesAsync()
@@ -76,6 +85,7 @@ namespace FamilyFinance.Views
             var result = await DisplayPromptAsync("Enter Category Name", "Please Enter A New Category Name");
             if (!string.IsNullOrWhiteSpace(result))
             {
+                UserDialogs.Instance.ShowLoading();
                 var request = new CategoryRequest
                 {
                     Category = new Category
@@ -89,8 +99,11 @@ namespace FamilyFinance.Views
                 if (!response.BaseIsSuccess || !response.IsSuccess)
                 {
                     AlertHelper.ShowAlertMessage(response, this);
+                    UserDialogs.Instance.HideLoading();
                     return;
                 }
+
+                UserDialogs.Instance.HideLoading();
 
                 LoadCategoriesAsync();
             }

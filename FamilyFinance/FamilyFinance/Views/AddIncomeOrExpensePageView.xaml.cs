@@ -152,13 +152,21 @@ namespace FamilyFinance.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            LoadCategoriesAsync();
-            LoadCurrenciesAsync();
+            try
+            {
+                UserDialogs.Instance.ShowLoading();
+                LoadCategoriesAsync();
+                LoadCurrenciesAsync();
+            }
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
         }
 
         private async void AddNewIncomeOrExpenseAsync()
         {
+            UserDialogs.Instance.ShowLoading();
             var request = new ChangeMoneyRequest
             {
                 Name = Name,
@@ -175,8 +183,11 @@ namespace FamilyFinance.Views
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
+                UserDialogs.Instance.HideLoading();
                 return;
             }
+
+            UserDialogs.Instance.HideLoading();
 
             await Navigation.PopAsync();
         }
@@ -195,26 +206,19 @@ namespace FamilyFinance.Views
 
         private async void LoadCurrenciesAsync()
         {
-            try
+            var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
+            if (!response.BaseIsSuccess || !response.IsSuccess)
             {
-                UserDialogs.Instance.ShowLoading();
-                var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
-                if (!response.BaseIsSuccess || !response.IsSuccess)
-                {
-                    AlertHelper.ShowAlertMessage(response, this);
-                    return;
-                }
+                AlertHelper.ShowAlertMessage(response, this);
+                return;
+            }
 
-                Currencies = response.Currencies;
-            }
-            finally
-            {
-                UserDialogs.Instance.HideLoading();
-            }
+            Currencies = response.Currencies;
         }
 
         private async void LoadPursesByCurrencyIdAsync(int currencyId)
         {
+            UserDialogs.Instance.ShowLoading();
             var request = new GetPursesByCurrencyRequest
             {
                 CurrencyId = currencyId,
@@ -225,8 +229,11 @@ namespace FamilyFinance.Views
             if(!response.IsSuccess || !response.BaseIsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
+                UserDialogs.Instance.HideLoading();
                 return;
             }
+
+            UserDialogs.Instance.HideLoading();
 
             Purses = response.Purses;
         }

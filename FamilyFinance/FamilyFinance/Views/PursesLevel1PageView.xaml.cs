@@ -1,4 +1,5 @@
-﻿using FamilyFinance.Helpers;
+﻿using Acr.UserDialogs;
+using FamilyFinance.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,15 @@ namespace FamilyFinance.Views
         {
             base.OnAppearing();
 
-            LoadPursesAsync();
+            try
+            {
+                UserDialogs.Instance.ShowLoading();
+                LoadPursesAsync();
+            }
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
         }
 
         private async void LoadPursesAsync()

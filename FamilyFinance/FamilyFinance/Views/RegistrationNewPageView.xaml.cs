@@ -1,4 +1,5 @@
-﻿using FamilyFinance.Helpers;
+﻿using Acr.UserDialogs;
+using FamilyFinance.Helpers;
 using Shared.Models.Requests;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,7 @@ namespace FamilyFinance.Views
 
         private async void RegistrationAsync()
         {
+            UserDialogs.Instance.ShowLoading();
             var request = new RegistrationRequest
             {
                 FamilyName = FamilyName,
@@ -85,8 +87,11 @@ namespace FamilyFinance.Views
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
+                UserDialogs.Instance.HideLoading();
                 return;
             }
+
+            UserDialogs.Instance.HideLoading();
 
             await Navigation.PushAsync(new LoginPageView());
         }

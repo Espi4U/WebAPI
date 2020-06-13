@@ -1,4 +1,5 @@
-﻿using FamilyFinance.Helpers;
+﻿using Acr.UserDialogs;
+using FamilyFinance.Helpers;
 using Shared.Models.Requests.BaseRequests;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,7 @@ namespace FamilyFinance.Views
 
         private async void LoginAsync()
         {
+            UserDialogs.Instance.ShowLoading();
             var request = new LoginRequest
             {
                 Login = Login,
@@ -65,6 +67,7 @@ namespace FamilyFinance.Views
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
+                UserDialogs.Instance.HideLoading();
                 return;
             }
 
@@ -73,6 +76,8 @@ namespace FamilyFinance.Views
             GlobalHelper.SetFamilyName(response.FamilyName);
             GlobalHelper.SetPersonName(response.PersonName);
             GlobalHelper.SetRole(response.Role);
+
+            UserDialogs.Instance.HideLoading();
 
             await Navigation.PushAsync(new MainPageView());
         }

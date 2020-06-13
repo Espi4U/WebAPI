@@ -122,7 +122,7 @@ namespace WebAPI.Services
                             {
                                 response.Purses = request.PersonId == null ?
                                 db.Purses.Where(x => x.FamilyId == request.FamilyId && x.CurrencyId == request.CurrencyId).ToList():
-                                db.Purses.Where(x => x.PersonId == request.PersonId && x.CurrencyId == request.CurrencyId).ToList();
+                                db.Purses.Where(x => x.PersonId == request.PersonId && x.FamilyId == request.FamilyId && x.CurrencyId == request.CurrencyId).ToList();
                             }
                         }
                     }

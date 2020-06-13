@@ -1,4 +1,5 @@
-﻿using FamilyFinance.Helpers;
+﻿using Acr.UserDialogs;
+using FamilyFinance.Helpers;
 using Newtonsoft.Json;
 using Shared.Models.Requests.PursesRequests;
 using System;
@@ -26,17 +27,6 @@ namespace FamilyFinance.Views
             {
                 _name = value;
                 OnPropertyChanged(nameof(Name));
-            }
-        }
-
-        private int _size;
-        public int Size
-        {
-            get => _size;
-            set
-            {
-                _size = value;
-                OnPropertyChanged(nameof(Size));
             }
         }
 
@@ -78,15 +68,24 @@ namespace FamilyFinance.Views
         {
             base.OnAppearing();
 
-            LoadCurrenciesAsync();
+            try
+            {
+                UserDialogs.Instance.ShowLoading();
+                LoadCurrenciesAsync();
+            }
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
         }
 
         private async void SavePurseAsync()
         {
+            UserDialogs.Instance.ShowLoading();
             var request = new PurseRequest
             {
                 Name = Name,
-                Size = Size,
+                Size = 0,
                 CurrencyId = Currency.Id,
                 FamilyId = GlobalHelper.GetFamilyId(),
                 PersonId = GlobalHelper.GetPersonId()
@@ -95,8 +94,10 @@ namespace FamilyFinance.Views
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
+                UserDialogs.Instance.HideLoading();
                 return;
             }
+            UserDialogs.Instance.HideLoading();
 
             await Navigation.PopAsync();
         }
