@@ -85,19 +85,19 @@ namespace WebAPI.Services
                             };
 
                             db.Families.Add(family);
+                            db.SaveChanges();
 
                             var familyFormContext = db.Families.Where(x => x.Name == family.Name).FirstOrDefault();
 
-                            db.Categories.Add(new Category { Name = "Інше", Family = family });
-
                             var uah = db.Currencies.Where(x => x.Name == "Українська Гривня").FirstOrDefault();
-                            db.Purses.Add(new Purse { Name = "Універсальний гривневий гаманець", Size = 0, Currency = uah, Family = familyFormContext });
+                            db.Purses.Add(new Purse { Name = "Універсальний гривневий гаманець", Size = 0, Currency = uah, Family = familyFormContext, PersonId = null });
+                            db.Categories.Add(new Category { Name = "Інше", Family = familyFormContext });
 
                             var person = new Person
                             {
                                 Name = request.PersonName,
                                 Role = "H",
-                                Family = family,
+                                Family = familyFormContext,
                                 Login = request.Login,
                                 Password = request.Password
                             };
