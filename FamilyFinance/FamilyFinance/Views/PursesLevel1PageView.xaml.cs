@@ -64,6 +64,7 @@ namespace FamilyFinance.Views
 
         private async void LoadPursesAsync()
         {
+            var a = GlobalHelper.GetBaseRequest();
             var response = await _apiClient.GetPursesAsync(GlobalHelper.GetBaseRequest());
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {

@@ -41,8 +41,6 @@ namespace FamilyFinance.Views
             }
         }
 
-        public ICommand SavePurseCommand { get; }
-
         private List<Currency> _currencies;
         public List<Currency> Currencies
         {
@@ -54,9 +52,35 @@ namespace FamilyFinance.Views
             }
         }
 
+        private bool _isFamilyPurse = false;
+        public bool IsFamilyPurse
+        {
+            get => _isFamilyPurse;
+            set
+            {
+                _isFamilyPurse = value;
+                OnPropertyChanged(nameof(IsFamilyPurse));
+            }
+        }
+
+        private bool _isSeeIsFamilyPurseSwitch = false;
+        public bool IsSeeIsFamilyPurseSwitch
+        {
+            get => _isSeeIsFamilyPurseSwitch;
+            set
+            {
+                _isSeeIsFamilyPurseSwitch = value;
+                OnPropertyChanged(nameof(IsSeeIsFamilyPurseSwitch));
+            }
+        }
+
+        public ICommand SavePurseCommand { get; }
+
         public PursesLevel2PageView()
         {
             _apiClient = new APIClient();
+
+            IsSeeIsFamilyPurseSwitch = GlobalHelper.GetRole() == "H" ? true : false;
 
             SavePurseCommand = new Command(SavePurseAsync);
 
@@ -88,8 +112,16 @@ namespace FamilyFinance.Views
                 Size = 0,
                 CurrencyId = Currency.Id,
                 FamilyId = GlobalHelper.GetFamilyId(),
-                PersonId = GlobalHelper.GetPersonId()
             };
+            if (IsFamilyPurse)
+            {
+                request.PersonId = null;
+            }
+            else
+            {
+                request.PersonId = GlobalHelper.GetPersonId();
+            }
+
             var response = await _apiClient.AddPurseAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {

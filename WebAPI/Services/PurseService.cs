@@ -76,16 +76,8 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            if(request.PersonId != null || request.FamilyId != null)
-                            {
-                                response.Purses = db.Purses.Where(x => x.FamilyId == request.FamilyId || x.PersonId == request.PersonId).ToList();
-                            }
-                            else
-                            {
-                                response.Purses = request.PersonId == null ?
-                                db.Purses.Where(x => x.FamilyId == request.FamilyId).ToList():
-                                db.Purses.Where(x => x.PersonId == request.PersonId).ToList();
-                            }
+                            response.Purses = db.Purses.Where(x => (x.FamilyId == request.FamilyId && x.PersonId == request.PersonId) ||
+                                (x.FamilyId == request.FamilyId && x.PersonId == null)).ToList();
                         }
                     }
                 }
@@ -114,16 +106,8 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            if (request.PersonId != null || request.FamilyId != null)
-                            {
-                                response.Purses = db.Purses.Where(x => (x.FamilyId == request.FamilyId || x.PersonId == request.PersonId) && x.CurrencyId == request.CurrencyId).ToList();
-                            }
-                            else
-                            {
-                                response.Purses = request.PersonId == null ?
-                                db.Purses.Where(x => x.FamilyId == request.FamilyId && x.CurrencyId == request.CurrencyId).ToList():
-                                db.Purses.Where(x => x.PersonId == request.PersonId && x.FamilyId == request.FamilyId && x.CurrencyId == request.CurrencyId).ToList();
-                            }
+                            response.Purses = db.Purses.Where(x => (x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.CurrencyId == request.CurrencyId) ||
+                                (x.FamilyId == request.FamilyId && x.CurrencyId == request.CurrencyId && x.PersonId == null)).ToList();
                         }
                     }
                 }

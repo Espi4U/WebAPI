@@ -22,27 +22,27 @@
             <Entry
                 Text="{Binding Name, Mode=TwoWay}"
                 BackgroundColor="DarkGray"/>
-            <Label
-                Text="Розмір:"
-                VerticalOptions="Center" 
-                HorizontalOptions="Start" />
-            <Entry
-                Text="{Binding Size, Mode=TwoWay}"
-                BackgroundColor="DarkGray"
-                Keyboard="Numeric"/>
             <Picker
                 FontSize="Large"       
                 Title="Валюта"        
                 ItemsSource="{Binding Currencies}"
                 SelectedItem="{Binding Currency, Mode=TwoWay}"
                 ItemDisplayBinding="{Binding Name}"/>
+            <StackLayout
+                IsVisible="{Binding IsSeeIsFamilyPurseSwitch}"
+                Orientation="Horizontal">
+                <Switch
+                    IsToggled="{Binding IsFamilyPurse, Mode=TwoWay}"
+                    HorizontalOptions="StartAndExpand" />
+                <Label Text="Сімейний гаманець" />
+            </StackLayout>
             <ImageButton
                 HeightRequest="100"
                 WidthRequest="100"
                 HorizontalOptions="CenterAndExpand"
                 Margin="0,60,0,0"
                 Source="save_icon"
-                Command="{Binding SaveCommand}"/>
+                Command="{Binding SavePurseCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
