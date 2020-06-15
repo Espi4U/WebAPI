@@ -7,6 +7,7 @@ using Shared.Models.Requests.BaseRequests;
 using Shared.Models.Requests.ChangeMoneyRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.ChangeMoneysResponses;
+using WebAPI.Models.APIModels.Requests;
 using WebAPI.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -24,9 +25,13 @@ namespace WebAPI.Controllers
             _changeMoneyService = changeMoneyService;
         }
 
-        [HttpPost, Route("get_all")]
+        [HttpPost, Route("get_all_by_type")]
         public async Task<ListChangeMoneysResponse> GetIncomesOrExpensesAsync([FromBody]GetIncomesOrExpensesRequest request) =>
             await Task.Run(() => _changeMoneyService.GetIncomesOrExpenses(request));
+
+        [HttpPost, Route("get_all")]
+        public async Task<ListChangeMoneysResponse> GetAllIncomesOrExpensesAsync([FromBody]BaseRequest request) =>
+            await Task.Run(() => _changeMoneyService.GetAllIncomesOrExpenses(request));
 
         [HttpPost, Route("get_largest")]
         public async Task<ChangeMoneyResponse> GetLargestIncomeOrExpenseAsync([FromBody]GetIncomesOrExpensesRequest request) =>

@@ -130,6 +130,9 @@ namespace FamilyFinance
         #region CHANGEMONEYS
 
         public async Task<ListChangeMoneysResponse> GetIncomesOrExpensesAsync(GetIncomesOrExpensesRequest request) =>
+            await TryCallApiAsync<ListChangeMoneysResponse>("changemoneys/get_all_by_type", request);
+
+        public async Task<ListChangeMoneysResponse> GetAllIncomesOrExpensesAsync(BaseRequest request) =>
             await TryCallApiAsync<ListChangeMoneysResponse>("changemoneys/get_all", request);
 
         public async Task<ChangeMoneyResponse> GetLargestIncomeOrExpenseAsync(GetIncomesOrExpensesRequest request) =>

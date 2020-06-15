@@ -43,6 +43,35 @@ namespace WebAPI.Services
             });
         }
 
+        public ListChangeMoneysResponse GetAllIncomesOrExpenses(BaseRequest request)
+        {
+            return GetResponse(() => {
+                var response = new ListChangeMoneysResponse();
+                try
+                {
+                    using (FamilyFinanceContext db = new FamilyFinanceContext())
+                    {
+                        if (request.FamilyId == null && request.PersonId == null)
+                        {
+                            response.BaseMessage = Shared.Constants.NEED_AUTHORIZE;
+                            response.IsSuccess = false;
+                        }
+                        else
+                        {
+                            response.ChangeMoneys = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId).ToList();
+                        }
+                    }
+                }
+                catch
+                {
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
+                }
+
+                return response;
+            });
+        }
+
         public ChangeMoneyResponse GetLargestIncomeOrExpense(GetIncomesOrExpensesRequest request)
         {
             return GetResponse(() => {
