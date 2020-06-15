@@ -5,14 +5,5 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="FamilyFinance.Views.MePageView"
-             Title="Запросити Нового Члена Сім'ї">
-    <StackLayout
-        Spacing="1"
-        Margin="20">
-        <Label Text="Введіть Email"/>
-        <Entry Text="{Binding EmailAddress, Mode=TwoWay}"/>
-        <Button
-            Text="Надіслати Запрошення"
-            Command="{Binding SendInviteCommand}"/>
-    </StackLayout>
+             Title="Мої дані">
 </ContentPage>

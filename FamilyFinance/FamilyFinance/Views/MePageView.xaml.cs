@@ -1,4 +1,5 @@
-﻿using FamilyFinance.Helpers;
+﻿using Acr.UserDialogs;
+using FamilyFinance.Helpers;
 using Shared.Models.Requests;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WebAPI.Models.APIModels;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,18 +17,16 @@ namespace FamilyFinance.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MePageView : ContentPage
     {
-        private APIClient _apiClient;
+        private readonly APIClient _apiClient;
 
-        public ICommand SendInviteCommand { get; }
-
-        private string _emailAddress;
-        public string EmailAddress
+        private List<ChangeMoney> _changeMoneys;
+        public List<ChangeMoney> ChangeMoneys
         {
-            get => _emailAddress;
+            get => _changeMoneys;
             set
             {
-                _emailAddress = value;
-                OnPropertyChanged(nameof(EmailAddress));
+                _changeMoneys = value;
+                OnPropertyChanged(nameof(ChangeMoneys));
             }
         }
 
@@ -34,54 +34,28 @@ namespace FamilyFinance.Views
         {
             _apiClient = new APIClient();
 
-            SendInviteCommand = new Command(SendInvite);
-
             BindingContext = this;
             InitializeComponent();
         }
 
-        private void SendInvite()
+        protected override void OnAppearing()
         {
-            var key = GenerateNewInviteKey();
+            base.OnAppearing();
 
-            SendEmailAsync(key);
-            SaveKeyToDatabaseAsync(key);
-            EmailAddress = string.Empty;
-        }
-
-        private async void SendEmailAsync(string key)
-        {
             try
             {
-                var message = new EmailMessage
-                {
-                    Subject = "Вітання!",
-                    Body = $"Використайте цей код для реєстрації: {key}",
-                    To = new List<string> { EmailAddress },
-                };
-                await Email.ComposeAsync(message);
+                UserDialogs.Instance.ShowLoading();
+                LoadChangeMoneysAsync();
             }
-            catch { }
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
         }
 
-        private string GenerateNewInviteKey()
+        private async void LoadChangeMoneysAsync()
         {
-            return Guid.NewGuid().ToString();
-        }
 
-        private async void SaveKeyToDatabaseAsync(string key)
-        {
-            var request = new InviteKeyRequest
-            {
-                FamilyId = GlobalHelper.GetFamilyId(),
-                Key = key
-            };
-            var response = await _apiClient.AddInviteKey(request);
-            if(!response.BaseIsSuccess || !response.IsSuccess)
-            {
-                AlertHelper.ShowAlertMessage(response, this);
-                return;
-            }
         }
     }
 }

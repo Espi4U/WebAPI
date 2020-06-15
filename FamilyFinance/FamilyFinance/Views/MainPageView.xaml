@@ -37,7 +37,7 @@
             Title="Сім'я"
             IconImageSource="family_icon.png">
             <x:Arguments>
-                <views:MePageView />
+                <views:FamilyPageView />
             </x:Arguments>
         </NavigationPage>
     </TabbedPage.Children>

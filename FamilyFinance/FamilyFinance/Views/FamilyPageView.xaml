@@ -4,12 +4,15 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="FamilyFinance.Views.FamilyPageView">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="FamilyFinance.Views.FamilyPageView"
+             Title="Запросити нового члена сім'ї">
+    <StackLayout
+        Spacing="1"
+        Margin="20">
+        <Label Text="Введіть Email"/>
+        <Entry Text="{Binding EmailAddress, Mode=TwoWay}"/>
+        <Button
+            Text="Надіслати Запрошення"
+            Command="{Binding SendInviteCommand}"/>
+    </StackLayout>
 </ContentPage>
