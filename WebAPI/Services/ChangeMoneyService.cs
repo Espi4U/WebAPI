@@ -29,16 +29,7 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            if(request.PersonId != null || request.FamilyId != null)
-                            {
-                                response.ChangeMoneys = db.ChangeMoneys.Where(x => x.Type == request.Type && (x.FamilyId == request.FamilyId || x.PersonId == request.PersonId)).ToList();
-                            }
-                            else
-                            {
-                                response.ChangeMoneys = request.FamilyId == null ?
-                                db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.Type == request.Type).ToList():
-                                db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.Type == request.Type).ToList();
-                            }
+                            response.ChangeMoneys = db.ChangeMoneys.Where(x => x.Type == request.Type && x.FamilyId == request.FamilyId && x.PersonId == request.PersonId).ToList();
                         }
                     }
                 }
