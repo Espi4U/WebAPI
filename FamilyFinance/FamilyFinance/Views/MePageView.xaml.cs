@@ -19,6 +19,15 @@ namespace FamilyFinance.Views
     {
         private readonly APIClient _apiClient;
 
+        public ChangeMoney SelectedChangeMoney
+        {
+            get => null;
+            set
+            {
+                OnPropertyChanged(nameof(SelectedChangeMoney));
+            }
+        }
+
         private List<ChangeMoney> _changeMoneys;
         public List<ChangeMoney> ChangeMoneys
         {

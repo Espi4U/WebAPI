@@ -7,8 +7,8 @@
              x:Class="FamilyFinance.Views.MePageView"
              Title="Мої дані">
     <ListView HasUnevenRows="True"
-                  ItemsSource="{Binding Purses}"
-                  SelectedItem="{Binding SelectedPurse, Mode=TwoWay}">
+                  ItemsSource="{Binding ChangeMoneys}"
+                  SelectedItem="{Binding SelectedChangeMoney, Mode=TwoWay}">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
