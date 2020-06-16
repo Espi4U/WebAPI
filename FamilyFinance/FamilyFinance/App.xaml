@@ -28,6 +28,8 @@
             <converters:BoolReverseConverter x:Key="BoolReverseConverter"/>
             <converters:ListSizeToVisibleConverter x:Key="ListSizeToVisibleConverter"/>
             <converters:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
+            <converters:TypeCodeToColorConverter x:Key="TypeCodeToColorConverter"/>
+            <converters:TypeCodeToDescriptionConverter x:Key="TypeCodeToDescriptionConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
