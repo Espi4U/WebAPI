@@ -55,7 +55,14 @@ namespace FamilyFinance.Views
 
         private async void LoadChangeMoneysAsync()
         {
+            var response = await _apiClient.GetAllIncomesOrExpensesAsync(GlobalHelper.GetBaseRequest());
+            if(!response.BaseIsSuccess || !response.IsSuccess)
+            {
+                AlertHelper.ShowAlertMessage(response, this);
+                return;
+            }
 
+            ChangeMoneys = response.ChangeMoneys;
         }
     }
 }
