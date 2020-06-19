@@ -16,7 +16,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Margin="20">
+        <StackLayout>
             <Picker
                 Margin="20,0,20,0"
                 FontSize="Large"
@@ -25,58 +25,42 @@
                 ItemDisplayBinding="{Binding Name}"
                 SelectedItem="{Binding Currency, Mode=TwoWay}"
                 HorizontalOptions="FillAndExpand"/>
-            <StackLayout
-                Spacing="3"
-                IsVisible="{Binding Currency, Converter={StaticResource NullToVisibleConverter}}">
+            <StackLayout IsVisible="{Binding Currency, Converter={StaticResource NullToVisibleConverter}}">
                 <StackLayout
                         HeightRequest="1"
                         Margin="0,25,0,25"
                         HorizontalOptions="FillAndExpand"
                         BackgroundColor="Black"/>
-                <!--<StackLayout чи загальна мета заощадження
-                            Margin="20"
-                            Orientation="Horizontal"
-                            HorizontalOptions="FillAndExpand">
-                            <Label
-                                HorizontalOptions="Start"
-                                Text="Витрата" />
-                            <Switch
-                                IsToggled="{Binding IsIncome, Mode=TwoWay}"
-                                HorizontalOptions="Center" />
-                            <Label
-                                HorizontalOptions="End"
-                                Text="Дохід" />
-                        </StackLayout>-->
                 <local:ExEntry
-                        Placeholder="Необхідно"
-                        ErrorText="{Binding FinalSize.NotValidMessageError}"
-                        BorderErrorColor="Red"
-                        Keyboard="Numeric"
-                        Text="{Binding FinalSize.Name, Mode=TwoWay}"
-                        HeightRequest="50"
-                        IsBorderErrorVisible="{Binding FinalSize.IsNotValid, Mode=TwoWay}">
+                    Margin="20,0,20,0"
+                    Placeholder="Необхідно"
+                    ErrorText="{Binding FinalSize.NotValidMessageError}"
+                    BorderErrorColor="Red"
+                    Keyboard="Numeric"
+                    Text="{Binding FinalSize.Name, Mode=TwoWay}"
+                    HeightRequest="50"
+                    IsBorderErrorVisible="{Binding FinalSize.IsNotValid, Mode=TwoWay}">
                     <local:ExEntry.Behaviors>
                         <behavior:EmptyEntryValidatorBehavior />
                     </local:ExEntry.Behaviors>
                 </local:ExEntry>
                 <local:ExEntry
-                        Placeholder="Назва"
-                        ErrorText="{Binding Name.NotValidMessageError}"
-                        BorderErrorColor="Red"
-                        Text="{Binding Name.Name, Mode=TwoWay}"
-                        HeightRequest="50"
-                        IsBorderErrorVisible="{Binding Name.IsNotValid, Mode=TwoWay}">
+                    Margin="20,0,20,0"
+                    Placeholder="Назва"
+                    ErrorText="{Binding Name.NotValidMessageError}"
+                    BorderErrorColor="Red"
+                    Text="{Binding Name.Name, Mode=TwoWay}"
+                    HeightRequest="50"
+                    IsBorderErrorVisible="{Binding Name.IsNotValid, Mode=TwoWay}">
                     <local:ExEntry.Behaviors>
                         <behavior:EmptyEntryValidatorBehavior />
                     </local:ExEntry.Behaviors>
                 </local:ExEntry>
-                <ImageButton
-                        HeightRequest="100"
-                        WidthRequest="100"
-                        HorizontalOptions="CenterAndExpand"
-                        Margin="0,10,0,10"
-                        Source="save_icon"
-                        Command="{Binding OnValidationCommand}"/>
+                <Button
+                    Text="Зберегти"
+                    HorizontalOptions="FillAndExpand"
+                    Margin="20,10,20,10"
+                    Command="{Binding OnValidationCommand}"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

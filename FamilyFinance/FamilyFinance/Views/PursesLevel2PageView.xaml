@@ -4,8 +4,11 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:local="clr-namespace:FamilyFinance.Controls"
+             xmlns:behavior="clr-namespace:FamilyFinance.Behaviors"
              x:Class="FamilyFinance.Views.PursesLevel2PageView"
-             x:Name="Page">
+             x:Name="Page"
+             Title="Додавання нового гаманця">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
@@ -15,34 +18,38 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Margin="20">
-            <Label
-                Text="Назва:"
-                VerticalOptions="Center" 
-                HorizontalOptions="Start" />
-            <Entry
-                Text="{Binding Name, Mode=TwoWay}"
-                BackgroundColor="DarkGray"/>
             <Picker
                 FontSize="Large"       
-                Title="Валюта"        
+                Title="Для початку оберіть валюту"        
                 ItemsSource="{Binding Currencies}"
                 SelectedItem="{Binding Currency, Mode=TwoWay}"
                 ItemDisplayBinding="{Binding Name}"/>
-            <StackLayout
-                IsVisible="{Binding IsSeeIsFamilyPurseSwitch}"
-                Orientation="Horizontal">
-                <Switch
-                    IsToggled="{Binding IsFamilyPurse, Mode=TwoWay}"
-                    HorizontalOptions="StartAndExpand" />
-                <Label Text="Сімейний гаманець" />
+            <StackLayout IsVisible="{Binding Currency, Converter={StaticResource NullToVisibleConverter}}">
+                <local:ExEntry
+                    Placeholder="Назва"
+                    ErrorText="{Binding Name.NotValidMessageError}"
+                    BorderErrorColor="Red"
+                    Text="{Binding Name.Name, Mode=TwoWay}"
+                    HeightRequest="50"
+                    IsBorderErrorVisible="{Binding Name.IsNotValid, Mode=TwoWay}">
+                    <local:ExEntry.Behaviors>
+                        <behavior:EmptyEntryValidatorBehavior />
+                    </local:ExEntry.Behaviors>
+                </local:ExEntry>
+                <StackLayout
+                    IsVisible="{Binding IsSeeIsFamilyPurseSwitch}"
+                    Orientation="Horizontal">
+                    <Switch
+                        IsToggled="{Binding IsFamilyPurse, Mode=TwoWay}"
+                        HorizontalOptions="StartAndExpand" />
+                    <Label Text="Сімейний гаманець" />
+                </StackLayout>
+                <Button
+                    Text="Зберегти"
+                    HorizontalOptions="FillAndExpand"
+                    Margin="0,60,0,0"
+                    Command="{Binding OnValidationCommand}"/>
             </StackLayout>
-            <ImageButton
-                HeightRequest="100"
-                WidthRequest="100"
-                HorizontalOptions="CenterAndExpand"
-                Margin="0,60,0,0"
-                Source="save_icon"
-                Command="{Binding SavePurseCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

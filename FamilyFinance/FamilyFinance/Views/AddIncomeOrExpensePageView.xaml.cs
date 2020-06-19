@@ -1,11 +1,13 @@
 ﻿using Acr.UserDialogs;
 using FamilyFinance.Helpers;
+using FamilyFinance.Models;
 using Shared.Models.Requests;
 using Shared.Models.Requests.ChangeMoneyRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WebAPI.Models.APIModels;
@@ -19,8 +21,8 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        private string _name;
-        public string Name
+        private Field _name;
+        public Field Name
         {
             get => _name;
             set
@@ -30,29 +32,14 @@ namespace FamilyFinance.Views
             }
         }
 
-        private int _size;
-        public int Size
+        private Field _size;
+        public Field Size
         {
             get => _size;
             set
             {
                 _size = value;
                 OnPropertyChanged(nameof(Size));
-            }
-        }
-
-        public int MaxSliderOrStepperValue
-        {
-            get
-            {
-                if (Purse != null)
-                {
-                    return IsIncome ? 5000 : Purse.Size;
-                }
-                else
-                {
-                    return 1;
-                }
             }
         }
 
@@ -63,9 +50,8 @@ namespace FamilyFinance.Views
             set
             {
                 _isIncome = value;
-                Size = 0;
+                Size.Name = string.Empty;
                 OnPropertyChanged(nameof(IsIncome));
-                OnPropertyChanged(nameof(MaxSliderOrStepperValue));
             }
         }
 
@@ -101,7 +87,6 @@ namespace FamilyFinance.Views
             {
                 _purse = value;
                 OnPropertyChanged(nameof(Purse));
-                OnPropertyChanged(nameof(MaxSliderOrStepperValue));
             }
         }
 
@@ -138,13 +123,16 @@ namespace FamilyFinance.Views
             }
         }
 
-        public ICommand AddNewIncomeOrExpenseCommand { get; }
+        public ICommand OnValidationCommand { get; }
 
         public AddIncomeOrExpensePageView()
         {
             _apiClient = new APIClient();
 
-            AddNewIncomeOrExpenseCommand = new Command(AddNewIncomeOrExpenseAsync);
+            Name = new Field();
+            Size = new Field();
+
+            OnValidationCommand = new Command(Validation);
 
             BindingContext = this;
             InitializeComponent();
@@ -165,13 +153,60 @@ namespace FamilyFinance.Views
             }
         }
 
+        private void Validation()
+        {
+            if (string.IsNullOrEmpty(Name.Name))
+            {
+                Name.NotValidMessageError = "Обов'язкове поле";
+                Name.IsNotValid = true;
+            }
+            else if (!Regex.IsMatch(Name.Name, Constants.NameLatinAndCyrylicPattern))
+            {
+                Name.NotValidMessageError = "Некоректна назва. Мінімум 4, максимум 10";
+                Name.IsNotValid = true;
+            }
+            else
+            {
+                Name.IsNotValid = false;
+            }
+
+            if (string.IsNullOrEmpty(Size.Name))
+            {
+                Size.NotValidMessageError = "Обов'язкове поле";
+                Size.IsNotValid = true;
+            }
+            else if (!Regex.IsMatch(Size.Name, Constants.PositiveDigitsPattern))
+            {
+                Size.NotValidMessageError = "Тільки додатні числа";
+                Size.IsNotValid = true;
+            }
+            else if(!IsIncome && Convert.ToInt32(Size.Name) > Purse.Size)
+            {
+                Size.NotValidMessageError = "Недостатньо коштів";
+                Size.IsNotValid = true;
+            }
+            else
+            {
+                Size.IsNotValid = false;
+            }
+
+            if (!Name.IsNotValid &&
+                !Size.IsNotValid &&
+                Currency != null &&
+                Category != null &&
+                Purse != null)
+            {
+                AddNewIncomeOrExpenseAsync();
+            }
+        }
+
         private async void AddNewIncomeOrExpenseAsync()
         {
             UserDialogs.Instance.ShowLoading();
             var request = new ChangeMoneyRequest
             {
-                Name = Name,
-                Size = Size,
+                Name = Name.Name,
+                Size = Convert.ToInt32(Size.Name),
                 Type = IsIncome ? "I" : "E",
                 Date = DateTime.Now,
                 Category = Category,

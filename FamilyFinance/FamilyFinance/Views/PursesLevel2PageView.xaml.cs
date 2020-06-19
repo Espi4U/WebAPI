@@ -1,11 +1,13 @@
 ﻿using Acr.UserDialogs;
 using FamilyFinance.Helpers;
+using FamilyFinance.Models;
 using Newtonsoft.Json;
 using Shared.Models.Requests.PursesRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WebAPI.Models.APIModels;
@@ -19,8 +21,8 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        private string _name;
-        public string Name
+        private Field _name;
+        public Field Name
         {
             get => _name;
             set
@@ -74,15 +76,16 @@ namespace FamilyFinance.Views
             }
         }
 
-        public ICommand SavePurseCommand { get; }
+        public ICommand OnValidationCommand { get; }
 
         public PursesLevel2PageView()
         {
             _apiClient = new APIClient();
 
+            Name = new Field();
             IsSeeIsFamilyPurseSwitch = GlobalHelper.GetRole() == "H" ? true : false;
 
-            SavePurseCommand = new Command(SavePurseAsync);
+            OnValidationCommand = new Command(Validation);
 
             BindingContext = this;
             InitializeComponent();
@@ -103,12 +106,31 @@ namespace FamilyFinance.Views
             }
         }
 
+        private void Validation()
+        {
+            if (string.IsNullOrEmpty(Name.Name))
+            {
+                Name.NotValidMessageError = "Обов'язкове поле";
+                Name.IsNotValid = true;
+            }
+            else if (!Regex.IsMatch(Name.Name, Constants.NameLatinAndCyrylicPattern))
+            {
+                Name.NotValidMessageError = "Некоректна назва. Мінімум 4, максимум 10";
+                Name.IsNotValid = true;
+            }
+            else
+            {
+                Name.IsNotValid = false;
+                SavePurseAsync();
+            }
+        }
+
         private async void SavePurseAsync()
         {
             UserDialogs.Instance.ShowLoading();
             var request = new PurseRequest
             {
-                Name = Name,
+                Name = Name.Name,
                 Size = 0,
                 CurrencyId = Currency.Id,
                 FamilyId = GlobalHelper.GetFamilyId(),

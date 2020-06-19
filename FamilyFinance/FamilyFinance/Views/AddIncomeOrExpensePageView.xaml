@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             xmlns:local="clr-namespace:FamilyFinance"
+             xmlns:local="clr-namespace:FamilyFinance.Controls"
+             xmlns:behavior="clr-namespace:FamilyFinance.Behaviors"
              x:Class="FamilyFinance.Views.AddIncomeOrExpensePageView"
              Title="Новий Дохід Або Витрата">
     <ContentPage.Resources>
@@ -45,9 +46,7 @@
                         ItemDisplayBinding="{Binding Name}"
                         SelectedItem="{Binding Category, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"/>
-                    <StackLayout
-                        Spacing="3"
-                        IsVisible="{Binding Category, Converter={StaticResource NullToVisibleConverter}}">
+                    <StackLayout IsVisible="{Binding Category, Converter={StaticResource NullToVisibleConverter}}">
                         <StackLayout
                             HeightRequest="1"
                             Margin="0,25,0,25"
@@ -67,44 +66,36 @@
                                 HorizontalOptions="End"
                                 Text="Дохід" />
                         </StackLayout>
-                        <Label
-                            Text="Розмір:"
-                            Margin="20,5,0,5"
-                            VerticalOptions="Center" 
-                            HorizontalOptions="Start" />
-                        <StackLayout
-                            Margin="20"
-                            Orientation="Horizontal">
-                            <Slider
-                                Minimum="-1"
-                                Maximum="{Binding MaxSliderOrStepperValue}"
-                                Value="{Binding Size, Mode=TwoWay}"
-                                HorizontalOptions="FillAndExpand"/>
-                            <Stepper
-                                Minimum="-1"
-                                Maximum="{Binding MaxSliderOrStepperValue}"
-                                Value="{Binding Size, Mode=TwoWay}"
-                                Increment="1" />
-                            <Label
-                                VerticalOptions="CenterAndExpand"
-                                Text="{Binding Size}" />
-                        </StackLayout>
-                        <Label
-                            Text="Назва:"
-                            Margin="20,5,0,5"
-                            VerticalOptions="Center" 
-                            HorizontalOptions="Start" />
-                        <Entry
-                            Margin="20,0,20,0"
-                            Text="{Binding Name, Mode=TwoWay}"
-                            BackgroundColor="DarkGray"/>
-                        <ImageButton
-                            HeightRequest="100"
-                            WidthRequest="100"
-                            HorizontalOptions="CenterAndExpand"
-                            Margin="0,10,0,10"
-                            Source="save_icon"
-                            Command="{Binding AddNewIncomeOrExpenseCommand}"/>
+                        <local:ExEntry
+                            Margin="20,5,20,5"
+                            Placeholder="Розмір"
+                            Keyboard="Numeric"
+                            ErrorText="{Binding Size.NotValidMessageError}"
+                            BorderErrorColor="Red"
+                            Text="{Binding Size.Name, Mode=TwoWay}"
+                            HeightRequest="50"
+                            IsBorderErrorVisible="{Binding Size.IsNotValid, Mode=TwoWay}">
+                            <local:ExEntry.Behaviors>
+                                <behavior:EmptyEntryValidatorBehavior />
+                            </local:ExEntry.Behaviors>
+                        </local:ExEntry>
+                        <local:ExEntry
+                            Margin="20,0,20,5"
+                            Placeholder="Назва"
+                            ErrorText="{Binding Name.NotValidMessageError}"
+                            BorderErrorColor="Red"
+                            Text="{Binding Name.Name, Mode=TwoWay}"
+                            HeightRequest="50"
+                            IsBorderErrorVisible="{Binding Name.IsNotValid, Mode=TwoWay}">
+                            <local:ExEntry.Behaviors>
+                                <behavior:EmptyEntryValidatorBehavior />
+                            </local:ExEntry.Behaviors>
+                        </local:ExEntry>
+                        <Button
+                            Text="Зберегти"
+                            HorizontalOptions="FillAndExpand"
+                            Margin="20,0,20,10"
+                            Command="{Binding OnValidationCommand}"/>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
