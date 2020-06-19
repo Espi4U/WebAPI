@@ -38,7 +38,7 @@ namespace WebAPI.Services
 
                             var heresFamily = db.Families.Where(x => x.Id == currentPerson.FamilyId).FirstOrDefault();
 
-                            if(currentPerson == default)
+                            if(currentPerson == null)
                             {
                                 response.BaseIsSuccess = false;
                                 response.BaseMessage = "Помилка, нікого не знайдено";
