@@ -1,4 +1,5 @@
 ﻿using FamilyFinance.Helpers;
+using FamilyFinance.Models;
 using Shared.Models;
 using Shared.Models.Requests;
 using Shared.Models.Requests.PurposesRequests;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WebAPI.Models.APIModels;
@@ -19,8 +21,8 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        private string _name;
-        public string Name
+        private Field _name;
+        public Field Name
         {
             get => _name;
             set
@@ -30,8 +32,8 @@ namespace FamilyFinance.Views
             }
         }
 
-        private int _finalSize;
-        public int FinalSize
+        private Field _finalSize;
+        public Field FinalSize
         {
             get => _finalSize;
             set
@@ -48,7 +50,6 @@ namespace FamilyFinance.Views
             set
             {
                 _currency = value;
-                LoadPursesByCurrencyIdAsync(Currency.Id);
                 OnPropertyChanged(nameof(Currency));
             }
         }
@@ -64,24 +65,16 @@ namespace FamilyFinance.Views
             }
         }
 
-        private List<Purse> _purses;
-        public List<Purse> Purses
-        {
-            get => _purses;
-            set
-            {
-                _purses = value;
-                OnPropertyChanged(nameof(Purses));
-            }
-        }
-
-        public ICommand SaveCommand { get; }
+        public ICommand OnValidationCommand { get; }
 
         public PurposesLevel3PageView()
         {
             _apiClient = new APIClient();
 
-            SaveCommand = new Command(SaveAsync);
+            Name = new Field();
+            FinalSize = new Field();
+
+            OnValidationCommand = new Command(Validation);
 
             BindingContext = this;
             InitializeComponent();
@@ -94,12 +87,12 @@ namespace FamilyFinance.Views
             LoadCurrenciesAsync();
         }
 
-        private async void SaveAsync()
+        private async void SaveNewPurposeAsync()
         {
             var request = new PurposeRequest
             {
-                Name = Name,
-                FinalSize = FinalSize,
+                Name = Name.Name,
+                FinalSize = Convert.ToInt32(FinalSize.Name),
                 CurrencyId = Currency.Id,
                 FamilyId = GlobalHelper.GetFamilyId(),
                 PersonId = GlobalHelper.GetPersonId()
@@ -114,6 +107,46 @@ namespace FamilyFinance.Views
             await Navigation.PopAsync();
         }
 
+        private void Validation()
+        {
+            if (string.IsNullOrEmpty(Name.Name))
+            {
+                Name.NotValidMessageError = "Обов'язкове поле";
+                Name.IsNotValid = true;
+            }
+            else if (!Regex.IsMatch(Name.Name, Constants.NameLatinAndCyrylicPattern))
+            {
+                Name.NotValidMessageError = "Некоректна назва. Мінімум 4, максимум 10";
+                Name.IsNotValid = true;
+            }
+            else
+            {
+                Name.IsNotValid = false;
+            }
+
+            if (string.IsNullOrEmpty(FinalSize.Name))
+            {
+                FinalSize.NotValidMessageError = "Обов'язкове поле";
+                FinalSize.IsNotValid = true;
+            }
+            else if (!Regex.IsMatch(FinalSize.Name, Constants.PositiveDigitsPattern))
+            {
+                FinalSize.NotValidMessageError = "Тільки додатні числа";
+                FinalSize.IsNotValid = true;
+            }
+            else
+            {
+                FinalSize.IsNotValid = false;
+            }
+
+            if(!Name.IsNotValid &&
+                !FinalSize.IsNotValid &&
+                Currency != null)
+            {
+                SaveNewPurposeAsync();
+            }
+        }
+
         private async void LoadCurrenciesAsync()
         {
             var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
@@ -124,24 +157,6 @@ namespace FamilyFinance.Views
             }
 
             Currencies = response.Currencies;
-        }
-
-        private async void LoadPursesByCurrencyIdAsync(int currencyId)
-        {
-            var request = new GetPursesByCurrencyRequest
-            {
-                CurrencyId = currencyId,
-                FamilyId = GlobalHelper.GetFamilyId(),
-                PersonId = GlobalHelper.GetPersonId()
-            };
-            var response = await _apiClient.GetPursesByCurrencyAsync(request);
-            if (!response.IsSuccess || !response.BaseIsSuccess)
-            {
-                AlertHelper.ShowAlertMessage(response, this);
-                return;
-            }
-
-            Purses = response.Purses;
         }
     }
 }

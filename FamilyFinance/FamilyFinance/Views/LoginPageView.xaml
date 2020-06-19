@@ -4,18 +4,40 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:local="clr-namespace:FamilyFinance.Controls"
+             xmlns:behavior="clr-namespace:FamilyFinance.Behaviors"
              x:Class="FamilyFinance.Views.LoginPageView">
     <Grid
         HorizontalOptions="FillAndExpand"
         VerticalOptions="CenterAndExpand">
         <StackLayout Margin="20">
-            <Label Text="Логін" />
-            <Entry Text="{Binding Login, Mode=TwoWay}" />
-            <Label Text="Пароль" />
-            <Entry Text="{Binding Password, Mode=TwoWay}" />
-            <Button 
+            <local:ExEntry
+                Placeholder="Логін"
+                ErrorText="{Binding Login.NotValidMessageError}"
+                BorderErrorColor="Red"
+                Text="{Binding Login.Name, Mode=TwoWay}"
+                HeightRequest="50"
+                IsBorderErrorVisible="{Binding Login.IsNotValid, Mode=TwoWay}">
+                <local:ExEntry.Behaviors>
+                    <behavior:EmptyEntryValidatorBehavior />
+                </local:ExEntry.Behaviors>
+            </local:ExEntry>
+            <local:ExEntry
+                Placeholder="Пароль"
+                ErrorText="{Binding Password.NotValidMessageError}"
+                BorderErrorColor="Red"
+                IsPassword="True"
+                Text="{Binding Password.Name, Mode=TwoWay}"
+                HeightRequest="50"
+                IsBorderErrorVisible="{Binding Password.IsNotValid, Mode=TwoWay}">
+                <local:ExEntry.Behaviors>
+                    <behavior:EmptyEntryValidatorBehavior />
+                </local:ExEntry.Behaviors>
+            </local:ExEntry>
+            <Button
+                Margin="0,5,0,0"
                 Text="Пустіть Мене"
-                Command="{Binding LoginCommand}" />
+                Command="{Binding OnValidationCommand}" />
             <Button
                 Margin="0,30,0,0"
                 Text="Реєстрація Нової Сім'ї"

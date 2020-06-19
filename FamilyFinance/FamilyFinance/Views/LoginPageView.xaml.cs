@@ -1,10 +1,12 @@
 ﻿using Acr.UserDialogs;
 using FamilyFinance.Helpers;
+using FamilyFinance.Models;
 using Shared.Models.Requests.BaseRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -17,8 +19,8 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        private string _login;
-        public string Login
+        private Field _login;
+        public Field Login
         {
             get => _login;
             set
@@ -28,8 +30,8 @@ namespace FamilyFinance.Views
             }
         }
 
-        private string _password;
-        public string Password
+        private Field _password;
+        public Field Password
         {
             get => _password;
             set
@@ -38,16 +40,18 @@ namespace FamilyFinance.Views
                 OnPropertyChanged(nameof(Password));
             }
         }
-
-        public ICommand LoginCommand { get; }
         public ICommand RegistrationCommand { get; }
+        public ICommand OnValidationCommand { get; set; }
 
         public LoginPageView()
         {
             _apiClient = new APIClient();
 
-            LoginCommand = new Command(LoginAsync);
+            Login = new Field();
+            Password = new Field();
+
             RegistrationCommand = new Command(RegistrationAsync);
+            OnValidationCommand = new Command(Validation);
 
             BindingContext = this;
             InitializeComponent();
@@ -60,8 +64,8 @@ namespace FamilyFinance.Views
             UserDialogs.Instance.ShowLoading();
             var request = new LoginRequest
             {
-                Login = Login,
-                Password = Password
+                Login = Login.Name,
+                Password = Password.Name
             };
             var response = await _apiClient.LoginAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
@@ -81,6 +85,45 @@ namespace FamilyFinance.Views
 
             await Navigation.PushAsync(new MainPageView());
         }
+
+        private void Validation()
+        {
+            if (string.IsNullOrEmpty(Login.Name))
+            {
+                Login.NotValidMessageError = "Обов'язкове поле";
+                Login.IsNotValid = true;
+            }
+            else if(!Regex.IsMatch(Login.Name, Constants.NameLatinPattern))
+            {
+                Login.NotValidMessageError = "Тільки латинські символи. Мінімум 4, максимум 10";
+                Login.IsNotValid = true;
+            }
+            else
+            {
+                Login.IsNotValid = false;
+            }
+
+            if (string.IsNullOrEmpty(Password.Name))
+            {
+                Password.NotValidMessageError = "Обов'язкове поле";
+                Password.IsNotValid = true;
+            }
+            else if(!Regex.IsMatch(Password.Name, Constants.NameLatinPattern))
+            {
+                Password.NotValidMessageError = "Тільки латинські символи. Мінімум 4, максимум 10";
+                Password.IsNotValid = true;
+            }
+            else
+            {
+                Password.IsNotValid = false;
+            }
+
+            if(!Login.IsNotValid && !Password.IsNotValid)
+            {
+                LoginAsync();
+            }
+        }
+
 
         private async void RegistrationAsync(object parameter)
         {

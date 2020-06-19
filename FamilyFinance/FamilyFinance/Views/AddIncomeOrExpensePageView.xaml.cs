@@ -87,6 +87,7 @@ namespace FamilyFinance.Views
             set
             {
                 _currency = value;
+                Category = null;
                 LoadPursesByCurrencyIdAsync(Currency.Id);
                 OnPropertyChanged(nameof(Currency));
             }

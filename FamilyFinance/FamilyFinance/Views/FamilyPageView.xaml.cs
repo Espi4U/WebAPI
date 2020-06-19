@@ -1,9 +1,11 @@
 ﻿using FamilyFinance.Helpers;
+using FamilyFinance.Models;
 using Shared.Models.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -17,10 +19,8 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        public ICommand SendInviteCommand { get; }
-
-        private string _emailAddress;
-        public string EmailAddress
+        private Field _emailAddress;
+        public Field EmailAddress
         {
             get => _emailAddress;
             set
@@ -30,14 +30,37 @@ namespace FamilyFinance.Views
             }
         }
 
+        public ICommand OnValidationCommand { get; }
+
         public FamilyPageView()
         {
             _apiClient = new APIClient();
 
-            SendInviteCommand = new Command(SendInvite);
+            EmailAddress = new Field();
+
+            OnValidationCommand = new Command(Validation);
 
             BindingContext = this;
             InitializeComponent();
+        }
+
+        private void Validation()
+        {
+            if (string.IsNullOrEmpty(EmailAddress.Name))
+            {
+                EmailAddress.NotValidMessageError = "Обов'язкове поле";
+                EmailAddress.IsNotValid = true;
+            }
+            else if (!Regex.IsMatch(EmailAddress.Name, Constants.EmailPattern))
+            {
+                EmailAddress.NotValidMessageError = "Некоректна email адреса";
+                EmailAddress.IsNotValid = true;
+            }
+            else
+            {
+                EmailAddress.IsNotValid = false;
+                SendInvite();
+            }
         }
 
         private void SendInvite()
@@ -46,7 +69,7 @@ namespace FamilyFinance.Views
 
             SendEmailAsync(key);
             SaveKeyToDatabaseAsync(key);
-            EmailAddress = string.Empty;
+            EmailAddress.Name = string.Empty;
         }
 
         private async void SendEmailAsync(string key)
@@ -57,7 +80,7 @@ namespace FamilyFinance.Views
                 {
                     Subject = "Вітання!",
                     Body = $"Використайте цей код для реєстрації: {key}",
-                    To = new List<string> { EmailAddress },
+                    To = new List<string> { EmailAddress.Name },
                 };
                 await Email.ComposeAsync(message);
             }

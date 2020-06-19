@@ -14,12 +14,15 @@
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
             </Style>
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Black" />
+                <Setter Property="TextColor" Value="White" />
+            </Style>
             <Style x:Key="addLabel" TargetType="Label">
                 <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
                 <Setter Property="FontSize" Value="Medium"/>
             </Style>
             <Style x:Key="addStackLayout" TargetType="StackLayout">
-                <Setter Property="Opacity" Value="0.3"/>
                 <Setter Property="Margin" Value="50"/>
             </Style>
             <converters:PurposeProgressToColorConverter x:Key="PurposeProgressToColorConverter"/>

@@ -4,22 +4,61 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:local="clr-namespace:FamilyFinance.Controls"
+             xmlns:behavior="clr-namespace:FamilyFinance.Behaviors"
              x:Class="FamilyFinance.Views.RegistrationNewWithKeyPageView"
              Title="Долучитися До Сім'ї">
     <Grid HorizontalOptions="FillAndExpand"
           VerticalOptions="CenterAndExpand">
         <StackLayout Margin="20">
-            <Label Text="Ключ Доступу" />
-            <Entry Text="{Binding Key, Mode=TwoWay}" />
-            <Label Text="Ваше Ім'я" />
-            <Entry Text="{Binding PersonName, Mode=TwoWay}" />
-            <Label Text="Логін" />
-            <Entry Text="{Binding Login, Mode=TwoWay}" />
-            <Label Text="Пароль" />
-            <Entry Text="{Binding Password, Mode=TwoWay}" />
+            <local:ExEntry
+                Placeholder="Ключ доступу"
+                ErrorText="{Binding Key.NotValidMessageError}"
+                BorderErrorColor="Red"
+                Text="{Binding Key.Name, Mode=TwoWay}"
+                HeightRequest="50"
+                IsBorderErrorVisible="{Binding Key.IsNotValid, Mode=TwoWay}">
+                <local:ExEntry.Behaviors>
+                    <behavior:EmptyEntryValidatorBehavior />
+                </local:ExEntry.Behaviors>
+            </local:ExEntry>
+            <local:ExEntry
+                Placeholder="Ваше ім'я"
+                ErrorText="{Binding PersonName.NotValidMessageError}"
+                BorderErrorColor="Red"
+                Text="{Binding PersonName.Name, Mode=TwoWay}"
+                HeightRequest="50"
+                IsBorderErrorVisible="{Binding PersonName.IsNotValid, Mode=TwoWay}">
+                <local:ExEntry.Behaviors>
+                    <behavior:EmptyEntryValidatorBehavior />
+                </local:ExEntry.Behaviors>
+            </local:ExEntry>
+            <local:ExEntry
+                Placeholder="Логін"
+                ErrorText="{Binding Login.NotValidMessageError}"
+                BorderErrorColor="Red"
+                Text="{Binding Login.Name, Mode=TwoWay}"
+                HeightRequest="50"
+                IsBorderErrorVisible="{Binding Login.IsNotValid, Mode=TwoWay}">
+                <local:ExEntry.Behaviors>
+                    <behavior:EmptyEntryValidatorBehavior />
+                </local:ExEntry.Behaviors>
+            </local:ExEntry>
+            <local:ExEntry
+                Placeholder="Пароль"
+                ErrorText="{Binding Password.NotValidMessageError}"
+                BorderErrorColor="Red"
+                IsPassword="True"
+                Text="{Binding Password.Name, Mode=TwoWay}"
+                HeightRequest="50"
+                IsBorderErrorVisible="{Binding Password.IsNotValid, Mode=TwoWay}">
+                <local:ExEntry.Behaviors>
+                    <behavior:EmptyEntryValidatorBehavior />
+                </local:ExEntry.Behaviors>
+            </local:ExEntry>
             <Button
                 Text="Реєстрація"
-                Command="{Binding RegistrationCommand}" />
+                Command="{Binding OnValidationCommand}" />
         </StackLayout>
     </Grid>
 </ContentPage>

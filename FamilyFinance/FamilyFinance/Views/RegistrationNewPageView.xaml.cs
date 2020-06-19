@@ -1,10 +1,12 @@
 ﻿using Acr.UserDialogs;
 using FamilyFinance.Helpers;
+using FamilyFinance.Models;
 using Shared.Models.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -17,8 +19,8 @@ namespace FamilyFinance.Views
     {
         private APIClient _apiClient;
 
-        private string _familyName;
-        public string FamilyName
+        private Field _familyName;
+        public Field FamilyName
         {
             get => _familyName;
             set
@@ -28,8 +30,8 @@ namespace FamilyFinance.Views
             }
         }
 
-        private string _personName;
-        public string PersonName
+        private Field _personName;
+        public Field PersonName
         {
             get => _personName;
             set
@@ -39,8 +41,8 @@ namespace FamilyFinance.Views
             }
         }
 
-        private string _login;
-        public string Login
+        private Field _login;
+        public Field Login
         {
             get => _login;
             set
@@ -50,8 +52,8 @@ namespace FamilyFinance.Views
             }
         }
 
-        private string _password;
-        public string Password
+        private Field _password;
+        public Field Password
         {
             get => _password;
             set
@@ -61,16 +63,92 @@ namespace FamilyFinance.Views
             }
         }
 
-        public ICommand RegistrationCommand { get; }
+        public ICommand OnValidationCommand { get; }
 
         public RegistrationNewPageView()
         {
             _apiClient = new APIClient();
 
-            RegistrationCommand = new Command(RegistrationAsync);
+            FamilyName = new Field();
+            PersonName = new Field();
+            Login = new Field();
+            Password = new Field();
+
+            OnValidationCommand = new Command(Validation);
 
             BindingContext = this;
             InitializeComponent();
+        }
+
+        private void Validation()
+        {
+            if (string.IsNullOrEmpty(Login.Name))
+            {
+                Login.NotValidMessageError = "Обов'язкове поле";
+                Login.IsNotValid = true;
+            }
+            else if (!Regex.IsMatch(Login.Name, Constants.NameLatinPattern))
+            {
+                Login.NotValidMessageError = "Тільки латинські символи. Мінімум 4, максимум 10";
+                Login.IsNotValid = true;
+            }
+            else
+            {
+                Login.IsNotValid = false;
+            }
+
+            if (string.IsNullOrEmpty(Password.Name))
+            {
+                Password.NotValidMessageError = "Обов'язкове поле";
+                Password.IsNotValid = true;
+            }
+            else if (!Regex.IsMatch(Password.Name, Constants.NameLatinPattern))
+            {
+                Password.NotValidMessageError = "Тільки латинські символи. Мінімум 4, максимум 10";
+                Password.IsNotValid = true;
+            }
+            else
+            {
+                Password.IsNotValid = false;
+            }
+
+            if (string.IsNullOrEmpty(FamilyName.Name))
+            {
+                FamilyName.NotValidMessageError = "Обов'язкове поле";
+                FamilyName.IsNotValid = true;
+            }
+            else if (!Regex.IsMatch(FamilyName.Name, Constants.NameLatinAndCyrylicPattern))
+            {
+                FamilyName.NotValidMessageError = "Некоректне ім'я. Мінімум 4, максимум 10";
+                FamilyName.IsNotValid = true;
+            }
+            else
+            {
+                FamilyName.IsNotValid = false;
+            }
+
+            if (string.IsNullOrEmpty(PersonName.Name))
+            {
+                PersonName.NotValidMessageError = "Обов'язкове поле";
+                PersonName.IsNotValid = true;
+            }
+            else if (!Regex.IsMatch(PersonName.Name, Constants.NameLatinAndCyrylicPattern))
+            {
+                PersonName.NotValidMessageError = "Некоректне ім'я. Мінімум 4, максимум 10";
+                PersonName.IsNotValid = true;
+            }
+            else
+            {
+                PersonName.IsNotValid = false;
+            }
+
+            if(!FamilyName.IsNotValid &&
+                !PersonName.IsNotValid &&
+                !Login.IsNotValid &&
+                !Password.IsNotValid)
+            {
+                RegistrationAsync();
+            }
         }
 
         private async void RegistrationAsync()
@@ -78,10 +156,10 @@ namespace FamilyFinance.Views
             UserDialogs.Instance.ShowLoading();
             var request = new RegistrationRequest
             {
-                FamilyName = FamilyName,
-                PersonName = PersonName,
-                Login = Login,
-                Password = Password,
+                FamilyName = FamilyName.Name,
+                PersonName = PersonName.Name,
+                Login = Login.Name,
+                Password = Password.Name,
             };
             var response = await _apiClient.RegistrationNewAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)

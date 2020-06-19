@@ -4,15 +4,27 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:local="clr-namespace:FamilyFinance.Controls"
+             xmlns:behavior="clr-namespace:FamilyFinance.Behaviors"
              x:Class="FamilyFinance.Views.FamilyPageView"
              Title="Запросити нового члена сім'ї">
     <StackLayout
         Spacing="1"
         Margin="20">
-        <Label Text="Введіть Email"/>
-        <Entry Text="{Binding EmailAddress, Mode=TwoWay}"/>
+        <local:ExEntry
+                Placeholder="Введіть email адресу"
+                ErrorText="{Binding EmailAddress.NotValidMessageError}"
+                BorderErrorColor="Red"
+                Text="{Binding EmailAddress.Name, Mode=TwoWay}"
+                HeightRequest="50"
+                IsBorderErrorVisible="{Binding EmailAddress.IsNotValid, Mode=TwoWay}">
+            <local:ExEntry.Behaviors>
+                <behavior:EmptyEntryValidatorBehavior />
+            </local:ExEntry.Behaviors>
+        </local:ExEntry>
         <Button
+            Margin="0,20,0,0"
             Text="Надіслати Запрошення"
-            Command="{Binding SendInviteCommand}"/>
+            Command="{Binding OnValidationCommand}"/>
     </StackLayout>
 </ContentPage>

@@ -17,9 +17,9 @@
             <Style TargetType="Label">
                 <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
                 <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="TextColor" Value="Black"/>
             </Style>
             <Style TargetType="StackLayout">
-                <Setter Property="Opacity" Value="0.3"/>
                 <Setter Property="Margin" Value="50"/>
             </Style>
         </ResourceDictionary>

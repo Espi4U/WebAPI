@@ -36,17 +36,18 @@
                         ItemDisplayBinding="{Binding Name}"
                         SelectedItem="{Binding Purse, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"/>
+                    <Picker
+                        IsVisible="{Binding Purse, Converter={StaticResource NullToVisibleConverter}}"
+                        Margin="20,0,20,0"
+                        FontSize="Large"
+                        Title="Оберіть категорію"       
+                        ItemsSource="{Binding Categories}"
+                        ItemDisplayBinding="{Binding Name}"
+                        SelectedItem="{Binding Category, Mode=TwoWay}"
+                        HorizontalOptions="FillAndExpand"/>
                     <StackLayout
                         Spacing="3"
-                        IsVisible="{Binding Purse, Converter={StaticResource NullToVisibleConverter}}">
-                        <Picker
-                            Margin="20,0,20,0"
-                            FontSize="Large"
-                            Title="Оберіть категорію"       
-                            ItemsSource="{Binding Categories}"
-                            ItemDisplayBinding="{Binding Name}"
-                            SelectedItem="{Binding Category, Mode=TwoWay}"
-                            HorizontalOptions="FillAndExpand"/>
+                        IsVisible="{Binding Category, Converter={StaticResource NullToVisibleConverter}}">
                         <StackLayout
                             HeightRequest="1"
                             Margin="0,25,0,25"
