@@ -33,6 +33,8 @@
             <converters:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
             <converters:TypeCodeToColorConverter x:Key="TypeCodeToColorConverter"/>
             <converters:TypeCodeToDescriptionConverter x:Key="TypeCodeToDescriptionConverter"/>
+            <converters:IncomeStateToTextConverter x:Key="IncomeStateToTextConverter"/>
+            <converters:IsFamilyPurseToTextConverter x:Key="IsFamilyPurseToTextConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

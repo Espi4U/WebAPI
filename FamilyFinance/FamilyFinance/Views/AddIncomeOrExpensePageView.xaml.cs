@@ -50,7 +50,6 @@ namespace FamilyFinance.Views
             set
             {
                 _isIncome = value;
-                Size.Name = string.Empty;
                 OnPropertyChanged(nameof(IsIncome));
             }
         }
@@ -124,6 +123,7 @@ namespace FamilyFinance.Views
         }
 
         public ICommand OnValidationCommand { get; }
+        public ICommand ChangeIsIncomeStateCommand { get; }
 
         public AddIncomeOrExpensePageView()
         {
@@ -133,6 +133,7 @@ namespace FamilyFinance.Views
             Size = new Field();
 
             OnValidationCommand = new Command(Validation);
+            ChangeIsIncomeStateCommand = new Command(ChangeIsIncomeState);
 
             BindingContext = this;
             InitializeComponent();
@@ -151,6 +152,11 @@ namespace FamilyFinance.Views
             {
                 UserDialogs.Instance.HideLoading();
             }
+        }
+
+        private void ChangeIsIncomeState()
+        {
+            IsIncome = !IsIncome;
         }
 
         private void Validation()

@@ -16,6 +16,8 @@
             Margin="20">
             <local:ExEntry
                 Placeholder="Назва сім'ї"
+                TextColor="Black"
+                PlaceholderColor="Black"
                 ErrorText="{Binding FamilyName.NotValidMessageError}"
                 BorderErrorColor="Red"
                 Text="{Binding FamilyName.Name, Mode=TwoWay}"
@@ -27,6 +29,8 @@
             </local:ExEntry>
             <local:ExEntry
                 Placeholder="Ваше ім'я"
+                TextColor="Black"
+                PlaceholderColor="Black"
                 ErrorText="{Binding PersonName.NotValidMessageError}"
                 BorderErrorColor="Red"
                 Text="{Binding PersonName.Name, Mode=TwoWay}"
@@ -38,6 +42,8 @@
             </local:ExEntry>
             <local:ExEntry
                 Placeholder="Логін"
+                TextColor="Black"
+                PlaceholderColor="Black"
                 ErrorText="{Binding Login.NotValidMessageError}"
                 BorderErrorColor="Red"
                 Text="{Binding Login.Name, Mode=TwoWay}"
@@ -49,6 +55,8 @@
             </local:ExEntry>
             <local:ExEntry
                 Placeholder="Пароль"
+                TextColor="Black"
+                PlaceholderColor="Black"
                 ErrorText="{Binding Password.NotValidMessageError}"
                 BorderErrorColor="Red"
                 IsPassword="True"

@@ -13,6 +13,14 @@
             <Style TargetType="Label">
                 <Setter Property="FontSize" Value="Large" />
             </Style>
+            <Style TargetType="Button" x:Key="ActiveButton">
+                <Setter Property="BackgroundColor" Value="DarkGray" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+            <Style TargetType="Button" x:Key="InactiveButton">
+                <Setter Property="BackgroundColor" Value="LightGray" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -56,20 +64,31 @@
                             Margin="20"
                             Orientation="Horizontal"
                             HorizontalOptions="FillAndExpand">
+                            <Button
+                                HeightRequest="50"
+                                WidthRequest="50"
+                                Command="{Binding ChangeIsIncomeStateCommand}"
+                                Text="⟨⟨⟨" />
                             <Label
-                                HorizontalOptions="Start"
-                                Text="Витрата" />
-                            <Switch
-                                IsToggled="{Binding IsIncome, Mode=TwoWay}"
-                                HorizontalOptions="Center" />
-                            <Label
-                                HorizontalOptions="End"
-                                Text="Дохід" />
+                                HeightRequest="50"
+                                HorizontalOptions="FillAndExpand"
+                                BackgroundColor="DarkGray"
+                                TextColor="Black"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"
+                                Text="{Binding IsIncome, Converter={StaticResource IncomeStateToTextConverter}}" />
+                            <Button
+                                HeightRequest="50"
+                                WidthRequest="50"
+                                Command="{Binding ChangeIsIncomeStateCommand}"
+                                Text="⟩⟩⟩" />
                         </StackLayout>
                         <local:ExEntry
                             Margin="20,5,20,5"
                             Placeholder="Розмір"
                             Keyboard="Numeric"
+                            TextColor="Black"
+                            PlaceholderColor="Black"
                             ErrorText="{Binding Size.NotValidMessageError}"
                             BorderErrorColor="Red"
                             Text="{Binding Size.Name, Mode=TwoWay}"
@@ -82,6 +101,8 @@
                         <local:ExEntry
                             Margin="20,0,20,5"
                             Placeholder="Назва"
+                            TextColor="Black"
+                            PlaceholderColor="Black"
                             ErrorText="{Binding Name.NotValidMessageError}"
                             BorderErrorColor="Red"
                             Text="{Binding Name.Name, Mode=TwoWay}"

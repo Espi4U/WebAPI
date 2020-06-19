@@ -77,6 +77,7 @@ namespace FamilyFinance.Views
         }
 
         public ICommand OnValidationCommand { get; }
+        public ICommand ChangeIsIncomeStateCommand { get; }
 
         public PursesLevel2PageView()
         {
@@ -86,6 +87,7 @@ namespace FamilyFinance.Views
             IsSeeIsFamilyPurseSwitch = GlobalHelper.GetRole() == "H" ? true : false;
 
             OnValidationCommand = new Command(Validation);
+            ChangeIsIncomeStateCommand = new Command(ChangeIsIncomeState);
 
             BindingContext = this;
             InitializeComponent();
@@ -104,6 +106,11 @@ namespace FamilyFinance.Views
             {
                 UserDialogs.Instance.HideLoading();
             }
+        }
+
+        private void ChangeIsIncomeState()
+        {
+            IsFamilyPurse = !IsFamilyPurse;
         }
 
         private void Validation()

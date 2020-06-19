@@ -34,6 +34,8 @@
                 <local:ExEntry
                     Margin="20,0,20,0"
                     Placeholder="Необхідно"
+                    TextColor="Black"
+                    PlaceholderColor="Black"
                     ErrorText="{Binding FinalSize.NotValidMessageError}"
                     BorderErrorColor="Red"
                     Keyboard="Numeric"
@@ -47,6 +49,8 @@
                 <local:ExEntry
                     Margin="20,0,20,0"
                     Placeholder="Назва"
+                    TextColor="Black"
+                    PlaceholderColor="Black"
                     ErrorText="{Binding Name.NotValidMessageError}"
                     BorderErrorColor="Red"
                     Text="{Binding Name.Name, Mode=TwoWay}"

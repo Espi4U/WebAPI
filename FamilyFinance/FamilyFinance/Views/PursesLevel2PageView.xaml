@@ -17,16 +17,25 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Margin="20">
+        <StackLayout>
             <Picker
-                FontSize="Large"       
+                FontSize="Large"  
+                Margin="20,0,20,0"
                 Title="Для початку оберіть валюту"        
                 ItemsSource="{Binding Currencies}"
                 SelectedItem="{Binding Currency, Mode=TwoWay}"
                 ItemDisplayBinding="{Binding Name}"/>
+            <StackLayout
+                HeightRequest="1"
+                Margin="0,25,0,25"
+                HorizontalOptions="FillAndExpand"
+                BackgroundColor="Black"/>
             <StackLayout IsVisible="{Binding Currency, Converter={StaticResource NullToVisibleConverter}}">
                 <local:ExEntry
                     Placeholder="Назва"
+                    TextColor="Black"
+                    Margin="20,0,20,0"
+                    PlaceholderColor="Black"
                     ErrorText="{Binding Name.NotValidMessageError}"
                     BorderErrorColor="Red"
                     Text="{Binding Name.Name, Mode=TwoWay}"
@@ -37,17 +46,32 @@
                     </local:ExEntry.Behaviors>
                 </local:ExEntry>
                 <StackLayout
+                    Margin="20"
                     IsVisible="{Binding IsSeeIsFamilyPurseSwitch}"
                     Orientation="Horizontal">
-                    <Switch
-                        IsToggled="{Binding IsFamilyPurse, Mode=TwoWay}"
-                        HorizontalOptions="StartAndExpand" />
-                    <Label Text="Сімейний гаманець" />
+                    <Button
+                        HeightRequest="50"
+                        WidthRequest="50"
+                        Command="{Binding ChangeIsIncomeStateCommand}"
+                        Text="⟨⟨⟨" />
+                    <Label
+                        HeightRequest="50"
+                        HorizontalOptions="FillAndExpand"
+                        BackgroundColor="DarkGray"
+                        TextColor="Black"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        Text="{Binding IsFamilyPurse, Converter={StaticResource IsFamilyPurseToTextConverter}}" />
+                    <Button
+                        HeightRequest="50"
+                        WidthRequest="50"
+                        Command="{Binding ChangeIsIncomeStateCommand}"
+                        Text="⟩⟩⟩" />
                 </StackLayout>
                 <Button
                     Text="Зберегти"
                     HorizontalOptions="FillAndExpand"
-                    Margin="0,60,0,0"
+                    Margin="20"
                     Command="{Binding OnValidationCommand}"/>
             </StackLayout>
         </StackLayout>

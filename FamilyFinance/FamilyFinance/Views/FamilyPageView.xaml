@@ -13,6 +13,8 @@
         Margin="20">
         <local:ExEntry
                 Placeholder="Введіть email адресу"
+                TextColor="Black"
+                PlaceholderColor="Black"
                 ErrorText="{Binding EmailAddress.NotValidMessageError}"
                 BorderErrorColor="Red"
                 Text="{Binding EmailAddress.Name, Mode=TwoWay}"

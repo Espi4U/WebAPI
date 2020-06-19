@@ -50,7 +50,7 @@ namespace FamilyFinance.Droid.Renderers
 			}
 			else
 			{
-				shape.SetStroke(3, Android.Graphics.Color.LightGray);
+				shape.SetStroke(3, Android.Graphics.Color.Black);
 				this.Control.SetBackground(shape);
 			}
 
