@@ -35,8 +35,7 @@ namespace FamilyFinance.Views
 
         private async void EnlargePurposeAsync()
         {
-            //need go to enlarge page
-            await Navigation.PushAsync(new PurposesLevel3PageView());
+            await Navigation.PushAsync(new PurposesLevel4PageView(Purpose.CurrencyId, Purpose.Id, Purpose.FinalSize, Purpose.CurrentSize));
         }
     }
 }

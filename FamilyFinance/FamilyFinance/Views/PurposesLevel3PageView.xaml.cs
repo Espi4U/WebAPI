@@ -1,4 +1,5 @@
-﻿using FamilyFinance.Helpers;
+﻿using Acr.UserDialogs;
+using FamilyFinance.Helpers;
 using FamilyFinance.Models;
 using Shared.Models;
 using Shared.Models.Requests;
@@ -89,6 +90,7 @@ namespace FamilyFinance.Views
 
         private async void SaveNewPurposeAsync()
         {
+            UserDialogs.Instance.ShowLoading();
             var request = new PurposeRequest
             {
                 Name = Name.Name,
@@ -100,10 +102,12 @@ namespace FamilyFinance.Views
             var response = await _apiClient.AddPurposeAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
+                UserDialogs.Instance.HideLoading();
                 AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
+            UserDialogs.Instance.HideLoading();
             await Navigation.PopAsync();
         }
 
@@ -149,14 +153,17 @@ namespace FamilyFinance.Views
 
         private async void LoadCurrenciesAsync()
         {
+            UserDialogs.Instance.ShowLoading();
             var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
+                UserDialogs.Instance.HideLoading();
                 AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
             Currencies = response.Currencies;
+            UserDialogs.Instance.HideLoading();
         }
     }
 }

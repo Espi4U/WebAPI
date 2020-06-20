@@ -77,7 +77,7 @@ namespace FamilyFinance.Views
         }
 
         public ICommand OnValidationCommand { get; }
-        public ICommand ChangeIsIncomeStateCommand { get; }
+        public ICommand ChangeIsFamilyPurseStateCommand { get; }
 
         public PursesLevel2PageView()
         {
@@ -87,7 +87,7 @@ namespace FamilyFinance.Views
             IsSeeIsFamilyPurseSwitch = GlobalHelper.GetRole() == "H" ? true : false;
 
             OnValidationCommand = new Command(Validation);
-            ChangeIsIncomeStateCommand = new Command(ChangeIsIncomeState);
+            ChangeIsFamilyPurseStateCommand = new Command(ChangeIsFamilyPurseState);
 
             BindingContext = this;
             InitializeComponent();
@@ -97,18 +97,10 @@ namespace FamilyFinance.Views
         {
             base.OnAppearing();
 
-            try
-            {
-                UserDialogs.Instance.ShowLoading();
-                LoadCurrenciesAsync();
-            }
-            finally
-            {
-                UserDialogs.Instance.HideLoading();
-            }
+            LoadCurrenciesAsync();
         }
 
-        private void ChangeIsIncomeState()
+        private void ChangeIsFamilyPurseState()
         {
             IsFamilyPurse = !IsFamilyPurse;
         }
@@ -165,14 +157,17 @@ namespace FamilyFinance.Views
 
         private async void LoadCurrenciesAsync()
         {
+            UserDialogs.Instance.ShowLoading();
             var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
+                UserDialogs.Instance.HideLoading();
                 AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
             Currencies = response.Currencies;
+            UserDialogs.Instance.HideLoading();
         }
     }
 }

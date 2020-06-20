@@ -25,12 +25,12 @@
                 ItemsSource="{Binding Currencies}"
                 SelectedItem="{Binding Currency, Mode=TwoWay}"
                 ItemDisplayBinding="{Binding Name}"/>
-            <StackLayout
-                HeightRequest="1"
-                Margin="0,25,0,25"
-                HorizontalOptions="FillAndExpand"
-                BackgroundColor="Black"/>
             <StackLayout IsVisible="{Binding Currency, Converter={StaticResource NullToVisibleConverter}}">
+                <StackLayout
+                    HeightRequest="1"
+                    Margin="0,25,0,25"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="Black"/>
                 <local:ExEntry
                     Placeholder="Назва"
                     TextColor="Black"
@@ -52,7 +52,7 @@
                     <Button
                         HeightRequest="50"
                         WidthRequest="50"
-                        Command="{Binding ChangeIsIncomeStateCommand}"
+                        Command="{Binding ChangeIsFamilyPurseStateCommand}"
                         Text="⟨⟨⟨" />
                     <Label
                         HeightRequest="50"
@@ -65,7 +65,7 @@
                     <Button
                         HeightRequest="50"
                         WidthRequest="50"
-                        Command="{Binding ChangeIsIncomeStateCommand}"
+                        Command="{Binding ChangeIsFamilyPurseStateCommand}"
                         Text="⟩⟩⟩" />
                 </StackLayout>
                 <Button

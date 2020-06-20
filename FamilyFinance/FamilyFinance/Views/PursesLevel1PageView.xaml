@@ -7,19 +7,10 @@
              x:Class="FamilyFinance.Views.PursesLevel1PageView"
              Title="Гаманці">
     <StackLayout>
-        <StackLayout
-            Grid.Column="0"
-            Style="{StaticResource addStackLayout}">
-        <StackLayout.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding AddNewPurseCommand}"/>
-        </StackLayout.GestureRecognizers>
-        <Image
-            Source="plus_icon.png"
-            Style="{StaticResource addImage}"/>
-        <Label
-            Text="Додати Гаманець"
-            Style="{StaticResource addLabel}"/>
-        </StackLayout>
+        <Button
+            Text="Додати новий гаманець"
+            Margin="20"
+            Command="{Binding AddNewPurseCommand}"/>
         <ListView HasUnevenRows="True"
                   ItemsSource="{Binding Purses}"
                   SelectedItem="{Binding SelectedPurse, Mode=TwoWay}">

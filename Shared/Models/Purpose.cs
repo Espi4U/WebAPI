@@ -18,7 +18,19 @@ namespace WebAPI.Models.APIModels
         [JsonIgnore]
         public double PurposeProgress
         {
-            get => CurrentSize / FinalSize;
+            get => CurrentSize * 1.0 / FinalSize * 1.0;
+        }
+
+        [JsonIgnore]
+        public string DescriptionText
+        {
+            get => FinalSize == CurrentSize ? "Завершено" : $"Необхідно {FinalSize - CurrentSize} з {FinalSize}";
+        }
+
+        [JsonIgnore]
+        public bool IsCompleted
+        {
+            get => FinalSize == CurrentSize;
         }
     }
 }

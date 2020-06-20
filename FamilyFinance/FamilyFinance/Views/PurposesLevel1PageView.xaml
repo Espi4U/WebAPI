@@ -7,19 +7,10 @@
              x:Class="FamilyFinance.Views.PurposesLevel1PageView"
              Title="Мої Цілі Заощадження">
     <StackLayout>
-        <StackLayout
-            Grid.Column="0"
-            Style="{StaticResource addStackLayout}">
-            <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding AddNewPurposeCommand}"/>
-            </StackLayout.GestureRecognizers>
-            <Image
-                Source="plus_icon.png"
-                Style="{StaticResource addImage}"/>
-            <Label
-                Text="Додати Ціль Заощадження"
-                Style="{StaticResource addLabel}"/>
-        </StackLayout>
+        <Button
+            Text="Додати нову ціль заощадження"
+            Margin="20"
+            Command="{Binding AddNewPurposeCommand}"/>
         <ListView HasUnevenRows="True"
                   ItemsSource="{Binding Purposes}"
                   SelectedItem="{Binding SelectedPurpose, Mode=TwoWay}">

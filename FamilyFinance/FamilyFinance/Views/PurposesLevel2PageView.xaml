@@ -29,6 +29,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label
             Grid.Row="0"
@@ -37,33 +38,21 @@
             HorizontalOptions="CenterAndExpand"
             TextColor="{Binding Purpose.PurposeProgress, Converter={StaticResource PurposeProgressToColorConverter}}"
             Text="{Binding Purpose.PurposeProgress, Converter={StaticResource PurposeProgressToPercentConverter}}"/>
-        <Grid
+        <Label
             Grid.Row="1"
+            FontSize="Large"
+            TextColor="Black"
+            Text="{Binding Purpose.DescriptionText}"/>
+        <Grid
+            Grid.Row="2"
             HeightRequest="1"
             VerticalOptions="Start"
             BackgroundColor="Black"/>
-        <Grid
-            Grid.Row="2"
-            RowSpacing="2"
-            ColumnSpacing="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <StackLayout Grid.Column="0">
-                <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding EnlargePurposeCommand}"/>
-                </StackLayout.GestureRecognizers>
-                <Image Source="plus_icon.png" />
-                <Label Text="Збільшити" />
-            </StackLayout>
-            <!--<StackLayout Grid.Column="1">
-                <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding DeleteCommand}"/>
-                </StackLayout.GestureRecognizers>
-                <Image Source="delete_icon.png" />
-                <Label Text="Видалити" />
-            </StackLayout>-->
-        </Grid>
+        <Button
+            IsVisible="{Binding Purpose.IsCompleted, Converter={StaticResource BoolReverseConverter}}"
+            Grid.Row="3"
+            Text="Збільшити"
+            Margin="20"
+            Command="{Binding EnlargePurposeCommand}"/>
     </Grid>
 </ContentPage>

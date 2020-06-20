@@ -8,19 +8,10 @@
              x:Name="page"
              Title="Категорії">
     <StackLayout>
-        <StackLayout
-            Grid.Column="0"
-            Style="{StaticResource addStackLayout}">
-            <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding AddNewCategoryCommand}"/>
-            </StackLayout.GestureRecognizers>
-            <Image
-                Source="plus_icon.png"
-                Style="{StaticResource addImage}"/>
-            <Label
-                Text="Додати Категорію"
-                Style="{StaticResource addLabel}"/>
-        </StackLayout>
+        <Button
+            Text="Додати нову категорію"
+            Margin="20"
+            Command="{Binding AddNewCategoryCommand}"/>
         <ListView HasUnevenRows="True"
               ItemsSource="{Binding Categories}"
               SelectedItem="{Binding SelectedCategory, Mode=TwoWay}">
@@ -34,26 +25,11 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <Image
-                                    Margin="10"
-                                    HeightRequest="20"
-                                    WidthRequest="20"
-                                    Source="{Binding .,Converter={StaticResource ItemToIconConverter}}" />
                                 <Label
                                     Grid.Column="1"
                                     Margin="10"
                                     FontSize="Large"
                                     Text="{Binding Name}"/>
-                                <!--<Image
-                                    Opacity="0.3"
-                                    Grid.Column="2"
-                                    Margin="10"
-                                    HeightRequest="35"
-                                    WidthRequest="35"
-                                    HorizontalOptions="End"
-                                    VerticalOptions="CenterAndExpand"
-                                    BackgroundColor="Transparent"
-                                    Source="delete_icon"/>-->
                             </Grid>
                         </ViewCell.View>
                     </ViewCell>

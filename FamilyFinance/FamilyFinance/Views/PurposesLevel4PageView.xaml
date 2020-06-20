@@ -4,12 +4,47 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="FamilyFinance.Views.PurposesLevel4PageView">
+             xmlns:local="clr-namespace:FamilyFinance.Controls"
+             xmlns:behavior="clr-namespace:FamilyFinance.Behaviors"
+             x:Class="FamilyFinance.Views.PurposesLevel4PageView"
+             Title="Збільшення Прогресу">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Picker
+                Margin="20,0,20,0"
+                FontSize="Large"
+                Title="Для початку оберіть гаманець"       
+                ItemsSource="{Binding Purses}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Purse, Mode=TwoWay}"
+                HorizontalOptions="FillAndExpand"/>
+            <StackLayout IsVisible="{Binding Purse, Converter={StaticResource NullToVisibleConverter}}">
+                <StackLayout
+                    HeightRequest="1"
+                    Margin="0,25,0,25"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="Black"/>
+                <local:ExEntry
+                    Margin="20,5,20,5"
+                    Placeholder="Розмір"
+                    Keyboard="Numeric"
+                    TextColor="Black"
+                    PlaceholderColor="Black"
+                    ErrorText="{Binding NewSize.NotValidMessageError}"
+                    BorderErrorColor="Red"
+                    Text="{Binding NewSize.Name, Mode=TwoWay}"
+                    HeightRequest="50"
+                    IsBorderErrorVisible="{Binding NewSize.IsNotValid, Mode=TwoWay}">
+                    <local:ExEntry.Behaviors>
+                        <behavior:EmptyEntryValidatorBehavior />
+                    </local:ExEntry.Behaviors>
+                </local:ExEntry>
+                <Button
+                    Text="Зберегти"
+                    HorizontalOptions="FillAndExpand"
+                    Margin="20,0,20,10"
+                    Command="{Binding OnValidationCommand}"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

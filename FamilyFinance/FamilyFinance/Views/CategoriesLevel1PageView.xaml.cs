@@ -57,56 +57,27 @@ namespace FamilyFinance.Views
         {
             base.OnAppearing();
 
-            try
-            {
-                UserDialogs.Instance.ShowLoading();
-                LoadCategoriesAsync();
-            }
-            finally
-            {
-                UserDialogs.Instance.HideLoading();
-            }
+            LoadCategoriesAsync();
         }
 
         private async void LoadCategoriesAsync()
         {
+            UserDialogs.Instance.ShowLoading();
             var response = await _apiClient.GetCategoriesAsync(GlobalHelper.GetBaseRequest());
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
+                UserDialogs.Instance.HideLoading();
                 AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
             Categories = response.Categories;
+            UserDialogs.Instance.HideLoading();
         }
 
         private async void AddNewCategoryAsync()
         {
-            var result = await DisplayPromptAsync("Enter Category Name", "Please Enter A New Category Name");
-            if (!string.IsNullOrWhiteSpace(result))
-            {
-                UserDialogs.Instance.ShowLoading();
-                var request = new CategoryRequest
-                {
-                    Category = new Category
-                    {
-                        Name = result,
-                        FamilyId = GlobalHelper.GetFamilyId()
-                    }
-                };
-
-                var response = await _apiClient.AddCategoryAsync(request);
-                if (!response.BaseIsSuccess || !response.IsSuccess)
-                {
-                    AlertHelper.ShowAlertMessage(response, this);
-                    UserDialogs.Instance.HideLoading();
-                    return;
-                }
-
-                UserDialogs.Instance.HideLoading();
-
-                LoadCategoriesAsync();
-            }
+            await Navigation.PushAsync(new CategoriesLevel2PageView());
         }
     }
 }

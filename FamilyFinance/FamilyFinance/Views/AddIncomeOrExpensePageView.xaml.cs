@@ -142,16 +142,9 @@ namespace FamilyFinance.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            try
-            {
-                UserDialogs.Instance.ShowLoading();
-                LoadCategoriesAsync();
-                LoadCurrenciesAsync();
-            }
-            finally
-            {
-                UserDialogs.Instance.HideLoading();
-            }
+
+            LoadCategoriesAsync();
+            LoadCurrenciesAsync();
         }
 
         private void ChangeIsIncomeState()
@@ -224,8 +217,8 @@ namespace FamilyFinance.Views
             var response = await _apiClient.AddIncomeOrExpenseAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
-                AlertHelper.ShowAlertMessage(response, this);
                 UserDialogs.Instance.HideLoading();
+                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
@@ -236,26 +229,32 @@ namespace FamilyFinance.Views
 
         private async void LoadCategoriesAsync()
         {
+            UserDialogs.Instance.ShowLoading();
             var response = await _apiClient.GetCategoriesAsync(GlobalHelper.GetBaseRequest());
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
+                UserDialogs.Instance.HideLoading();
                 AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
             Categories = response.Categories;
+            UserDialogs.Instance.HideLoading();
         }
 
         private async void LoadCurrenciesAsync()
         {
+            UserDialogs.Instance.ShowLoading();
             var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
+                UserDialogs.Instance.HideLoading();
                 AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
             Currencies = response.Currencies;
+            UserDialogs.Instance.HideLoading();
         }
 
         private async void LoadPursesByCurrencyIdAsync(int currencyId)

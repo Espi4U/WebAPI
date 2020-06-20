@@ -59,27 +59,22 @@ namespace FamilyFinance.Views
         {
             base.OnAppearing();
 
-            try
-            {
-                UserDialogs.Instance.ShowLoading();
-                LoadPurposesAsync();
-            }
-            finally
-            {
-                UserDialogs.Instance.HideLoading();
-            }
+            LoadPurposesAsync();
         }
 
         private async void LoadPurposesAsync()
         {
+            UserDialogs.Instance.ShowLoading();
             var response = await _apiClient.GetPurposesAsync(GlobalHelper.GetBaseRequest());
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
+                UserDialogs.Instance.HideLoading();
                 AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
             Purposes = response.Purposes;
+            UserDialogs.Instance.HideLoading();
         }
 
         private async void AddNewPurposeAsync()

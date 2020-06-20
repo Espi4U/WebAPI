@@ -104,11 +104,22 @@ namespace WebAPI.Services
                     {
                         var purpose = db.Purposes.Where(x => x.Id == request.PurposeId).FirstOrDefault();
                         var purse = db.Purses.Where(x => x.Id == request.PurseId).FirstOrDefault();
-
+                        if(purse.Size <= request.NewSize)
+                        {
+                            response.BaseIsSuccess = false;
+                            response.BaseMessage = "Недостатньо коштів";
+                        }
+                        if(purpose.CurrentSize + request.NewSize > purpose.FinalSize)
+                        {
+                            response.BaseIsSuccess = false;
+                            response.BaseMessage = "Перевищення ліміту";
+                        }
                         if(purpose != null && purse != null)
                         {
-                            purpose.FinalSize += request.NewSize;
+                            purse.Size -= request.NewSize;
+                            purpose.CurrentSize += request.NewSize;
 
+                            db.Purses.Update(purse);
                             db.Purposes.Update(purpose);
                             db.SaveChanges();
                         }
