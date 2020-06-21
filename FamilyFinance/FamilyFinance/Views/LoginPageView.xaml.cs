@@ -78,7 +78,7 @@ namespace FamilyFinance.Views
             GlobalHelper.SetPersonName(response.PersonName);
             GlobalHelper.SetRole(response.Role);
 
-            await Navigation.PushAsync(new MainPageView());
+            App.Current.MainPage = new NavigationPage(new MainPageView());
         }
 
         private void Validation()

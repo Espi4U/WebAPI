@@ -21,16 +21,16 @@ namespace FamilyFinance.Views
 
         public UserInfoPageView()
         {
-            LogoutCommand = new Command(LogoutAsync);
+            LogoutCommand = new Command(Logout);
 
             BindingContext = this;
             InitializeComponent();
         }
 
-        private async void LogoutAsync()
+        private void Logout()
         {
             GlobalHelper.Logout();
-            await Navigation.PushAsync(new LoginPageView());
+            App.Current.MainPage = new NavigationPage(new StartPageView());
         }
     }
 }

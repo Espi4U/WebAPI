@@ -89,8 +89,23 @@ namespace WebAPI.Services
 
                             var familyFormContext = db.Families.Where(x => x.Name == family.Name).FirstOrDefault();
 
-                            var uah = db.Currencies.Where(x => x.Name == "Українська Гривня").FirstOrDefault();
-                            db.Purses.Add(new Purse { Name = "Універсальний гривневий гаманець", Size = 0, Currency = uah, Family = familyFormContext, PersonId = null });
+                            var uah = db.Currencies.Where(x => x.Id == 1).FirstOrDefault();
+                            var usd = db.Currencies.Where(x => x.Id == 2).FirstOrDefault();
+                            var eur = db.Currencies.Where(x => x.Id == 3).FirstOrDefault();
+                            var plz = db.Currencies.Where(x => x.Id == 4).FirstOrDefault();
+
+                            db.Purses.Add(new Purse { Name = "Гаманець з гривнями", Size = 0, Currency = uah, Family = familyFormContext, PersonId = null });
+                            db.Purses.Add(new Purse { Name = "Гаманець з доларами", Size = 0, Currency = usd, Family = familyFormContext, PersonId = null });
+                            db.Purses.Add(new Purse { Name = "Гаманець з євро", Size = 0, Currency = eur, Family = familyFormContext, PersonId = null });
+                            db.Purses.Add(new Purse { Name = "Гаманець з злотими", Size = 0, Currency = plz, Family = familyFormContext, PersonId = null });
+
+                            db.Categories.Add(new Category { Name = "Розваги", Family = familyFormContext });
+                            db.Categories.Add(new Category { Name = "Житло", Family = familyFormContext });
+                            db.Categories.Add(new Category { Name = "Комунальні послуги", Family = familyFormContext });
+                            db.Categories.Add(new Category { Name = "Навчання", Family = familyFormContext });
+                            db.Categories.Add(new Category { Name = "Їжа", Family = familyFormContext });
+                            db.Categories.Add(new Category { Name = "Транспорт", Family = familyFormContext });
+                            db.Categories.Add(new Category { Name = "Робота", Family = familyFormContext });
                             db.Categories.Add(new Category { Name = "Інше", Family = familyFormContext });
 
                             var person = new Person

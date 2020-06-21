@@ -35,6 +35,7 @@
             <converters:TypeCodeToDescriptionConverter x:Key="TypeCodeToDescriptionConverter"/>
             <converters:IncomeStateToTextConverter x:Key="IncomeStateToTextConverter"/>
             <converters:IsFamilyPurseToTextConverter x:Key="IsFamilyPurseToTextConverter"/>
+            <converters:IsFamilyPurposeToTextConverter x:Key="IsFamilyPurposeToTextConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

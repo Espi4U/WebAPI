@@ -56,7 +56,7 @@ namespace WebAPI.Controllers
                 { 
                     Text = @"",
                     Date = DateTime.Now,
-                    Name = $"Звіт за {DateTime.Now}, користуача {personName}",
+                    Name = $"Звіт за {DateTime.Now}, користуача {personName.Name}",
                     FamilyId = request.FamilyId,
                     PersonId = request.PersonId
                 };
@@ -98,7 +98,7 @@ namespace WebAPI.Controllers
                 var expensesPLZ = _changeMoneyService.GetResultForCurrency(requestForCurrency);
 
                 var template = @"<html>
-                                   <body>
+                                   <body style='background-color: lightgray;'>
                                       <h1>Звіт</h1>
                                       <h4>{0}</h4>
                                       <p>Кількість витрат: {1}</p>
@@ -135,7 +135,7 @@ namespace WebAPI.Controllers
                               </html>";
 
                 model.Text = String.Format(template,
-                    $"Сім'я: {familyName}; Користувач: {personName};",
+                    $"Сім'я: {familyName.Name}; Користувач: {personName.Name};",
                     allExpensesCount.ChangeMoneys.Count(),
                     allIncomesCount.ChangeMoneys.Count(),
                     expensesUAH.ChangeMoneys.Count(),

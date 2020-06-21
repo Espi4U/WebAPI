@@ -146,7 +146,7 @@ namespace FamilyFinance.Views
                 return;
             }
 
-            await Navigation.PopAsync();
+            await Navigation.PopToRootAsync();
         }
     }
 }

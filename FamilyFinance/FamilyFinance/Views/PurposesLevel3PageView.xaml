@@ -60,6 +60,29 @@
                         <behavior:EmptyEntryValidatorBehavior />
                     </local:ExEntry.Behaviors>
                 </local:ExEntry>
+                <StackLayout
+                    Margin="20"
+                    IsVisible="{Binding IsSeeIsFamilyPurposeSwitch}"
+                    Orientation="Horizontal">
+                    <Button
+                        HeightRequest="50"
+                        WidthRequest="50"
+                        Command="{Binding ChangeIsFamilyPurposeStateCommand}"
+                        Text="⟨⟨⟨" />
+                    <Label
+                        HeightRequest="50"
+                        HorizontalOptions="FillAndExpand"
+                        BackgroundColor="DarkGray"
+                        TextColor="Black"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        Text="{Binding IsFamilyPurpose, Converter={StaticResource IsFamilyPurposeToTextConverter}}" />
+                    <Button
+                        HeightRequest="50"
+                        WidthRequest="50"
+                        Command="{Binding ChangeIsFamilyPurposeStateCommand}"
+                        Text="⟩⟩⟩" />
+                </StackLayout>
                 <Button
                     Text="Зберегти"
                     HorizontalOptions="FillAndExpand"

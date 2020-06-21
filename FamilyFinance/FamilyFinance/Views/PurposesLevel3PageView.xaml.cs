@@ -66,7 +66,30 @@ namespace FamilyFinance.Views
             }
         }
 
+        private bool _isFamilyPurpose;
+        public bool IsFamilyPurpose
+        {
+            get => _isFamilyPurpose;
+            set
+            {
+                _isFamilyPurpose = value;
+                OnPropertyChanged(nameof(IsFamilyPurpose));
+            }
+        }
+
+        private bool _isSeeIsFamilyPurposeSwitch = false;
+        public bool IsSeeIsFamilyPurposeSwitch
+        {
+            get => _isSeeIsFamilyPurposeSwitch;
+            set
+            {
+                _isSeeIsFamilyPurposeSwitch = value;
+                OnPropertyChanged(nameof(IsSeeIsFamilyPurposeSwitch));
+            }
+        }
+
         public ICommand OnValidationCommand { get; }
+        public ICommand ChangeIsFamilyPurposeStateCommand { get; }
 
         public PurposesLevel3PageView()
         {
@@ -75,7 +98,10 @@ namespace FamilyFinance.Views
             Name = new Field();
             FinalSize = new Field();
 
+            IsSeeIsFamilyPurposeSwitch = GlobalHelper.GetRole() == "H" ? true : false;
+
             OnValidationCommand = new Command(Validation);
+            ChangeIsFamilyPurposeStateCommand = new Command(ChangeIsFamilyPurposeState);
 
             BindingContext = this;
             InitializeComponent();
@@ -88,6 +114,11 @@ namespace FamilyFinance.Views
             LoadCurrenciesAsync();
         }
 
+        private void ChangeIsFamilyPurposeState()
+        {
+            IsFamilyPurpose = !IsFamilyPurpose;
+        }
+
         private async void SaveNewPurposeAsync()
         {
             var request = new PurposeRequest
@@ -95,17 +126,21 @@ namespace FamilyFinance.Views
                 Name = Name.Name,
                 FinalSize = Convert.ToInt32(FinalSize.Name),
                 CurrencyId = Currency.Id,
-                FamilyId = GlobalHelper.GetFamilyId(),
-                PersonId = GlobalHelper.GetPersonId()
+                FamilyId = GlobalHelper.GetFamilyId()
             };
+            if (IsFamilyPurpose)
+            {
+                request.PersonId = null;
+            }
+            else
+            {
+                request.PersonId = GlobalHelper.GetPersonId();
+            }
             var response = await _apiClient.AddPurposeAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
                 return;
             }
-
-            var page = Navigation.NavigationStack.FirstOrDefault(x => x is PurposesLevel2PageView);
-            Navigation.RemovePage(page);
 
             await Navigation.PopAsync();
         }
