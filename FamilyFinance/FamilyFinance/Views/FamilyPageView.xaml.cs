@@ -31,7 +31,7 @@ namespace FamilyFinance.Views
         }
 
         public ICommand OnValidationCommand { get; }
-        public ICommand LogoutCommand { get; }
+        public ICommand GoToUserInfoPageCommand { get; }
 
         public FamilyPageView()
         {
@@ -40,7 +40,7 @@ namespace FamilyFinance.Views
             EmailAddress = new Field();
 
             OnValidationCommand = new Command(Validation);
-            LogoutCommand = new Command(LogoutAsync);
+            GoToUserInfoPageCommand = new Command(GoToUserInfoPageAsync);
 
             BindingContext = this;
             InitializeComponent();
@@ -108,10 +108,9 @@ namespace FamilyFinance.Views
             }
         }
 
-        private async void LogoutAsync()
+        private async void GoToUserInfoPageAsync()
         {
-            GlobalHelper.Logout();
-            await Navigation.PushAsync(new LoginPageView());
+            await Navigation.PushAsync(new UserInfoPageView());
         }
     }
 }

@@ -42,7 +42,7 @@
                         FontSize="Large"
                         Title="Оберіть гаманець"       
                         ItemsSource="{Binding Purses}"
-                        ItemDisplayBinding="{Binding Name}"
+                        ItemDisplayBinding="{Binding PurseDescription}"
                         SelectedItem="{Binding Purse, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"/>
                     <Picker

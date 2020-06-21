@@ -14,5 +14,11 @@ namespace WebAPI.Models.APIModels
         public Family Family { get; set; }
         public int? PersonId { get; set; }
         public Person Person { get; set; }
+
+        [JsonIgnore]
+        public string PurseDescription
+        {
+            get => $"{Name} - {Size}";
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Shared.Models.Requests.BaseRequests;
+﻿using Shared.Models.Requests;
+using Shared.Models.Requests.BaseRequests;
 using Shared.Models.Requests.ChangeMoneyRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.ChangeMoneysResponses;
@@ -163,23 +164,29 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            if (request.PersonId != null || request.FamilyId != null)
-                            {
-                                response.ChangeMoneys = db.ChangeMoneys.Where(x => (x.PersonId == request.PersonId || x.FamilyId ==request.FamilyId) && (x.Date >= request.Start && x.Date <= request.End)).ToList();
-                            }
-                            else
-                            {
-                                response.ChangeMoneys = request.FamilyId == null ?
-                                db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && (x.Date >= request.Start && x.Date <= request.End)).ToList():
-                                db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && (x.Date >= request.Start && x.Date <= request.End)).ToList();
-                            }
-
-                            if (response.ChangeMoneys == default)
-                            {
-                                response.BaseMessage = Shared.Constants.NOT_FOUND;
-                                response.IsSuccess = false;
-                            }
+                            response.ChangeMoneys = db.ChangeMoneys.Where(x => (x.PersonId == request.PersonId && x.FamilyId == request.FamilyId) && (x.Date >= request.Start && x.Date <= request.End)).ToList();
                         }
+                    }
+                }
+                catch
+                {
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
+                }
+
+                return response;
+            });
+        }
+
+        public ListChangeMoneysResponse GetResultForCurrency(GetResultForCurrencyRequest request)
+        {
+            return GetResponse(() => {
+                var response = new ListChangeMoneysResponse();
+                try
+                {
+                    using (FamilyFinanceContext db = new FamilyFinanceContext())
+                    {
+                        response.ChangeMoneys = db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.FamilyId == request.FamilyId && request.CurrencyId == x.CurrencyId && request.Type == x.Type).ToList();
                     }
                 }
                 catch
@@ -217,7 +224,7 @@ namespace WebAPI.Services
                             }
                             else
                             {
-                                if(request.Size < purse.Size)
+                                if(request.Size <= purse.Size)
                                 {
                                     purse.Size -= request.Size;
                                 }

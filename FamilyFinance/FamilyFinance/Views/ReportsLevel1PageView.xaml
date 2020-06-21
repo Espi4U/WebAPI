@@ -18,7 +18,11 @@
                 <DataTemplate>
                     <ViewCell>
                         <ViewCell.View>
-                            <Label Text="{Binding Name}"></Label>
+                            <Label
+                                TextColor="Black"
+                                FontSize="Large"
+                                Margin="10"
+                                Text="{Binding Name}" />
                         </ViewCell.View>
                     </ViewCell>
                 </DataTemplate>

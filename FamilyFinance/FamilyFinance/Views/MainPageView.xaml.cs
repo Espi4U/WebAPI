@@ -16,6 +16,7 @@ namespace FamilyFinance.Views
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
             On<Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
+            On<Android>().SetIsSwipePagingEnabled(false);
         }
     }
 }

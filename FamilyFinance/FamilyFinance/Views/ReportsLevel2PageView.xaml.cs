@@ -17,6 +17,18 @@ namespace FamilyFinance.Views
     public partial class ReportsLevel2PageView : ContentPage
     {
         private APIClient _apiClient;
+
+        private HtmlWebViewSource _source;
+        public HtmlWebViewSource Source
+        {
+            get => _source;
+            set
+            {
+                _source = value;
+                OnPropertyChanged(nameof(Source));
+            }
+        }
+
         public ICommand DeleteReportCommand { get; set; }
 
         public Report Report { get; set; }
@@ -26,6 +38,8 @@ namespace FamilyFinance.Views
             _apiClient = new APIClient();
 
             Report = report;
+            Source = new HtmlWebViewSource();
+            Source.Html = Report.Text;
 
             DeleteReportCommand = new Command(DeleteReportAsync);
 

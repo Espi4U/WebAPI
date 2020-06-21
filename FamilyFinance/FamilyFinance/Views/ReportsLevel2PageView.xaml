@@ -12,9 +12,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Label
-            Margin="20"
-            Text="{Binding Report.Text}" />
+        <WebView
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            Source="{Binding Source}" />
         <StackLayout
             Grid.Row="1"
             HeightRequest="1"

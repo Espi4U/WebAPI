@@ -15,7 +15,7 @@
                 FontSize="Large"
                 Title="Для початку оберіть гаманець"       
                 ItemsSource="{Binding Purses}"
-                ItemDisplayBinding="{Binding Name}"
+                ItemDisplayBinding="{Binding PurseDescription}"
                 SelectedItem="{Binding Purse, Mode=TwoWay}"
                 HorizontalOptions="FillAndExpand"/>
             <StackLayout IsVisible="{Binding Purse, Converter={StaticResource NullToVisibleConverter}}">

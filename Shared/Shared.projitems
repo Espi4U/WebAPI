@@ -21,6 +21,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Purse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Report.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\DeleteReportRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\GetResultForCurrencyRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\GetResultsForTimePeriodRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\BaseRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\LoginRequest.cs" />
