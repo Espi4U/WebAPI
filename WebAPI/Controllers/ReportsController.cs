@@ -23,10 +23,13 @@ namespace WebAPI.Controllers
     {
         private readonly ReportService _reportService;
         private readonly ChangeMoneyService _changeMoneyService;
+        private readonly PersonService _personService;
         public ReportsController(
             ReportService reportService,
-            ChangeMoneyService changeMoneyService)
+            ChangeMoneyService changeMoneyService,
+            PersonService personService)
         {
+            _personService = personService;
             _reportService = reportService;
             _changeMoneyService = changeMoneyService;
         }
@@ -46,11 +49,14 @@ namespace WebAPI.Controllers
             var response = new BaseResponse();
             try
             {
+                var familyName = _personService.GetName((int)request.FamilyId, 0);
+                var personName = _personService.GetName((int)request.PersonId, 1);
+
                 var model = new ReportRequest
                 { 
                     Text = @"",
                     Date = DateTime.Now,
-                    Name = $"Звіт за {DateTime.Now}",
+                    Name = $"Звіт за {DateTime.Now}, користуача {personName}",
                     FamilyId = request.FamilyId,
                     PersonId = request.PersonId
                 };
@@ -104,7 +110,7 @@ namespace WebAPI.Controllers
                                       <p>Кількість витрат у євро: {7}</p>
                                       <p>Кількість доходів у євро: {8}</p><hr>
                                       <p>Кількість витрат у злотих: {9}</p>
-                                      <p>Кількість доходів у злотих: {10}</p><hr><hr>
+                                      <p>Кількість доходів у злотих: {10}</p><hr>
                                       <h3>Найбільші доходи по валютах</h3>
                                       <p>Українська Гривня - {11}({12} UAH)</p>
                                       <p>Долар США - {13}({14} USD)</p>
@@ -129,7 +135,7 @@ namespace WebAPI.Controllers
                               </html>";
 
                 model.Text = String.Format(template,
-                    model.Date,
+                    $"Сім'я: {familyName}; Користувач: {personName};",
                     allExpensesCount.ChangeMoneys.Count(),
                     allIncomesCount.ChangeMoneys.Count(),
                     expensesUAH.ChangeMoneys.Count(),

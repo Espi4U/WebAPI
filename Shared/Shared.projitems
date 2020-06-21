@@ -46,6 +46,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ListCurrenciesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\LoginResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ListPersonsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\NameResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\PersonResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ListPurposesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ListPursesResponse.cs" />

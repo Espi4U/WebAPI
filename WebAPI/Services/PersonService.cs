@@ -170,5 +170,26 @@ namespace WebAPI.Services
                 return response;
             });
         }
+
+        public NameResponse GetName(int id, int type)
+        {
+            return GetResponse(() => {
+                var response = new NameResponse();
+                try
+                {
+                    using (FamilyFinanceContext db = new FamilyFinanceContext())
+                    {
+                        response.Name = type == 0 ? db.Families.Where(x => x.Id == id).FirstOrDefault().Name : db.Persons.Where(x => x.Id == id).FirstOrDefault().Name;
+                    }
+                }
+                catch
+                {
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = Constants.BAD_REQUEST;
+                }
+
+                return response;
+            });
+        }
     }
 }

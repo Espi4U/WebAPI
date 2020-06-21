@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WebAPI.Models.APIModels;
+using WebAPI.Models.APIModels.Requests;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -63,7 +64,19 @@ namespace FamilyFinance.Views
 
         private async void LoadReportsAsync()
         {
-            var response = await _apiClient.GetReportsAsync(GlobalHelper.GetBaseRequest());
+            var request = new BaseRequest
+            {
+                FamilyId = GlobalHelper.GetFamilyId()
+            };
+            if(GlobalHelper.GetRole() == "H")
+            {
+                request.PersonId = null;
+            }
+            else
+            {
+                request.PersonId = GlobalHelper.GetPersonId();
+            }
+            var response = await _apiClient.GetReportsAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
                 AlertHelper.ShowAlertMessage(response, this);
