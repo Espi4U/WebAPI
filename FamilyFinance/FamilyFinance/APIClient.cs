@@ -25,6 +25,7 @@ using WebAPI.Models.APIModels.Requests.PersonsControllerRequests;
 using WebAPI.Models.APIModels.Requests.ReportsControllerRequests;
 using WebAPI.Models.APIModels.Responses;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace FamilyFinance
 {
@@ -159,16 +160,25 @@ namespace FamilyFinance
             try
             {
                 UserDialogs.Instance.ShowLoading(title: "Завантаження...");
-                var uri = $"{httpClient.BaseAddress}{apiUrl}";
-                var content = new StringContent(JsonConvert.SerializeObject(request ?? new object()), Encoding.UTF8, "application/json");
+                var current = Connectivity.NetworkAccess;
+                if (current != NetworkAccess.Internet)
+                {
+                    response.IsSuccess = false;
+                    response.ApiMessage = "Немає доступу до іетернету";
+                }
+                else
+                {
+                    var uri = $"{httpClient.BaseAddress}{apiUrl}";
+                    var content = new StringContent(JsonConvert.SerializeObject(request ?? new object()), Encoding.UTF8, "application/json");
 
-                HttpResponseMessage responseMessage = null;
+                    HttpResponseMessage responseMessage = null;
 
-                responseMessage = await httpClient.PostAsync(uri, content);
+                    responseMessage = await httpClient.PostAsync(uri, content);
 
-                var responseContext = await responseMessage.Content.ReadAsStringAsync();
+                    var responseContext = await responseMessage.Content.ReadAsStringAsync();
 
-                response = JsonConvert.DeserializeObject<T>(responseContext);
+                    response = JsonConvert.DeserializeObject<T>(responseContext);
+                }
             }
             catch(Exception ex)
             {
