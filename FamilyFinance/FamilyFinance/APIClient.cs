@@ -164,7 +164,7 @@ namespace FamilyFinance
                 if (current != NetworkAccess.Internet)
                 {
                     response.IsSuccess = false;
-                    response.ApiMessage = "Немає доступу до іетернету";
+                    response.ApiMessage = "Немає доступу до інтернету";
                 }
                 else
                 {
