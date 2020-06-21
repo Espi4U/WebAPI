@@ -62,17 +62,13 @@ namespace FamilyFinance.Views
 
         private async void LoadCategoriesAsync()
         {
-            UserDialogs.Instance.ShowLoading();
             var response = await _apiClient.GetCategoriesAsync(GlobalHelper.GetBaseRequest());
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
-                UserDialogs.Instance.HideLoading();
-                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
             Categories = response.Categories;
-            UserDialogs.Instance.HideLoading();
         }
 
         private async void AddNewCategoryAsync()

@@ -102,7 +102,6 @@ namespace FamilyFinance.Views
             var response = await _apiClient.AddInviteKey(request);
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
-                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
         }

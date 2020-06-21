@@ -201,7 +201,6 @@ namespace FamilyFinance.Views
 
         private async void AddNewIncomeOrExpenseAsync()
         {
-            UserDialogs.Instance.ShowLoading();
             var request = new ChangeMoneyRequest
             {
                 Name = Name.Name,
@@ -217,49 +216,36 @@ namespace FamilyFinance.Views
             var response = await _apiClient.AddIncomeOrExpenseAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
-                UserDialogs.Instance.HideLoading();
-                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
-
-            UserDialogs.Instance.HideLoading();
 
             await Navigation.PopAsync();
         }
 
         private async void LoadCategoriesAsync()
         {
-            UserDialogs.Instance.ShowLoading();
             var response = await _apiClient.GetCategoriesAsync(GlobalHelper.GetBaseRequest());
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
-                UserDialogs.Instance.HideLoading();
-                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
             Categories = response.Categories;
-            UserDialogs.Instance.HideLoading();
         }
 
         private async void LoadCurrenciesAsync()
         {
-            UserDialogs.Instance.ShowLoading();
             var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
-                UserDialogs.Instance.HideLoading();
-                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
             Currencies = response.Currencies;
-            UserDialogs.Instance.HideLoading();
         }
 
         private async void LoadPursesByCurrencyIdAsync(int currencyId)
         {
-            UserDialogs.Instance.ShowLoading();
             var request = new GetPursesByCurrencyRequest
             {
                 CurrencyId = currencyId,
@@ -269,12 +255,8 @@ namespace FamilyFinance.Views
             var response = await _apiClient.GetPursesByCurrencyAsync(request);
             if(!response.IsSuccess || !response.BaseIsSuccess)
             {
-                AlertHelper.ShowAlertMessage(response, this);
-                UserDialogs.Instance.HideLoading();
                 return;
             }
-
-            UserDialogs.Instance.HideLoading();
 
             Purses = response.Purses;
         }

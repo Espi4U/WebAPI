@@ -51,15 +51,7 @@ namespace FamilyFinance.Views
         {
             base.OnAppearing();
 
-            try
-            {
-                UserDialogs.Instance.ShowLoading();
-                LoadChangeMoneysAsync();
-            }
-            finally
-            {
-                UserDialogs.Instance.HideLoading();
-            }
+            LoadChangeMoneysAsync();
         }
 
         private async void LoadChangeMoneysAsync()

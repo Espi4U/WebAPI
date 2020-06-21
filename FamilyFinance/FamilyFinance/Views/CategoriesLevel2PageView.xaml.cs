@@ -66,7 +66,6 @@ namespace FamilyFinance.Views
 
         private async void AddNewCategoryAsync()
         {
-            UserDialogs.Instance.ShowLoading();
             var request = new CategoryRequest
             {
                 Category = new Category
@@ -79,12 +78,9 @@ namespace FamilyFinance.Views
             var response = await _apiClient.AddCategoryAsync(request);
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
-                AlertHelper.ShowAlertMessage(response, this);
-                UserDialogs.Instance.HideLoading();
                 return;
             }
 
-            UserDialogs.Instance.HideLoading();
             await Navigation.PopAsync();
         }
     }

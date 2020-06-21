@@ -42,12 +42,12 @@ namespace WebAPI.Controllers
 
         //TODO
         [Route("generate_report_per_time_period"), HttpPost]
-        public ReportResponse GenerateReportPerTimePeriod([FromBody]GetResultsForTimePeriodRequest request)
+        public BaseResponse GenerateReportPerTimePeriod([FromBody]GetResultsForTimePeriodRequest request)
         {
-            var response = new ReportResponse();
+            var response = new BaseResponse();
             try
             {
-                response.Report = new Report 
+                var model = new ReportRequest
                 { 
                     Text = "",
                     Date = DateTime.Now,
@@ -66,7 +66,13 @@ namespace WebAPI.Controllers
                 allIncomesOrExpensesRequest.Type = "E";
                 var allExpensesCount = _changeMoneyService.GetIncomesOrExpenses(allIncomesOrExpensesRequest);
 
-                response.Report.Text = $"Кількість доходів: {allIncomesCount.ChangeMoneys.Count()}; Кількість витрат: {allExpensesCount.ChangeMoneys.Count()};";
+                model.Text = $"Кількість доходів: {allIncomesCount.ChangeMoneys.Count()}; Кількість витрат: {allExpensesCount.ChangeMoneys.Count()};";
+
+                var addReportResponse = _reportService.AddReport(model);
+                response.IsSuccess = addReportResponse.IsSuccess;
+                response.BaseIsSuccess = addReportResponse.BaseIsSuccess;
+                response.BaseMessage = addReportResponse.BaseMessage;
+                response.ApiMessage = addReportResponse.ApiMessage;
             }
             catch(Exception ex)
             {

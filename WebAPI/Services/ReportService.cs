@@ -69,5 +69,39 @@ namespace WebAPI.Services
                 return response;
             });
         }
+
+        public BaseResponse AddReport(ReportRequest request)
+        {
+            return GetResponse(() => {
+                var response = new BaseResponse();
+                try
+                {
+                    using (FamilyFinanceContext db = new FamilyFinanceContext())
+                    {
+                        var family = db.Families.Where(x => x.Id == request.FamilyId).FirstOrDefault();
+                        var person = db.Persons.Where(x => x.FamilyId == request.FamilyId && x.Id == request.PersonId).FirstOrDefault();
+
+                        var model = new Report
+                        {
+                            Name = request.Name,
+                            Text = request.Text,
+                            Date = request.Date,
+                            Family = family,
+                            Person = person
+                        };
+
+                        db.Reports.Add(model);
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = Shared.Constants.BAD_REQUEST;
+                }
+
+                return response;
+            });
+        }
     }
 }

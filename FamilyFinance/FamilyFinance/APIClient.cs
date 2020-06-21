@@ -61,6 +61,9 @@ namespace FamilyFinance
         public async Task<BaseResponse> DeleteReportAsync(DeleteReportRequest request) =>
             await TryCallApiAsync<BaseResponse>("reports/delete_report", request);
 
+        public async Task<BaseResponse> GenerateReportPerTimePeriod(GetResultsForTimePeriodRequest request) =>
+            await TryCallApiAsync<BaseResponse>("reports/generate_report_per_time_period", request);
+
         #endregion
 
         #region PERSON
@@ -150,8 +153,9 @@ namespace FamilyFinance
 
         #endregion
 
-        private async Task<T> TryCallApiAsync<T>(string apiUrl, object request = null) where T : ApiResponse, new()
+        private async Task<T> TryCallApiAsync<T>(string apiUrl, object request = null) where T : BaseResponse, new()
         {
+            var response = new T();
             try
             {
                 UserDialogs.Instance.ShowLoading(title: "Завантаження...");
@@ -164,19 +168,34 @@ namespace FamilyFinance
 
                 var responseContext = await responseMessage.Content.ReadAsStringAsync();
 
-                var response = JsonConvert.DeserializeObject<T>(responseContext);
-                UserDialogs.Instance.HideLoading();
-                return response;
+                response = JsonConvert.DeserializeObject<T>(responseContext);
             }
             catch(Exception ex)
             {
-                UserDialogs.Instance.HideLoading();
-                return new T
+                response =  new T
                 {
                     ApiMessage = $"Client side ERROR: {ex.Message}",
                     IsSuccess = false
                 };
             }
+            finally
+            {
+                var config = new ToastConfig("");
+                config.SetDuration(2000);
+                UserDialogs.Instance.HideLoading();
+                if (!response.IsSuccess)
+                {
+                    config.Message = response.ApiMessage;
+                    UserDialogs.Instance.Toast(config);
+                }
+                if (!response.BaseIsSuccess)
+                {
+                    config.Message = response.BaseMessage;
+                    UserDialogs.Instance.Toast(config);
+                }
+            }
+
+            return response;
         }
     }
 }

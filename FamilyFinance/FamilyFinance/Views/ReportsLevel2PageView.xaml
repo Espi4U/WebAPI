@@ -16,11 +16,13 @@
             Margin="20"
             Text="{Binding Report.Text}" />
         <StackLayout
+            Grid.Row="1"
             HeightRequest="1"
             Margin="0,25,0,25"
             HorizontalOptions="FillAndExpand"
             BackgroundColor="Black"/>
         <Button
+            Grid.Row="2"
             Text="Видалити"
             HorizontalOptions="FillAndExpand"
             Margin="20,0,20,10"

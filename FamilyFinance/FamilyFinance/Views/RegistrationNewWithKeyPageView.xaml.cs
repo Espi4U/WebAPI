@@ -148,7 +148,6 @@ namespace FamilyFinance.Views
 
         private async void RegistrationAsync()
         {
-            UserDialogs.Instance.ShowLoading();
             var request = new RegistrationRequest
             {
                 PersonName = PersonName.Name,
@@ -159,12 +158,8 @@ namespace FamilyFinance.Views
             var response = await _apiClient.RegistrationNewWithKeyAsync(request);
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
-                AlertHelper.ShowAlertMessage(response, this);
-                UserDialogs.Instance.HideLoading();
                 return;
             }
-
-            UserDialogs.Instance.HideLoading();
 
             await Navigation.PushAsync(new LoginPageView());
         }

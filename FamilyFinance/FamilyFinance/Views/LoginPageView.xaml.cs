@@ -61,7 +61,6 @@ namespace FamilyFinance.Views
 
         private async void LoginAsync()
         {
-            UserDialogs.Instance.ShowLoading();
             var request = new LoginRequest
             {
                 Login = Login.Name,
@@ -70,8 +69,6 @@ namespace FamilyFinance.Views
             var response = await _apiClient.LoginAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
-                AlertHelper.ShowAlertMessage(response, this);
-                UserDialogs.Instance.HideLoading();
                 return;
             }
 
@@ -80,8 +77,6 @@ namespace FamilyFinance.Views
             GlobalHelper.SetFamilyName(response.FamilyName);
             GlobalHelper.SetPersonName(response.PersonName);
             GlobalHelper.SetRole(response.Role);
-
-            UserDialogs.Instance.HideLoading();
 
             await Navigation.PushAsync(new MainPageView());
         }

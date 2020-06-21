@@ -126,7 +126,6 @@ namespace FamilyFinance.Views
 
         private async void SavePurseAsync()
         {
-            UserDialogs.Instance.ShowLoading();
             var request = new PurseRequest
             {
                 Name = Name.Name,
@@ -146,28 +145,21 @@ namespace FamilyFinance.Views
             var response = await _apiClient.AddPurseAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)
             {
-                AlertHelper.ShowAlertMessage(response, this);
-                UserDialogs.Instance.HideLoading();
                 return;
             }
-            UserDialogs.Instance.HideLoading();
 
             await Navigation.PopAsync();
         }
 
         private async void LoadCurrenciesAsync()
         {
-            UserDialogs.Instance.ShowLoading();
             var response = await _apiClient.GetCurrenciesAsync(GlobalHelper.GetBaseRequest());
             if (!response.BaseIsSuccess || !response.IsSuccess)
             {
-                UserDialogs.Instance.HideLoading();
-                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
             Currencies = response.Currencies;
-            UserDialogs.Instance.HideLoading();
         }
     }
 }

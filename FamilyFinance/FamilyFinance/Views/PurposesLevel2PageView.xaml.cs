@@ -16,15 +16,12 @@ namespace FamilyFinance.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PurposesLevel2PageView : ContentPage
     {
-        private APIClient _apiClient;
         public Purpose Purpose { get; set; }
 
         public ICommand EnlargePurposeCommand { get; }
 
         public PurposesLevel2PageView(Purpose purpose)
         {
-            _apiClient = new APIClient();
-
             Purpose = purpose;
 
             EnlargePurposeCommand = new Command(EnlargePurposeAsync);

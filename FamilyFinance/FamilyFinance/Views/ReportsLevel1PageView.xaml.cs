@@ -48,7 +48,7 @@ namespace FamilyFinance.Views
         {
             _apiClient = new APIClient();
 
-            GoToGenerateReportPageCommand = new Command(GoToGenerateReportPage);
+            GoToGenerateReportPageCommand = new Command(GoToGenerateReportPageAsync);
 
             BindingContext = this;
             InitializeComponent();
@@ -73,9 +73,9 @@ namespace FamilyFinance.Views
             Reports = response.Reports;
         }
 
-        private void GoToGenerateReportPage()
+        private async void GoToGenerateReportPageAsync()
         {
-            //Navigation.PushAsync(page)
+            await Navigation.PushAsync(new ReportsLevel3PageView());
         }
     }
 }

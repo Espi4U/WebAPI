@@ -86,7 +86,6 @@ namespace FamilyFinance.Views
 
         private async void LoadPursesByCurrencyIdAsync(int currencyId)
         {
-            UserDialogs.Instance.ShowLoading();
             var request = new GetPursesByCurrencyRequest
             {
                 CurrencyId = currencyId,
@@ -96,12 +95,8 @@ namespace FamilyFinance.Views
             var response = await _apiClient.GetPursesByCurrencyAsync(request);
             if (!response.IsSuccess || !response.BaseIsSuccess)
             {
-                AlertHelper.ShowAlertMessage(response, this);
-                UserDialogs.Instance.HideLoading();
                 return;
             }
-
-            UserDialogs.Instance.HideLoading();
 
             Purses = response.Purses;
         }
@@ -137,7 +132,6 @@ namespace FamilyFinance.Views
 
         private async void UpdatePurposeAsync()
         {
-            UserDialogs.Instance.ShowLoading();
             var request = new UpdatePurposeRequest
             {
                 PersonId = GlobalHelper.GetPersonId(),
@@ -149,12 +143,9 @@ namespace FamilyFinance.Views
             var response = await _apiClient.UpdatePurposeAsync(request);
             if(!response.IsSuccess || !response.BaseIsSuccess)
             {
-                UserDialogs.Instance.HideLoading();
-                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
 
-            UserDialogs.Instance.HideLoading();
             await Navigation.PopAsync();
         }
     }

@@ -9,7 +9,7 @@ namespace WebAPI.Services
 {
     public abstract class BaseService
     {
-        protected T GetResponse<T>(Func<T> func) where T : ApiResponse, new()
+        protected T GetResponse<T>(Func<T> func) where T : BaseResponse, new()
         {
             T response;
             try
