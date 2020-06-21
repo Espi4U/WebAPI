@@ -6,40 +6,24 @@
              mc:Ignorable="d"
              x:Class="FamilyFinance.Views.ReportsLevel2PageView"
              Title="{Binding Report.Name}">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="Image">
-                <Setter Property="HeightRequest" Value="60"/>
-                <Setter Property="WidthRequest" Value="60"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
-            </Style>
-            <Style TargetType="Label">
-                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
-                <Setter Property="FontSize" Value="Medium"/>
-            </Style>
-            <Style TargetType="StackLayout">
-                <Setter Property="Opacity" Value="0.3"/>
-                <Setter Property="Margin" Value="50"/>
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ScrollView>
-            <Label
-                Margin="30"
-                HorizontalOptions="StartAndExpand"
-                Text="{Binding Report.Text}" />
-        </ScrollView>
-        <StackLayout Grid.Row="1">
-            <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding DeleteCommand}"/>
-            </StackLayout.GestureRecognizers>
-            <Image Source="delete_icon.png" />
-        </StackLayout>
+        <Label
+            Margin="20"
+            Text="{Binding Report.Text}" />
+        <StackLayout
+            HeightRequest="1"
+            Margin="0,25,0,25"
+            HorizontalOptions="FillAndExpand"
+            BackgroundColor="Black"/>
+        <Button
+            Text="Видалити"
+            HorizontalOptions="FillAndExpand"
+            Margin="20,0,20,10"
+            Command="{Binding DeleteReportCommand}"/>
     </Grid>
 </ContentPage>

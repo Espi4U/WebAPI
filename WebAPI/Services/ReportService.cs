@@ -1,4 +1,5 @@
-﻿using Shared.Models.Requests.BaseRequests;
+﻿using Shared.Models.Requests;
+using Shared.Models.Requests.BaseRequests;
 using Shared.Models.Responses;
 using Shared.Models.Responses.ReportsResponses;
 using System;
@@ -30,16 +31,8 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            if(request.PersonId != null && request.FamilyId != null)
-                            {
-                                response.Reports = db.Reports.Where(x => x.PersonId == request.PersonId || x.FamilyId == request.FamilyId).ToList();
-                            }
-                            else
-                            {
-                                response.Reports = request.PersonId == null ?
-                                db.Reports.Where(x => x.FamilyId == request.FamilyId).ToList():
-                                db.Reports.Where(x => x.PersonId == request.PersonId).ToList();
-                            }
+                            response.Reports = request.PersonId == null ? db.Reports.Where(x => x.FamilyId == request.FamilyId).ToList() :
+                                db.Reports.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId).ToList();
                         }
                     }
                 }
@@ -53,7 +46,7 @@ namespace WebAPI.Services
             });
         }
 
-        public BaseResponse DeleteReport(ReportRequest request)
+        public BaseResponse DeleteReport(DeleteReportRequest request)
         {
             return GetResponse(() => {
             var response = new BaseResponse();
@@ -61,7 +54,7 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        var report = db.Reports.Where(x => x.Id == request.Report.Id).FirstOrDefault();
+                        var report = db.Reports.Where(x => x.Id == request.ReportId && x.FamilyId == request.FamilyId).FirstOrDefault();
 
                         db.Reports.Remove(report);
                         db.SaveChanges();

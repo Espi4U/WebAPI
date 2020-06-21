@@ -1,4 +1,5 @@
-﻿using FamilyFinance.Helpers;
+﻿using Acr.UserDialogs;
+using FamilyFinance.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

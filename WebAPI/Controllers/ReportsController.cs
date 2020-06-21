@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Shared.Models.Requests;
 using Shared.Models.Requests.BaseRequests;
 using Shared.Models.Requests.ChangeMoneyRequests;
 using Shared.Models.Responses;
@@ -36,7 +37,7 @@ namespace WebAPI.Controllers
 
 
         [Route("delete_report"), HttpPost]
-        public BaseResponse DeleteReportById([FromBody]ReportRequest request) =>
+        public BaseResponse DeleteReportById([FromBody]DeleteReportRequest request) =>
             _reportService.DeleteReport(request);
 
         //TODO
@@ -50,7 +51,7 @@ namespace WebAPI.Controllers
                 { 
                     Text = "",
                     Date = DateTime.Now,
-                    Name = $"Report per {DateTime.Now}",
+                    Name = $"Звіт за {DateTime.Now}",
                     FamilyId = request.FamilyId,
                     PersonId = request.PersonId
                 };
@@ -61,12 +62,11 @@ namespace WebAPI.Controllers
                     PersonId = request.PersonId,
                     Type = "I"
                 };
-                var allIncomes = _changeMoneyService.GetIncomesOrExpenses(allIncomesOrExpensesRequest);
-
+                var allIncomesCount = _changeMoneyService.GetIncomesOrExpenses(allIncomesOrExpensesRequest);
                 allIncomesOrExpensesRequest.Type = "E";
-                var allExpenses = _changeMoneyService.GetIncomesOrExpenses(allIncomesOrExpensesRequest);
+                var allExpensesCount = _changeMoneyService.GetIncomesOrExpenses(allIncomesOrExpensesRequest);
 
-                response.Report.Text += $"Incomes on sum";
+                response.Report.Text = $"Кількість доходів: {allIncomesCount.ChangeMoneys.Count()}; Кількість витрат: {allExpensesCount.ChangeMoneys.Count()};";
             }
             catch(Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using FamilyFinance.Helpers;
+using Shared.Models.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,33 +17,36 @@ namespace FamilyFinance.Views
     public partial class ReportsLevel2PageView : ContentPage
     {
         private APIClient _apiClient;
-        public ICommand DeleteCommand { get; set; }
+        public ICommand DeleteReportCommand { get; set; }
 
         public Report Report { get; set; }
 
         public ReportsLevel2PageView(Report report)
         {
             _apiClient = new APIClient();
+
             Report = report;
-            DeleteCommand = new Command(DeleteAsync);
+
+            DeleteReportCommand = new Command(DeleteReportAsync);
 
             BindingContext = this;
             InitializeComponent();
         }
 
-        public async void DeleteAsync()
+        private async void DeleteReportAsync()
         {
-            var request = new ReportRequest
+            var request = new DeleteReportRequest
             {
-                Report = Report
+                ReportId = Report.Id,
+                FamilyId = GlobalHelper.GetFamilyId(),
+                PersonId = GlobalHelper.GetPersonId()
             };
             var response = await _apiClient.DeleteReportAsync(request);
-            if(!response.BaseIsSuccess || !response.IsSuccess)
+            if (!response.IsSuccess || !response.BaseIsSuccess)
             {
-                AlertHelper.ShowAlertMessage(response, this);
                 return;
             }
-
         }
+
     }
 }

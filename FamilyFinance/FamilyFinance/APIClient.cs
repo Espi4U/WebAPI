@@ -1,4 +1,5 @@
-﻿using FamilyFinance.Helpers;
+﻿using Acr.UserDialogs;
+using FamilyFinance.Helpers;
 using Newtonsoft.Json;
 using Shared.Models.Requests;
 using Shared.Models.Requests.BaseRequests;
@@ -57,7 +58,7 @@ namespace FamilyFinance
         public async Task<ListReportsResponse> GetReportsAsync(BaseRequest request) =>
             await TryCallApiAsync<ListReportsResponse>("reports/get_reports", request);
 
-        public async Task<BaseResponse> DeleteReportAsync(ReportRequest request) =>
+        public async Task<BaseResponse> DeleteReportAsync(DeleteReportRequest request) =>
             await TryCallApiAsync<BaseResponse>("reports/delete_report", request);
 
         #endregion
@@ -153,6 +154,7 @@ namespace FamilyFinance
         {
             try
             {
+                UserDialogs.Instance.ShowLoading(title: "Завантаження...");
                 var uri = $"{httpClient.BaseAddress}{apiUrl}";
                 var content = new StringContent(JsonConvert.SerializeObject(request ?? new object()), Encoding.UTF8, "application/json");
 
@@ -163,10 +165,12 @@ namespace FamilyFinance
                 var responseContext = await responseMessage.Content.ReadAsStringAsync();
 
                 var response = JsonConvert.DeserializeObject<T>(responseContext);
+                UserDialogs.Instance.HideLoading();
                 return response;
             }
             catch(Exception ex)
             {
+                UserDialogs.Instance.HideLoading();
                 return new T
                 {
                     ApiMessage = $"Client side ERROR: {ex.Message}",
