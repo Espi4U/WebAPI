@@ -182,6 +182,7 @@ namespace FamilyFinance
             {
                 var config = new ToastConfig("");
                 config.SetDuration(2000);
+                config.SetPosition(ToastPosition.Top);
                 UserDialogs.Instance.HideLoading();
                 if (!response.IsSuccess)
                 {

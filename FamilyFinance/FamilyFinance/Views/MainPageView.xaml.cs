@@ -13,12 +13,6 @@ namespace FamilyFinance.Views
     {
         public MainPageView()
         {
-            var existingPages = Navigation.NavigationStack.ToList();
-            foreach (var page in existingPages)
-            {
-                Navigation.RemovePage(page);
-            }
-
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
             On<Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);

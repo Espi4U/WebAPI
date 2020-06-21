@@ -45,6 +45,12 @@ namespace FamilyFinance.Views
 
         public LoginPageView()
         {
+            var existingPages = Navigation.NavigationStack.ToList();
+            foreach (var page in existingPages)
+            {
+                Navigation.RemovePage(page);
+            }
+
             _apiClient = new APIClient();
 
             Login = new Field();

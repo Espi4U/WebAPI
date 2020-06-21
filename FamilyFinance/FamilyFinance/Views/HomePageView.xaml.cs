@@ -16,6 +16,12 @@ namespace FamilyFinance.Views
 
         public HomePageView()
         {
+            var existingPages = Navigation.NavigationStack.ToList();
+            foreach (var page in existingPages)
+            {
+                Navigation.RemovePage(page);
+            }
+
             NavigationPage.SetHasNavigationBar(this, false);
 
             OpenAddNewIncomeOrExpensePageCommand = new Command(OpenAddNewIncomeOrExpensePage);

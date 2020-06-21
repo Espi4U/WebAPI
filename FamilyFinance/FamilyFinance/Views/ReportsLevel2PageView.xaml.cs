@@ -46,6 +46,8 @@ namespace FamilyFinance.Views
             {
                 return;
             }
+
+            await Navigation.PopAsync();
         }
 
     }

@@ -104,6 +104,9 @@ namespace FamilyFinance.Views
                 return;
             }
 
+            var page = Navigation.NavigationStack.FirstOrDefault(x => x is PurposesLevel2PageView);
+            Navigation.RemovePage(page);
+
             await Navigation.PopAsync();
         }
 
