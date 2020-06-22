@@ -60,7 +60,7 @@ namespace WebAPI.Controllers
                 { 
                     Text = @"",
                     Date = request.Now,
-                    Name = $"Звіт за {DateTime.Now}, користуача {personName.Name}",
+                    Name = $"Звіт за {request.Now}, користуача {personName.Name}",
                     FamilyId = request.FamilyId,
                     PersonId = request.PersonId
                 };
