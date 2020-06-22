@@ -59,7 +59,7 @@ namespace WebAPI.Controllers
                 var model = new ReportRequest
                 { 
                     Text = @"",
-                    Date = DateTime.Now,
+                    Date = request.Now,
                     Name = $"Звіт за {DateTime.Now}, користуача {personName.Name}",
                     FamilyId = request.FamilyId,
                     PersonId = request.PersonId

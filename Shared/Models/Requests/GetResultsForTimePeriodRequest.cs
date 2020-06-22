@@ -10,6 +10,7 @@ namespace Shared.Models.Requests.BaseRequests
     {
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
+        public DateTime Now { get; set; }
         public string Type { get; set; }
     }
 }
