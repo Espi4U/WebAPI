@@ -64,7 +64,7 @@ namespace FamilyFinance.Views
             {
                 Start = Start,
                 End = End,
-                Now = DateTime.Now,
+                Now = DateTime.UtcNow.Date,
                 FamilyId = GlobalHelper.GetFamilyId(),
                 PersonId = GlobalHelper.GetPersonId()
             };
