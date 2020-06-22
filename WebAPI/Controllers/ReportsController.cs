@@ -65,7 +65,9 @@ namespace WebAPI.Controllers
                 {
                     FamilyId = request.FamilyId,
                     PersonId = request.PersonId,
-                    Type = "I"
+                    Type = "I",
+                    Start = request.Start,
+                    End = request.End
                 };
                 var allIncomesCount = _changeMoneyService.GetResultForTimePeriod(allIncomesOrExpensesRequest);
                 allIncomesOrExpensesRequest.Type = "E";
