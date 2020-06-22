@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Shared;
 using Shared.Models.Requests;
 using Shared.Models.Requests.BaseRequests;
@@ -6,7 +7,9 @@ using Shared.Models.Responses;
 using Shared.Models.Responses.PersonsResponses;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using WebAPI.Models;
@@ -50,6 +53,19 @@ namespace WebAPI.Services
                                 response.FamilyId = currentPerson.FamilyId;
                                 response.PersonId = currentPerson.Id;
                                 response.FamilyName = heresFamily.Name;
+
+                                var identity = GetIdentity(currentPerson);
+                                var now = DateTime.UtcNow;
+                                var jwt = new JwtSecurityToken(
+                                        issuer: AuthOptions.ISSUER,
+                                        audience: AuthOptions.AUDIENCE,
+                                        notBefore: now,
+                                        claims: identity.Claims,
+                                        expires: DateTime.Now.AddYears(10),
+                                        signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                                var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+                                response.Token = encodedJwt;
                             }
                         }
                     }
@@ -205,6 +221,18 @@ namespace WebAPI.Services
 
                 return response;
             });
+        }
+
+        private ClaimsIdentity GetIdentity(Person person)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, person.Login),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, person.Role)
+            };
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            return claimsIdentity;
         }
     }
 }

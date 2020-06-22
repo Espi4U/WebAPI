@@ -26,6 +26,7 @@ using WebAPI.Models.APIModels.Requests.ReportsControllerRequests;
 using WebAPI.Models.APIModels.Responses;
 using Xamarin.Forms;
 using Xamarin.Essentials;
+using System.Net.Http.Headers;
 
 namespace FamilyFinance
 {
@@ -45,7 +46,10 @@ namespace FamilyFinance
             };
         }
 
-        public APIClient() { }
+        public APIClient()
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GlobalHelper.GetToken());
+        }
 
         #region INVITEKEYS
 

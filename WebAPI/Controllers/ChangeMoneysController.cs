@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Requests.BaseRequests;
 using Shared.Models.Requests.ChangeMoneyRequests;
@@ -14,6 +16,7 @@ using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/v1/changemoneys")]
     public class ChangeMoneysController : ControllerBase

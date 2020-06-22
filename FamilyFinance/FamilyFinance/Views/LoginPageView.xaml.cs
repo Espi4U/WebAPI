@@ -77,6 +77,7 @@ namespace FamilyFinance.Views
             GlobalHelper.SetFamilyName(response.FamilyName);
             GlobalHelper.SetPersonName(response.PersonName);
             GlobalHelper.SetRole(response.Role);
+            GlobalHelper.SetToken(response.Token);
 
             App.Current.MainPage = new NavigationPage(new MainPageView());
         }

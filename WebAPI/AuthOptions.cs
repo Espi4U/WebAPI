@@ -9,10 +9,10 @@ namespace WebAPI
 {
     public class AuthOptions
     {
-        public const string ISSUER = "FamilyFinanceWEBAPI"; // издатель токена
-        public const string AUDIENCE = "FamilyFinanceDroid"; // потребитель токена
-        const string KEY = "sHa4kk8GAl64pC1";   // ключ для шифрации
-        public const int LIFETIME = 1; // время жизни токена - 1 минута
+        public const string ISSUER = "FinanceServer";
+        public const string AUDIENCE = "FinanceClient";
+        const string KEY = "fin!na563!nv56!dsd!5d";
+        public const int LIFETIME = 1;
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));

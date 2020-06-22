@@ -12,5 +12,6 @@ namespace Shared.Models.Responses
         public string PersonName { get; set; }
         public string FamilyName { get; set; }
         public string Role { get; set; }
+        public string Token { get; set; }
     }
 }

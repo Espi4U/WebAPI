@@ -30,6 +30,10 @@ namespace FamilyFinance.Helpers
             {
                 SetRole("");
             }
+            if (!Application.Current.Properties.ContainsKey("token"))
+            {
+                SetToken("");
+            }
         }
         public static int GetPersonId()
         {
@@ -54,6 +58,11 @@ namespace FamilyFinance.Helpers
         public static string GetRole()
         {
             return Convert.ToString(Application.Current.Properties["role"]);
+        }
+
+        public static string GetToken()
+        {
+            return Convert.ToString(Application.Current.Properties["token"]);
         }
 
         public static void SetPersonId(int? id)
@@ -85,6 +94,12 @@ namespace FamilyFinance.Helpers
             Application.Current.SavePropertiesAsync();
         }
 
+        public static void SetToken(string token)
+        {
+            Application.Current.Properties["token"] = token;
+            Application.Current.SavePropertiesAsync();
+        }
+
         public static void Logout()
         {
             Application.Current.Properties["familyid"] = null;
@@ -92,6 +107,7 @@ namespace FamilyFinance.Helpers
             Application.Current.Properties["familyname"] = null;
             Application.Current.Properties["personname"] = null;
             Application.Current.Properties["role"] = null;
+            Application.Current.Properties["token"] = null;
             Application.Current.SavePropertiesAsync();
         }
 
