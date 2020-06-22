@@ -114,7 +114,7 @@ namespace FamilyFinance.Views
             }
             else if (!Regex.IsMatch(Name.Name, Constants.NameLatinAndCyrylicPattern))
             {
-                Name.NotValidMessageError = "Некоректна назва. Мінімум 4, максимум 10";
+                Name.NotValidMessageError = "Некоректна назва. Мінімум 4, максимум 30";
                 Name.IsNotValid = true;
             }
             else

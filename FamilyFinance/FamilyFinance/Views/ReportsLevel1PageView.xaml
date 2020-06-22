@@ -11,6 +11,10 @@
             Text="Згенерувати новий звіт"
             Margin="20"
             Command="{Binding GoToGenerateReportPageCommand}"/>
+        <Button
+            Text="Графічні звіти"
+            Margin="20,5,20,20"
+            Command="{Binding GoToChartPageCommand}"/>
         <ListView HasUnevenRows="True"
                   ItemsSource="{Binding Reports}"
                   SelectedItem="{Binding SelectedReport, Mode=TwoWay}">

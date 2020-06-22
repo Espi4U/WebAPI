@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\UpdatePurposeRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ApiResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\BaseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\DataByCategotyToChartResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ListCategoriesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ChangeMoneyResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Responses\ListChangeMoneysResponse.cs" />

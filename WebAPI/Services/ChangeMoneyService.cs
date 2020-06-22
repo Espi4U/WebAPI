@@ -262,5 +262,58 @@ namespace WebAPI.Services
                 return response;
             });
         }
+
+        public DataByCategotyToChartResponse GetDataByCategoryToChart(BaseRequest request)
+        {
+            return GetResponse(() => {
+                var response = new DataByCategotyToChartResponse();
+                try
+                {
+                    using (FamilyFinanceContext db = new FamilyFinanceContext())
+                    {
+                        var incomes = new Dictionary<string, int>();
+                        var expenses = new Dictionary<string, int>();
+                        var changeMoneysIncome = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.Type == "I").ToList();
+                        var changeMoneysExpense = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.Type == "E").ToList();
+                        foreach(var changeMoney in changeMoneysIncome)
+                        {
+                            var category = db.Categories.Where(x => x.FamilyId == request.FamilyId && x.Id == changeMoney.CategoryId).FirstOrDefault();
+                            if (incomes.ContainsKey(category.Name))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                var sum = changeMoneysIncome.Where(x => x.CategoryId == category.Id).Sum(x => x.Size);
+                                incomes.Add(category.Name, sum);
+                            }
+                        }
+                        foreach (var changeMoney in changeMoneysExpense)
+                        {
+                            var category = db.Categories.Where(x => x.FamilyId == request.FamilyId && x.Id == changeMoney.CategoryId).FirstOrDefault();
+                            if (expenses.ContainsKey(category.Name))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                var sum = changeMoneysExpense.Where(x => x.CategoryId == category.Id).Sum(x => x.Size);
+                                expenses.Add(category.Name, sum);
+                            }
+                        }
+
+                        response.Incomes = incomes;
+                        response.Expenses = expenses;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    response.BaseIsSuccess = false;
+                    response.BaseMessage = ex.Message + "; Inner: " + ex.InnerException.Message;
+                }
+
+                return response;
+            });
+        }
     }
 }

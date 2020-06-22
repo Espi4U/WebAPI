@@ -91,7 +91,7 @@ namespace FamilyFinance.Views
             }
             else if(!Regex.IsMatch(Login.Name, Constants.NameLatinPattern))
             {
-                Login.NotValidMessageError = "Тільки латинські символи. Мінімум 4, максимум 10";
+                Login.NotValidMessageError = "Тільки латинські символи. Мінімум 4, максимум 30";
                 Login.IsNotValid = true;
             }
             else
@@ -106,7 +106,7 @@ namespace FamilyFinance.Views
             }
             else if(!Regex.IsMatch(Password.Name, Constants.NameLatinPattern))
             {
-                Password.NotValidMessageError = "Тільки латинські символи. Мінімум 4, максимум 10";
+                Password.NotValidMessageError = "Тільки латинські символи. Мінімум 4, максимум 30";
                 Password.IsNotValid = true;
             }
             else

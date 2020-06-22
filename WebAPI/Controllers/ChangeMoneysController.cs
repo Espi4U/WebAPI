@@ -51,5 +51,9 @@ namespace WebAPI.Controllers
         [HttpPost, Route("add")]
         public async Task<BaseResponse> AddIncomeOrExpenseAsync([FromBody]ChangeMoneyRequest request) =>
             await Task.Run(() => _changeMoneyService.AddIncomeOrExpense(request));
+
+        [HttpPost, Route("data_by_category_to_chart")]
+        public async Task<DataByCategotyToChartResponse> GetDataByCategoryToChart([FromBody]BaseRequest request) =>
+            await Task.Run(() => _changeMoneyService.GetDataByCategoryToChart(request));
     }
 }

@@ -54,7 +54,7 @@ namespace FamilyFinance.Views
             }
             else if (!Regex.IsMatch(Name.Name, Constants.NameLatinAndCyrylicPattern))
             {
-                Name.NotValidMessageError = "Тільки латинські символи. Мінімум 4, максимум 10";
+                Name.NotValidMessageError = "Тільки латинські символи. Мінімум 4, максимум 30";
                 Name.IsNotValid = true;
             }
             else

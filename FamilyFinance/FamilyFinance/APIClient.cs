@@ -156,6 +156,9 @@ namespace FamilyFinance
         public async Task<BaseResponse> AddIncomeOrExpenseAsync(ChangeMoneyRequest request) =>
             await TryCallApiAsync<BaseResponse>("changemoneys/add", request);
 
+        public async Task<DataByCategotyToChartResponse> LoadDataByCategoryToChart(BaseRequest request) =>
+            await TryCallApiAsync<DataByCategotyToChartResponse>("changemoneys/data_by_category_to_chart", request);
+
         #endregion
 
         private async Task<T> TryCallApiAsync<T>(string apiUrl, object request = null) where T : BaseResponse, new()

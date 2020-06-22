@@ -44,12 +44,14 @@ namespace FamilyFinance.Views
         }
 
         public ICommand GoToGenerateReportPageCommand { get; }
+        public ICommand GoToChartPageCommand { get; }
 
         public ReportsLevel1PageView()
         {
             _apiClient = new APIClient();
 
             GoToGenerateReportPageCommand = new Command(GoToGenerateReportPageAsync);
+            GoToChartPageCommand = new Command(GoToChartPageAsync);
 
             BindingContext = this;
             InitializeComponent();
@@ -60,6 +62,11 @@ namespace FamilyFinance.Views
             base.OnAppearing();
 
             LoadReportsAsync();
+        }
+
+        private async void GoToChartPageAsync()
+        {
+            await Navigation.PushAsync(new ChartPageView());
         }
 
         private async void LoadReportsAsync()
