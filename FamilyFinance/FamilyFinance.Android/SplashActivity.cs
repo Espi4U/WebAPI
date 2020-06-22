@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -16,6 +17,8 @@ namespace FamilyFinance.Droid
         Theme = "@style/Theme.Splash",
         Icon = "@mipmap/icon",
         MainLauncher = true,
+        ScreenOrientation = ScreenOrientation.Portrait,
+        ResizeableActivity = false,
         NoHistory = true)]
     public class SplashActivity : Activity
     {

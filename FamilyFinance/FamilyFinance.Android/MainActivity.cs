@@ -14,6 +14,8 @@ namespace FamilyFinance.Droid
         Icon = "@mipmap/icon",
         Theme = "@style/MainTheme",
         MainLauncher = false,
+        ScreenOrientation = ScreenOrientation.Portrait,
+        ResizeableActivity = false,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
