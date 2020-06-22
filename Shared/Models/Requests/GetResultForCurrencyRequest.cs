@@ -9,5 +9,7 @@ namespace Shared.Models.Requests
     {
         public int CurrencyId { get; set; }
         public string Type { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
     }
 }

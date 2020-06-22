@@ -10,5 +10,6 @@ namespace Shared.Models.Requests.BaseRequests
     {
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
+        public string Type { get; set; }
     }
 }

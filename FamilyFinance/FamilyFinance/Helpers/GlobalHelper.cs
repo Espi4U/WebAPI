@@ -8,6 +8,29 @@ namespace FamilyFinance.Helpers
 {
     public static class GlobalHelper
     {
+        static GlobalHelper()
+        {
+            if (!Application.Current.Properties.ContainsKey("personid"))
+            {
+                SetPersonId(0);
+            }
+            if (!Application.Current.Properties.ContainsKey("familyid"))
+            {
+                SetFamilyId(0);
+            }
+            if (!Application.Current.Properties.ContainsKey("personname"))
+            {
+                SetPersonName("");
+            }
+            if (!Application.Current.Properties.ContainsKey("familyname"))
+            {
+                SetFamilyName("");
+            }
+            if (!Application.Current.Properties.ContainsKey("role"))
+            {
+                SetRole("");
+            }
+        }
         public static int GetPersonId()
         {
             return Convert.ToInt32(Application.Current.Properties["personid"]);

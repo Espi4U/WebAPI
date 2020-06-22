@@ -61,22 +61,24 @@ namespace WebAPI.Controllers
                     PersonId = request.PersonId
                 };
 
-                var allIncomesOrExpensesRequest = new GetIncomesOrExpensesRequest
+                var allIncomesOrExpensesRequest = new GetResultsForTimePeriodRequest
                 {
                     FamilyId = request.FamilyId,
                     PersonId = request.PersonId,
                     Type = "I"
                 };
-                var allIncomesCount = _changeMoneyService.GetIncomesOrExpenses(allIncomesOrExpensesRequest);
+                var allIncomesCount = _changeMoneyService.GetResultForTimePeriod(allIncomesOrExpensesRequest);
                 allIncomesOrExpensesRequest.Type = "E";
-                var allExpensesCount = _changeMoneyService.GetIncomesOrExpenses(allIncomesOrExpensesRequest);
+                var allExpensesCount = _changeMoneyService.GetResultForTimePeriod(allIncomesOrExpensesRequest);
 
                 var requestForCurrency = new GetResultForCurrencyRequest
                 {
                     FamilyId = request.FamilyId,
                     PersonId = request.PersonId,
                     Type = "I",
-                    CurrencyId = 1
+                    CurrencyId = 1,
+                    Start = request.Start,
+                    End = request.End
                 };
                 var incomesUAH = _changeMoneyService.GetResultForCurrency(requestForCurrency);
                 requestForCurrency.CurrencyId = 2;

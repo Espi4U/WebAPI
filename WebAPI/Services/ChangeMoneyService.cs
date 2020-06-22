@@ -164,7 +164,7 @@ namespace WebAPI.Services
                         }
                         else
                         {
-                            response.ChangeMoneys = db.ChangeMoneys.Where(x => (x.PersonId == request.PersonId && x.FamilyId == request.FamilyId) && (x.Date >= request.Start && x.Date <= request.End)).ToList();
+                            response.ChangeMoneys = db.ChangeMoneys.Where(x => (x.PersonId == request.PersonId && x.FamilyId == request.FamilyId) && (x.Date >= request.Start && x.Date <= request.End) && x.Type == request.Type).ToList();
                         }
                     }
                 }
@@ -186,7 +186,7 @@ namespace WebAPI.Services
                 {
                     using (FamilyFinanceContext db = new FamilyFinanceContext())
                     {
-                        response.ChangeMoneys = db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.FamilyId == request.FamilyId && request.CurrencyId == x.CurrencyId && request.Type == x.Type).ToList();
+                        response.ChangeMoneys = db.ChangeMoneys.Where(x => x.PersonId == request.PersonId && x.FamilyId == request.FamilyId && request.CurrencyId == x.CurrencyId && request.Type == x.Type && x.Date <= request.End && x.Date >= request.Start).ToList();
                     }
                 }
                 catch
