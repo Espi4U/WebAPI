@@ -155,10 +155,10 @@ namespace FamilyFinance.Views
         {
             var request = new RegistrationRequest
             {
-                FamilyName = FamilyName.Name,
-                PersonName = PersonName.Name,
-                Login = Login.Name,
-                Password = Password.Name,
+                FamilyName = FamilyName.Name.TrimEnd(),
+                PersonName = PersonName.Name.TrimEnd(),
+                Login = Login.Name.TrimEnd(),
+                Password = Password.Name.TrimEnd(),
             };
             var response = await _apiClient.RegistrationNewAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)

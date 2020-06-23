@@ -150,10 +150,10 @@ namespace FamilyFinance.Views
         {
             var request = new RegistrationRequest
             {
-                PersonName = PersonName.Name,
-                Login = Login.Name,
-                Password = Password.Name,
-                Key = Key.Name,
+                PersonName = PersonName.Name.TrimEnd(),
+                Login = Login.Name.TrimEnd(),
+                Password = Password.Name.TrimEnd(),
+                Key = Key.Name.TrimEnd(),
             };
             var response = await _apiClient.RegistrationNewWithKeyAsync(request);
             if (!response.BaseIsSuccess || !response.IsSuccess)

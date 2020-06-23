@@ -14,6 +14,7 @@ namespace FamilyFinance.Models
             set
             {
                 _name = value;
+                _name = _name.TrimStart();
                 OnPropertyChanged("Name");
 
             }

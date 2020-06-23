@@ -70,7 +70,7 @@ namespace FamilyFinance.Views
             {
                 Category = new Category
                 {
-                    Name = Name.Name,
+                    Name = Name.Name.TrimEnd(),
                     FamilyId = GlobalHelper.GetFamilyId()
                 }
             };

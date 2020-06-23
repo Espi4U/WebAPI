@@ -13,19 +13,86 @@
                 FontSize="Large"
                 HorizontalOptions="CenterAndExpand"
                 TextColor="Black"
-                Text="Доходи по категоріям" />
+                Text="Доходи по категоріям для валюти Українська гривня" />
             <forms:ChartView
-                x:Name="IncomesComponent"
+                x:Name="IncomesComponentUAH"
                 HorizontalOptions="FillAndExpand"
                 HeightRequest="250"
                 WidthRequest="250"/>
             <Label
+                Margin="0,20,0,0"
                 FontSize="Large"
                 HorizontalOptions="CenterAndExpand"
                 TextColor="Black"
-                Text="Витрати по категоріям" />
+                Text="Витрати по категоріям для валюти Українська гривня" />
             <forms:ChartView
-                x:Name="ExpensesComponent"
+                x:Name="ExpensesComponentUAH"
+                HorizontalOptions="FillAndExpand"
+                HeightRequest="250"
+                WidthRequest="250"/>
+            <Label
+                Margin="0,20,0,0"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand"
+                TextColor="Black"
+                Text="Доходи по категоріям для валюти Долар США" />
+            <forms:ChartView
+                x:Name="IncomesComponentUSD"
+                HorizontalOptions="FillAndExpand"
+                HeightRequest="250"
+                WidthRequest="250"/>
+            <Label
+                Margin="0,20,0,0"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand"
+                TextColor="Black"
+                Text="Витрати по категоріям для валюти Долар США" />
+            <forms:ChartView
+                x:Name="ExpensesComponentUSD"
+                HorizontalOptions="FillAndExpand"
+                HeightRequest="250"
+                WidthRequest="250"/>
+            <Label
+                Margin="0,20,0,0"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand"
+                TextColor="Black"
+                Text="Доходи по категоріям для валюти Євро" />
+            <forms:ChartView
+                x:Name="IncomesComponentEUR"
+                HorizontalOptions="FillAndExpand"
+                HeightRequest="250"
+                WidthRequest="250"/>
+            <Label
+                Margin="0,20,0,0"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand"
+                TextColor="Black"
+                Text="Витрати по категоріям для валюти Євро" />
+            <forms:ChartView
+                x:Name="ExpensesComponentEUR"
+                HorizontalOptions="FillAndExpand"
+                HeightRequest="250"
+                WidthRequest="250"/>
+            <Label
+                Margin="0,20,0,0"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand"
+                TextColor="Black"
+                Text="Доходи по категоріям для валюти Польський злотий" />
+            <forms:ChartView
+                x:Name="IncomesComponentPLZ"
+                HorizontalOptions="FillAndExpand"
+                HeightRequest="250"
+                WidthRequest="250"/>
+            <Label
+                Margin="0,20,0,0"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand"
+                TextColor="Black"
+                Text="Витрати по категоріям для валюти Польський злотий" />
+            <forms:ChartView
+                x:Name="ExpensesComponentPLZ"
                 HorizontalOptions="FillAndExpand"
                 HeightRequest="250"
                 WidthRequest="250"/>

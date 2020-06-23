@@ -203,7 +203,7 @@ namespace FamilyFinance.Views
         {
             var request = new ChangeMoneyRequest
             {
-                Name = Name.Name,
+                Name = Name.Name.TrimEnd(),
                 Size = Convert.ToInt32(Size.Name),
                 Type = IsIncome ? "I" : "E",
                 Date = DateTime.Now,

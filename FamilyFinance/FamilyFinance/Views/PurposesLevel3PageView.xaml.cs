@@ -123,7 +123,7 @@ namespace FamilyFinance.Views
         {
             var request = new PurposeRequest
             {
-                Name = Name.Name,
+                Name = Name.Name.TrimEnd(),
                 FinalSize = Convert.ToInt32(FinalSize.Name),
                 CurrencyId = Currency.Id,
                 FamilyId = GlobalHelper.GetFamilyId()

@@ -273,8 +273,8 @@ namespace WebAPI.Services
                     {
                         var incomes = new Dictionary<string, int>();
                         var expenses = new Dictionary<string, int>();
-                        var changeMoneysIncome = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.Type == "I").ToList();
-                        var changeMoneysExpense = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.Type == "E").ToList();
+                        var changeMoneysIncome = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.Type == "I" && x.CurrencyId == 1).ToList();
+                        var changeMoneysExpense = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.Type == "E" && x.CurrencyId == 1).ToList();
                         foreach(var changeMoney in changeMoneysIncome)
                         {
                             var category = db.Categories.Where(x => x.FamilyId == request.FamilyId && x.Id == changeMoney.CategoryId).FirstOrDefault();
@@ -302,8 +302,110 @@ namespace WebAPI.Services
                             }
                         }
 
-                        response.Incomes = incomes;
-                        response.Expenses = expenses;
+                        response.IncomesUAH = incomes;
+                        response.ExpensesUAH = expenses;
+
+                        incomes = new Dictionary<string, int>();
+                        expenses = new Dictionary<string, int>();
+                        changeMoneysIncome = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.Type == "I" && x.CurrencyId == 2).ToList();
+                        changeMoneysExpense = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.Type == "E" && x.CurrencyId == 2).ToList();
+                        foreach (var changeMoney in changeMoneysIncome)
+                        {
+                            var category = db.Categories.Where(x => x.FamilyId == request.FamilyId && x.Id == changeMoney.CategoryId).FirstOrDefault();
+                            if (incomes.ContainsKey(category.Name))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                var sum = changeMoneysIncome.Where(x => x.CategoryId == category.Id).Sum(x => x.Size);
+                                incomes.Add(category.Name, sum);
+                            }
+                        }
+                        foreach (var changeMoney in changeMoneysExpense)
+                        {
+                            var category = db.Categories.Where(x => x.FamilyId == request.FamilyId && x.Id == changeMoney.CategoryId).FirstOrDefault();
+                            if (expenses.ContainsKey(category.Name))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                var sum = changeMoneysExpense.Where(x => x.CategoryId == category.Id).Sum(x => x.Size);
+                                expenses.Add(category.Name, sum);
+                            }
+                        }
+
+                        response.IncomesUSD = incomes;
+                        response.ExpensesUSD = expenses;
+
+                        incomes = new Dictionary<string, int>();
+                        expenses = new Dictionary<string, int>();
+                        changeMoneysIncome = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.Type == "I" && x.CurrencyId == 3).ToList();
+                        changeMoneysExpense = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.Type == "E" && x.CurrencyId == 3).ToList();
+                        foreach (var changeMoney in changeMoneysIncome)
+                        {
+                            var category = db.Categories.Where(x => x.FamilyId == request.FamilyId && x.Id == changeMoney.CategoryId).FirstOrDefault();
+                            if (incomes.ContainsKey(category.Name))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                var sum = changeMoneysIncome.Where(x => x.CategoryId == category.Id).Sum(x => x.Size);
+                                incomes.Add(category.Name, sum);
+                            }
+                        }
+                        foreach (var changeMoney in changeMoneysExpense)
+                        {
+                            var category = db.Categories.Where(x => x.FamilyId == request.FamilyId && x.Id == changeMoney.CategoryId).FirstOrDefault();
+                            if (expenses.ContainsKey(category.Name))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                var sum = changeMoneysExpense.Where(x => x.CategoryId == category.Id).Sum(x => x.Size);
+                                expenses.Add(category.Name, sum);
+                            }
+                        }
+
+                        response.IncomesEUR = incomes;
+                        response.ExpensesEUR = expenses;
+
+                        incomes = new Dictionary<string, int>();
+                        expenses = new Dictionary<string, int>();
+                        changeMoneysIncome = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.Type == "I" && x.CurrencyId == 4).ToList();
+                        changeMoneysExpense = db.ChangeMoneys.Where(x => x.FamilyId == request.FamilyId && x.PersonId == request.PersonId && x.Type == "E" && x.CurrencyId == 4).ToList();
+                        foreach (var changeMoney in changeMoneysIncome)
+                        {
+                            var category = db.Categories.Where(x => x.FamilyId == request.FamilyId && x.Id == changeMoney.CategoryId).FirstOrDefault();
+                            if (incomes.ContainsKey(category.Name))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                var sum = changeMoneysIncome.Where(x => x.CategoryId == category.Id).Sum(x => x.Size);
+                                incomes.Add(category.Name, sum);
+                            }
+                        }
+                        foreach (var changeMoney in changeMoneysExpense)
+                        {
+                            var category = db.Categories.Where(x => x.FamilyId == request.FamilyId && x.Id == changeMoney.CategoryId).FirstOrDefault();
+                            if (expenses.ContainsKey(category.Name))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                var sum = changeMoneysExpense.Where(x => x.CategoryId == category.Id).Sum(x => x.Size);
+                                expenses.Add(category.Name, sum);
+                            }
+                        }
+
+                        response.IncomesPLZ = incomes;
+                        response.ExpensesPLZ = expenses;
                     }
                 }
                 catch (Exception ex)

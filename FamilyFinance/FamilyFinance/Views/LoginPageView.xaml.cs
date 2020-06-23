@@ -63,8 +63,8 @@ namespace FamilyFinance.Views
         {
             var request = new LoginRequest
             {
-                Login = Login.Name,
-                Password = Password.Name
+                Login = Login.Name.TrimEnd(),
+                Password = Password.Name.TrimEnd()
             };
             var response = await _apiClient.LoginAsync(request);
             if(!response.BaseIsSuccess || !response.IsSuccess)

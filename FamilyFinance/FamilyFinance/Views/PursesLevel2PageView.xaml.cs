@@ -128,7 +128,7 @@ namespace FamilyFinance.Views
         {
             var request = new PurseRequest
             {
-                Name = Name.Name,
+                Name = Name.Name.TrimEnd(),
                 Size = 0,
                 CurrencyId = Currency.Id,
                 FamilyId = GlobalHelper.GetFamilyId(),
